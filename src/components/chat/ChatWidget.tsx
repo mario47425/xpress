@@ -117,7 +117,7 @@ export const ChatWidget: React.FC = () => {
     <>
       {/* 1. Floating Round Chat Button + Tooltip */}
       <div
-        className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end pointer-events-none select-none"
+        className="fixed bottom-20 md:bottom-6 left-4 sm:left-6 z-40 flex flex-col items-start pointer-events-none select-none"
         style={{
           paddingBottom: 'env(safe-area-inset-bottom)',
         }}
@@ -137,7 +137,7 @@ export const ChatWidget: React.FC = () => {
               <X size={12} />
             </button>
             {/* Tooltip arrow */}
-            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-text rotate-45" />
+            <div className="absolute -bottom-1.5 left-6 w-3 h-3 bg-text rotate-45" />
           </div>
         )}
 
@@ -169,7 +169,7 @@ export const ChatWidget: React.FC = () => {
           role="dialog"
           aria-label="CommuteCircle Assistant"
           aria-modal="true"
-          className="fixed inset-0 z-50 pointer-events-none flex flex-col justify-end md:justify-end md:items-end md:p-6"
+          className="fixed inset-0 z-50 pointer-events-none flex flex-col justify-end md:justify-end md:items-start md:p-6"
         >
           {/* Mobile backdrop */}
           <div
