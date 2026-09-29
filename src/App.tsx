@@ -17,6 +17,11 @@ import { RiderRoutePage } from './portals/rider/RoutePage';
 import { RiderScanner } from './portals/rider/Scanner';
 import { ActiveDrive } from './portals/rider/ActiveDrive';
 
+// Shared Safety Screens
+import { SOSActive } from './portals/shared/SOSActive';
+import { ResponderAlert } from './portals/shared/ResponderAlert';
+import { SafetyCentre } from './portals/shared/SafetyCentre';
+
 export default function App() {
   const { init, activeRole } = useAppStore();
 
@@ -44,6 +49,11 @@ export default function App() {
           <Route path="/rider/scanner" element={<RiderScanner />} />
           <Route path="/rider/active-drive/:rideId" element={<ActiveDrive />} />
           <Route path="/rider/active-drive" element={<ActiveDrive />} />
+
+          {/* Shared Safety & Emergency SOS */}
+          <Route path="/safety" element={<SafetyCentre />} />
+          <Route path="/sos/active" element={<SOSActive />} />
+          <Route path="/sos/responder" element={<ResponderAlert />} />
 
           {/* Notifications Utility Screen */}
           <Route
