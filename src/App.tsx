@@ -10,17 +10,28 @@ import { PeerMapPage } from './portals/peer/MapPage';
 import { HotspotWaiting } from './portals/peer/HotspotWaiting';
 import { PickupQR } from './portals/peer/PickupQR';
 import { LiveRide } from './portals/peer/LiveRide';
+import { RelayPlanner } from './portals/peer/RelayPlanner';
+import { PeerPodsPage } from './portals/peer/PodsPage';
+import { PeerTrustProfile } from './portals/peer/TrustProfile';
+import { PeerWalletPage } from './portals/peer/WalletPage';
 
 // Rider Portal Screens
 import { RiderHome } from './portals/rider/Home';
 import { RiderRoutePage } from './portals/rider/RoutePage';
 import { RiderScanner } from './portals/rider/Scanner';
 import { ActiveDrive } from './portals/rider/ActiveDrive';
+import { RiderHandoff } from './portals/rider/Handoff';
+import { RiderPodsPage } from './portals/rider/PodsPage';
+import { RiderTrustProfile } from './portals/rider/TrustProfile';
+import { RiderCostRecovery } from './portals/rider/CostRecovery';
+import { RequestsInbox } from './portals/rider/RequestsInbox';
 
-// Shared Safety Screens
+// Shared Safety, Verification & Moderator Screens
 import { SOSActive } from './portals/shared/SOSActive';
 import { ResponderAlert } from './portals/shared/ResponderAlert';
 import { SafetyCentre } from './portals/shared/SafetyCentre';
+import { ModeratorQueue } from './portals/shared/ModeratorQueue';
+import { Onboarding } from './portals/shared/Onboarding';
 
 export default function App() {
   const { init, activeRole } = useAppStore();
@@ -42,6 +53,10 @@ export default function App() {
           <Route path="/app/pickup-qr" element={<PickupQR />} />
           <Route path="/app/live-ride/:rideId" element={<LiveRide />} />
           <Route path="/app/live-ride" element={<LiveRide />} />
+          <Route path="/app/relay" element={<RelayPlanner />} />
+          <Route path="/app/pods" element={<PeerPodsPage />} />
+          <Route path="/app/profile" element={<PeerTrustProfile />} />
+          <Route path="/app/wallet" element={<PeerWalletPage />} />
 
           {/* Rider Portal (/rider) */}
           <Route path="/rider" element={<RiderHome />} />
@@ -49,11 +64,18 @@ export default function App() {
           <Route path="/rider/scanner" element={<RiderScanner />} />
           <Route path="/rider/active-drive/:rideId" element={<ActiveDrive />} />
           <Route path="/rider/active-drive" element={<ActiveDrive />} />
+          <Route path="/rider/handoff" element={<RiderHandoff />} />
+          <Route path="/rider/pods" element={<RiderPodsPage />} />
+          <Route path="/rider/profile" element={<RiderTrustProfile />} />
+          <Route path="/rider/cost-recovery" element={<RiderCostRecovery />} />
+          <Route path="/rider/requests" element={<RequestsInbox />} />
 
-          {/* Shared Safety & Emergency SOS */}
+          {/* Shared Safety, Emergency SOS & Onboarding */}
           <Route path="/safety" element={<SafetyCentre />} />
           <Route path="/sos/active" element={<SOSActive />} />
           <Route path="/sos/responder" element={<ResponderAlert />} />
+          <Route path="/moderator" element={<ModeratorQueue />} />
+          <Route path="/onboarding" element={<Onboarding />} />
 
           {/* Notifications Utility Screen */}
           <Route
