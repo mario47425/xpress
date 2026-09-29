@@ -91,11 +91,11 @@ export const DesktopNavBar: React.FC = () => {
             onClick={() => navigate(isPassenger ? '/app' : '/rider')}
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-inner overflow-hidden bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform shrink-0 p-0.5">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-inner overflow-hidden bg-transparent border border-border/40 flex items-center justify-center group-hover:scale-105 transition-transform shrink-0 p-0.5">
               <img
                 src="/logo.png"
                 alt="CommuteCircle Logo"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-inner"
               />
             </div>
             <div className="min-w-0">
@@ -182,7 +182,7 @@ export const DesktopNavBar: React.FC = () => {
               className="flex items-center gap-1.5 px-2 py-1.5 rounded-btn bg-surface-2 hover:bg-surface-glow border border-border text-xs text-text transition-all min-h-[44px]"
               aria-label="Switch User Persona"
             >
-              <div className="w-7 h-7 rounded-full overflow-hidden border border-border bg-white shrink-0">
+              <div className="w-7 h-7 rounded-full overflow-hidden border border-border bg-surface-2 shrink-0">
                 <img
                   src={currentUser?.avatar || '/demo/avatars/anitha.svg'}
                   alt={currentUser?.name}
