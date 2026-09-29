@@ -37,7 +37,7 @@ export const ModeratorQueue: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Community Moderator & Audit Console"
         showBack={true}
@@ -47,7 +47,7 @@ export const ModeratorQueue: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
         {/* Eligibility Check Banner */}
         {!isAnchor && (
-          <div className="p-4 bg-warn/15 border border-warn/40 rounded-card space-y-1 text-warn text-xs">
+          <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-card space-y-1 text-amber-700 text-xs">
             <div className="flex items-center gap-2 font-bold">
               <Lock size={16} /> RESTRICTED ROLE ACCESS
             </div>
@@ -74,15 +74,15 @@ export const ModeratorQueue: React.FC = () => {
             />
 
             {/* Case Cards List (PRD §3.9 I2 & I3) */}
-            <div className="space-y-3.5">
+            <div className="space-y-4">
               {filteredCases.map((c) => (
-                <Card key={c.id} variant="flat" className="space-y-3.5 p-5">
+                <Card key={c.id} variant="flat" className="space-y-4 p-5 sm:p-6">
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="font-label text-primary-soft text-[10px] uppercase">
+                      <span className="font-label text-primary text-xs font-bold uppercase tracking-wider">
                         Case #{c.id} · {c.type.replace('_', ' ')}
                       </span>
-                      <h4 className="font-title-m text-white text-base font-semibold mt-0.5">
+                      <h4 className="font-title-m text-text text-base sm:text-lg font-bold mt-1">
                         {c.reason}
                       </h4>
                     </div>
@@ -93,32 +93,32 @@ export const ModeratorQueue: React.FC = () => {
                   </div>
 
                   {/* Anonymised Participant IDs */}
-                  <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs text-text-2 space-y-1 font-mono">
+                  <div className="p-3.5 bg-surface-2 rounded-inner border border-border text-xs text-text-muted space-y-1.5">
                     <div>
-                      Parties: <span className="text-white font-semibold">{c.anonymisedUserA}</span>
+                      Parties: <span className="text-text font-bold">{c.anonymisedUserA}</span>
                       {c.anonymisedUserB ? ` vs ${c.anonymisedUserB}` : ''}
                     </div>
-                    <p className="text-[11px] text-text-3">{c.details}</p>
+                    <p className="text-xs text-text-muted leading-relaxed">{c.details}</p>
                   </div>
 
                   {/* Conflict of interest warning */}
                   {c.conflictPodId && (
-                    <div className="text-[11px] text-warn flex items-center gap-1.5 font-semibold">
-                      <AlertTriangle size={14} />
+                    <div className="text-xs text-amber-600 flex items-center gap-1.5 font-semibold">
+                      <AlertTriangle size={15} />
                       <span>Conflict of Interest Flag: Involves members of your pod</span>
                     </div>
                   )}
 
                   <div className="flex items-center justify-between pt-1">
-                    <span className="font-caption text-text-3 text-[11px]">
+                    <span className="font-caption text-text-muted text-xs">
                       Submitted {c.submittedAt}
                     </span>
                     <Button
                       variant="primary"
-                      size="sm"
+                      size="default"
                       onClick={() => setSelectedCase(c)}
                       disabled={!isAnchor}
-                      className="text-xs py-1.5 px-4"
+                      className="text-xs font-semibold px-4 min-h-[44px]"
                     >
                       Review & Adjudicate
                     </Button>
@@ -132,22 +132,22 @@ export const ModeratorQueue: React.FC = () => {
           <div className="lg:col-span-5 xl:col-span-4 space-y-6">
             {/* Immutable Audit Log Section (PRD §3.9 I2) */}
             <div className="space-y-3">
-              <span className="font-label text-text-2 text-xs flex items-center gap-1.5">
-                <History size={14} /> IMMUTABLE MODERATOR AUDIT LOG
+              <span className="font-label text-text font-bold text-xs flex items-center gap-1.5 tracking-wider">
+                <History size={16} /> IMMUTABLE MODERATOR AUDIT LOG
               </span>
               <div className="space-y-2.5 max-h-[500px] overflow-y-auto no-scrollbar">
                 {auditLog.map((log) => (
                   <div
                     key={log.id}
-                    className="p-3.5 bg-surface rounded-inner border border-border text-xs space-y-1.5 shadow-sm"
+                    className="p-4 bg-surface rounded-card border border-border text-xs space-y-1.5 shadow-card"
                   >
-                    <div className="flex justify-between text-text-3 font-mono text-[10px]">
-                      <span className="text-primary-soft font-semibold">{log.moderatorName}</span>
+                    <div className="flex justify-between text-text-muted text-[11px]">
+                      <span className="text-primary font-bold">{log.moderatorName}</span>
                       <span>{log.timestamp}</span>
                     </div>
-                    <div className="text-white font-medium">{log.action}</div>
+                    <div className="text-text font-semibold text-sm">{log.action}</div>
                     {log.notes && (
-                      <div className="text-text-3 text-[11px] italic bg-surface-2 p-2 rounded-inner">
+                      <div className="text-text-muted text-xs italic bg-surface-2 p-2.5 rounded-inner border border-border/50">
                         "{log.notes}"
                       </div>
                     )}
@@ -157,12 +157,12 @@ export const ModeratorQueue: React.FC = () => {
             </div>
 
             {/* Anchor Standards */}
-            <div className="p-5 bg-surface rounded-card border border-border space-y-2 text-xs text-text-3">
-              <div className="flex items-center gap-2 text-white font-semibold">
-                <ShieldCheck size={16} className="text-success" />
-                <span>Anchor Adjudication Code</span>
+            <div className="p-5 bg-surface rounded-card border border-border shadow-card space-y-2.5 text-xs text-text-muted">
+              <div className="flex items-center gap-2 text-text font-semibold">
+                <ShieldCheck size={18} className="text-success" />
+                <span className="text-sm">Anchor Adjudication Code</span>
               </div>
-              <p className="text-[11px] leading-relaxed">
+              <p className="text-xs leading-relaxed font-normal">
                 Anchors evaluate logs impartially using anonymised telemetry. All sanctions, trust restorations, and notes are permanently committed to the append-only audit trail.
               </p>
             </div>
@@ -177,23 +177,23 @@ export const ModeratorQueue: React.FC = () => {
         title={`Adjudicate Case #${selectedCase?.id}`}
       >
         {selectedCase && (
-          <div className="space-y-4 font-mono text-xs">
-            <div className="p-3 bg-surface-2 rounded-inner border border-border space-y-1">
-              <span className="font-label text-primary-soft text-[10px]">INCIDENT SUMMARY</span>
-              <p className="text-white font-medium">{selectedCase.details}</p>
+          <div className="space-y-4 text-xs">
+            <div className="p-3.5 bg-surface-2 rounded-inner border border-border space-y-1">
+              <span className="font-label text-primary text-[11px] font-bold">INCIDENT SUMMARY</span>
+              <p className="text-text font-medium text-xs leading-relaxed">{selectedCase.details}</p>
             </div>
 
             <div className="space-y-2">
-              <span className="font-label text-text-2">DECISION RULING</span>
+              <span className="font-label text-text font-bold text-xs">DECISION RULING</span>
               <div className="grid grid-cols-3 gap-2">
                 {(['approved', 'dismissed', 'escalated'] as const).map((act) => (
                   <button
                     key={act}
                     onClick={() => setReviewAction(act)}
-                    className={`py-2 px-3 rounded-inner border text-xs font-semibold capitalize transition-all ${
+                    className={`min-h-[44px] py-2.5 px-3 rounded-btn border text-xs font-semibold capitalize transition-all ${
                       reviewAction === act
-                        ? 'bg-primary text-white border-primary-soft shadow-md'
-                        : 'bg-surface text-text-3 border-border hover:bg-surface-2'
+                        ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-md'
+                        : 'bg-surface text-text-muted border-border hover:bg-surface-2 hover:text-text'
                     }`}
                   >
                     {act}
@@ -202,13 +202,13 @@ export const ModeratorQueue: React.FC = () => {
               </div>
             </div>
 
-            <div className="space-y-1">
-              <span className="font-label text-text-2">AUDIT REASON JUSTIFICATION</span>
+            <div className="space-y-1.5">
+              <span className="font-label text-text font-bold text-xs">AUDIT REASON JUSTIFICATION</span>
               <textarea
                 placeholder="State your justification for this ruling (recorded permanently in immutable audit log)..."
                 value={reviewNotes}
                 onChange={(e) => setReviewNotes(e.target.value)}
-                className="w-full h-20 bg-surface-2 border border-border rounded-input p-3 text-white text-xs outline-none focus:border-primary-soft"
+                className="w-full h-24 bg-surface-2 border border-border rounded-input p-3 text-text text-xs outline-none focus:border-primary transition-colors"
               />
             </div>
 
@@ -216,7 +216,7 @@ export const ModeratorQueue: React.FC = () => {
               variant="primary"
               onClick={handleReviewSubmit}
               loading={submitting}
-              className="w-full text-xs font-semibold shadow-md"
+              className="w-full text-xs font-semibold shadow-md min-h-[48px]"
             >
               Sign & Commit to Immutable Audit Log
             </Button>

@@ -30,45 +30,45 @@ export const LiveNavCard: React.FC<LiveNavCardProps> = ({
 
   return (
     <div
-      className={`card-glow rounded-card border border-border p-4.5 font-mono shadow-xl transition-all duration-220 ${
+      className={`bg-surface rounded-card border border-border p-4 sm:p-5 shadow-colored transition-all duration-200 ${
         collapsed ? 'h-24' : 'h-auto'
       } ${className}`}
     >
       {/* Top Header: Instruction + Collapse Chevron */}
-      <div className="flex items-center justify-between">
-        <span className="font-caption text-text-2 text-xs truncate">{instruction}</span>
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-text-muted text-xs sm:text-sm font-semibold truncate">{instruction}</span>
         <button
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? 'Expand live navigation' : 'Collapse live navigation'}
-          className="w-7 h-7 rounded-inner bg-surface-2/60 flex items-center justify-center text-text-3 hover:text-white transition-colors"
+          className="min-w-[44px] min-h-[44px] rounded-button bg-surface-2 flex items-center justify-center text-text-muted hover:text-text transition-colors"
         >
-          {collapsed ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+          {collapsed ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
         </button>
       </div>
 
-      {/* Main Metric: Direction Icon + Giant Display-XL Distance */}
+      {/* Main Metric: Direction Icon + Distance */}
       <div className="flex items-center gap-3.5 my-2">
-        <div className="w-10 h-10 rounded-inner bg-primary/20 border border-primary/30 flex items-center justify-center text-primary-soft shrink-0">
+        <div className="w-12 h-12 rounded-button bg-primary-gradient flex items-center justify-center text-white shrink-0 shadow-colored">
           <DirectionIcon size={24} />
         </div>
-        <div className="font-display-xl text-white tracking-tight leading-none text-4xl sm:text-5xl font-semibold">
+        <div className="text-3xl sm:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-primary-gradient">
           {distance}
         </div>
       </div>
 
       {/* Expanded View: Metrics Row & Tick Progress */}
       {!collapsed && (
-        <div className="space-y-3 mt-3 pt-2 border-t border-border/40">
-          <div className="flex items-center justify-between text-xs font-label text-text-2">
+        <div className="space-y-3 mt-3 pt-3 border-t border-border">
+          <div className="flex items-center justify-between text-xs font-semibold text-text-muted">
             <span>{totalKm}</span>
             <span>{etaMins}</span>
-            <span className="text-white font-medium">{arrivalTime}</span>
+            <span className="text-text font-bold">{arrivalTime}</span>
           </div>
 
           <TickProgress
             value={progress}
             totalTicks={28}
-            color="white"
+            color="primary"
           />
         </div>
       )}

@@ -8,6 +8,7 @@ import { Timeline } from '../../components/signature/Timeline';
 import { useAppStore } from '../../store/useAppStore';
 import { Route, ShieldCheck, Zap, DollarSign, Clock, ArrowRight, Layers, Sparkles } from 'lucide-react';
 import { PassLeg } from '../../types';
+import { FeatureHelpButton } from '../../components/chat/FeatureHelpButton';
 
 export const RelayPlanner: React.FC = () => {
   const navigate = useNavigate();
@@ -171,7 +172,7 @@ export const RelayPlanner: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Multimodal Relay Planner"
         pill={<Pill variant="available" label="3 ROUTES DISCOVERED" />}
@@ -183,27 +184,30 @@ export const RelayPlanner: React.FC = () => {
           {/* Left Column (5 cols): Origin, Destination, Route Options */}
           <div className="lg:col-span-5 space-y-5">
             {/* Origin & Destination Card */}
-            <Card variant="flat" className="space-y-3 p-5">
-              <div className="flex items-center gap-2">
-                <Route size={16} className="text-primary-soft" />
-                <span className="font-label text-primary-soft text-xs">CHENNAI CORRIDOR SELECTION</span>
-              </div>
-              <div className="space-y-2">
-                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs">
-                  <span className="text-text-3 font-label text-[10px]">ORIGIN</span>
-                  <div className="text-white font-semibold">{origin}</div>
+            <Card variant="flat" className="space-y-3.5 p-5 shadow-colored">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Route size={18} className="text-primary" />
+                  <span className="text-primary font-bold text-xs uppercase tracking-wider">CHENNAI CORRIDOR SELECTION</span>
                 </div>
-                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs">
-                  <span className="text-text-3 font-label text-[10px]">DESTINATION</span>
-                  <div className="text-white font-semibold">{destination}</div>
+                <FeatureHelpButton question="How does multimodal Relay Mode work?" label="Relay Guide" />
+              </div>
+              <div className="space-y-2.5">
+                <div className="p-3.5 bg-surface-2 rounded-card border border-border text-xs sm:text-sm">
+                  <span className="text-text-muted font-bold text-[10px] uppercase tracking-wider">ORIGIN</span>
+                  <div className="text-text font-bold text-sm sm:text-base">{origin}</div>
+                </div>
+                <div className="p-3.5 bg-surface-2 rounded-card border border-border text-xs sm:text-sm">
+                  <span className="text-text-muted font-bold text-[10px] uppercase tracking-wider">DESTINATION</span>
+                  <div className="text-text font-bold text-sm sm:text-base">{destination}</div>
                 </div>
               </div>
             </Card>
 
             {/* Three Plan Options */}
             <div className="space-y-3">
-              <span className="font-label text-text-2 text-xs">SELECT ITINERARY PROFILE</span>
-              <div className="space-y-2.5">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">SELECT ITINERARY PROFILE</span>
+              <div className="space-y-3">
                 {(['fastest', 'cheapest', 'safest'] as const).map((planKey) => {
                   const p = plans[planKey];
                   const isSelected = selectedPlan === planKey;
@@ -211,14 +215,14 @@ export const RelayPlanner: React.FC = () => {
                     <div
                       key={planKey}
                       onClick={() => setSelectedPlan(planKey)}
-                      className={`p-4 rounded-card border transition-all cursor-pointer ${
+                      className={`p-4 sm:p-5 rounded-card border transition-all cursor-pointer select-none ${
                         isSelected
-                          ? 'bg-primary/15 border-primary shadow-md'
-                          : 'bg-surface hover:bg-surface-2 border-border'
+                          ? 'bg-primary/10 border-primary shadow-colored ring-1 ring-primary'
+                          : 'bg-surface hover:bg-surface-2 border-border shadow-sm'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-title-m text-white text-sm font-semibold">
+                        <span className="text-text text-sm sm:text-base font-bold">
                           {p.title}
                         </span>
                         <Pill
@@ -227,17 +231,19 @@ export const RelayPlanner: React.FC = () => {
                         />
                       </div>
 
-                      <div className="flex items-center gap-4 text-xs text-text-2 mt-2 font-mono">
-                        <span className="flex items-center gap-1 text-white">
-                          <Clock size={13} className="text-primary-soft" />
+                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-text-muted mt-2.5">
+                        <span className="flex items-center gap-1.5 text-text font-bold">
+                          <Clock size={14} className="text-primary" />
                           <span>{p.totalTime}</span>
                         </span>
-                        <span className="flex items-center gap-1 text-white">
-                          <DollarSign size={13} className="text-success" />
+                        <span>•</span>
+                        <span className="flex items-center gap-1.5 text-text font-bold">
+                          <DollarSign size={14} className="text-success" />
                           <span>Rs {p.totalCost} total</span>
                         </span>
-                        <span className="flex items-center gap-1 text-success">
-                          <ShieldCheck size={13} />
+                        <span>•</span>
+                        <span className="flex items-center gap-1.5 text-success font-bold">
+                          <ShieldCheck size={14} />
                           <span>{p.safetyScore}% Safe</span>
                         </span>
                       </div>
@@ -253,9 +259,9 @@ export const RelayPlanner: React.FC = () => {
               size="lg"
               loading={isCreating}
               onClick={handleCreatePass}
-              className="w-full text-sm font-semibold flex items-center justify-center gap-2 shadow-xl"
+              className="w-full text-sm font-bold flex items-center justify-center gap-2 shadow-colored min-h-[48px]"
             >
-              <Sparkles size={16} />
+              <Sparkles size={18} />
               <span>Generate Single Unified QR Pass</span>
             </Button>
           </div>
@@ -263,20 +269,20 @@ export const RelayPlanner: React.FC = () => {
           {/* Right Column (7 cols): Multimodal Leg-by-Leg Itinerary Timeline */}
           <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="font-label text-text-2 text-xs uppercase">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 MULTIMODAL LEG-BY-LEG ITINERARY ({currentPlan.legs.length} LEGS)
               </span>
-              <span className="text-[11px] text-text-3 font-mono">
+              <span className="text-xs text-text-muted font-medium">
                 Auto-Transitions upon Boarding
               </span>
             </div>
 
-            <Card variant="flat" className="p-5 sm:p-6 space-y-4">
+            <Card variant="flat" className="p-5 sm:p-6 space-y-5 shadow-colored">
               <Timeline legs={currentPlan.legs} currentLegIndex={0} />
 
-              <div className="p-3.5 bg-surface-2 rounded-inner border border-border/60 text-xs text-text-2 space-y-1">
-                <span className="text-white font-semibold">Unified Single QR Pass:</span>
-                <p className="text-[11px] text-text-3 leading-relaxed">
+              <div className="p-4 bg-surface-2 rounded-card border border-border text-xs sm:text-sm text-text-muted space-y-1">
+                <span className="text-text font-bold block">Unified Single QR Pass:</span>
+                <p className="text-xs text-text-muted leading-relaxed">
                   Your server-signed ES256 Journey Pass contains cryptographically sequenced sub-tokens for each leg. Scanning at Leg 1 automatically unlocks the Leg 2 transfer hub.
                 </p>
               </div>

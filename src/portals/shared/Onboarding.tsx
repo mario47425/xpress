@@ -45,18 +45,18 @@ export const Onboarding: React.FC = () => {
     (selfieVerified ? 1 : 0);
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title={isRider ? 'Rider Onboarding' : 'Commuter Verification'}
         pill={<Pill variant="available" label={`SCORE ${completedSteps}/4`} />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-5 pb-8 no-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-2xl mx-auto w-full space-y-6 pb-8 no-scrollbar">
         {/* Verification Progress Hero (UI Spec §8.1) */}
-        <Card variant="glow" className="space-y-3">
+        <Card variant="glow" className="space-y-4 p-5 sm:p-6">
           <div className="flex items-center justify-between">
-            <span className="font-label text-primary-soft">VERIFICATION LADDER</span>
-            <span className="text-xs text-white font-bold">{completedSteps} of 4 Complete</span>
+            <span className="font-label text-primary text-xs font-bold uppercase tracking-wider">VERIFICATION LADDER</span>
+            <span className="text-xs text-text font-bold">{completedSteps} of 4 Complete</span>
           </div>
 
           <TickProgress
@@ -67,62 +67,62 @@ export const Onboarding: React.FC = () => {
             rightLabel="COMMUNITY ANCHOR"
           />
 
-          <p className="text-[11px] text-text-3 italic">
+          <p className="text-xs text-text-muted italic leading-relaxed">
             Each completed verification raises your trust tier and unlocks pod formation and women-only matching.
           </p>
         </Card>
 
         {/* Verification Checklist Card (UI Spec §8.1) */}
-        <div className="space-y-2">
-          <span className="font-label text-text-2">IDENTITY VERIFICATION STEPS</span>
-          <Card variant="flat" className="space-y-3">
+        <div className="space-y-3">
+          <span className="font-label text-text font-bold text-xs tracking-wider">IDENTITY VERIFICATION STEPS</span>
+          <Card variant="flat" className="space-y-3 p-5 sm:p-6">
             {/* Step 1: Phone OTP */}
-            <div className="flex items-center justify-between p-2.5 rounded-inner bg-surface-2 border border-border">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle size={18} className="text-success shrink-0" />
+            <div className="flex items-center justify-between p-3.5 rounded-inner bg-surface-2 border border-border">
+              <div className="flex items-center gap-3">
+                <CheckCircle size={20} className="text-success shrink-0" />
                 <div>
-                  <div className="text-xs font-semibold text-white">Phone OTP Verification</div>
-                  <div className="text-[10px] text-text-3">+91 98401 12345 (Sandbox 123456)</div>
+                  <div className="text-xs font-bold text-text">Phone OTP Verification</div>
+                  <div className="text-[11px] text-text-muted mt-0.5">+91 98401 12345 (Sandbox 123456)</div>
                 </div>
               </div>
               <Pill variant="progress" label="DONE" />
             </div>
 
             {/* Step 2: College / Employer ID */}
-            <div className="flex items-center justify-between p-2.5 rounded-inner bg-surface-2 border border-border">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle size={18} className="text-success shrink-0" />
+            <div className="flex items-center justify-between p-3.5 rounded-inner bg-surface-2 border border-border">
+              <div className="flex items-center gap-3">
+                <CheckCircle size={20} className="text-success shrink-0" />
                 <div>
-                  <div className="text-xs font-semibold text-white">College / Employer ID</div>
-                  <div className="text-[10px] text-text-3">IIT Madras / Tech Domain Email</div>
+                  <div className="text-xs font-bold text-text">College / Employer ID</div>
+                  <div className="text-[11px] text-text-muted mt-0.5">IIT Madras / Tech Domain Email</div>
                 </div>
               </div>
               <Pill variant="progress" label="DONE" />
             </div>
 
             {/* Step 3: Government ID */}
-            <div className="flex items-center justify-between p-2.5 rounded-inner bg-surface-2 border border-border">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle size={18} className="text-success shrink-0" />
+            <div className="flex items-center justify-between p-3.5 rounded-inner bg-surface-2 border border-border">
+              <div className="flex items-center gap-3">
+                <CheckCircle size={20} className="text-success shrink-0" />
                 <div>
-                  <div className="text-xs font-semibold text-white">Government ID Card</div>
-                  <div className="text-[10px] text-text-3">Aadhaar / Driving License OCR</div>
+                  <div className="text-xs font-bold text-text">Government ID Card</div>
+                  <div className="text-[11px] text-text-muted mt-0.5">Aadhaar / Driving License OCR</div>
                 </div>
               </div>
               <Pill variant="progress" label="DONE" />
             </div>
 
             {/* Step 4: Selfie Match */}
-            <div className="flex items-center justify-between p-2.5 rounded-inner bg-surface-2 border border-border">
-              <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-between p-3.5 rounded-inner bg-surface-2 border border-border">
+              <div className="flex items-center gap-3">
                 {selfieVerified ? (
-                  <CheckCircle size={18} className="text-success shrink-0" />
+                  <CheckCircle size={20} className="text-success shrink-0" />
                 ) : (
-                  <Camera size={18} className="text-primary-soft shrink-0" />
+                  <Camera size={20} className="text-primary shrink-0" />
                 )}
                 <div>
-                  <div className="text-xs font-semibold text-white">Ride-Start Selfie Match</div>
-                  <div className="text-[10px] text-text-3">Mutual check against profile photo</div>
+                  <div className="text-xs font-bold text-text">Ride-Start Selfie Match</div>
+                  <div className="text-[11px] text-text-muted mt-0.5">Mutual check against profile photo</div>
                 </div>
               </div>
               {selfieVerified ? (
@@ -130,7 +130,7 @@ export const Onboarding: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setSelfieVerified(true)}
-                  className="px-2.5 py-1 bg-primary text-white text-[10px] font-semibold rounded-pill"
+                  className="min-h-[44px] px-3.5 py-1.5 bg-gradient-to-r from-primary to-pink-500 text-white text-xs font-bold rounded-pill shadow-sm"
                 >
                   Verify Now
                 </button>
@@ -141,27 +141,27 @@ export const Onboarding: React.FC = () => {
 
         {/* Vehicle Setup for Riders (UI Spec §9.1 & PRD §3.1 A4) */}
         {isRider && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-label text-success flex items-center gap-1.5">
-                <Car size={14} /> VEHICLE & DRIVER LICENCE
+              <span className="font-label text-success flex items-center gap-1.5 text-xs font-bold">
+                <Car size={16} /> VEHICLE & DRIVER LICENCE
               </span>
               <Pill variant="progress" label="APPROVED" />
             </div>
 
-            <Card variant="flat" className="space-y-3.5">
-              <div className="space-y-1">
-                <span className="font-label text-text-3 text-[10px]">VEHICLE BODY TYPE</span>
+            <Card variant="flat" className="space-y-4 p-5 sm:p-6">
+              <div className="space-y-1.5">
+                <span className="font-label text-text-muted text-xs font-bold">VEHICLE BODY TYPE</span>
                 <div className="grid grid-cols-3 gap-2">
                   {(['sedan', 'hatchback', 'suv'] as const).map((type) => (
                     <button
                       key={type}
                       type="button"
                       onClick={() => setCarType(type)}
-                      className={`py-2 px-3 rounded-inner border text-xs font-semibold capitalize ${
+                      className={`min-h-[44px] py-2 px-3 rounded-btn border text-xs font-semibold capitalize transition-all ${
                         carType === type
-                          ? 'bg-primary text-white border-primary-soft shadow-md'
-                          : 'bg-surface-2 text-text-3 border-border'
+                          ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-md'
+                          : 'bg-surface-2 text-text-muted border-border hover:bg-surface-2/80 hover:text-text'
                       }`}
                     >
                       {type}
@@ -190,12 +190,12 @@ export const Onboarding: React.FC = () => {
                 />
               </div>
 
-              <div className="p-3 bg-surface-2 rounded-inner border border-border flex items-center justify-between text-xs">
+              <div className="p-3.5 bg-surface-2 rounded-inner border border-border flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} className="text-success" />
-                  <span className="text-white">Driving Licence Document</span>
+                  <ShieldCheck size={18} className="text-success" />
+                  <span className="text-text font-bold">Driving Licence Document</span>
                 </div>
-                <span className="text-success font-semibold text-[11px]">Approved ✓</span>
+                <span className="text-success font-semibold text-xs">Approved ✓</span>
               </div>
             </Card>
           </div>
@@ -204,7 +204,7 @@ export const Onboarding: React.FC = () => {
         <Button
           variant="primary"
           onClick={() => navigate(isRider ? '/rider' : '/app')}
-          className="w-full text-base font-semibold"
+          className="w-full text-base font-semibold min-h-[48px] shadow-lg"
         >
           Save & Return to Portal
         </Button>

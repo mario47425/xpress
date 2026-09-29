@@ -20,13 +20,13 @@ export const TrustRing: React.FC<TrustRingProps> = ({
   const progressOffset = circumference - (circumference * Math.min(100, score)) / 100;
 
   const tierColors: Record<TrustTier, string> = {
-    Newcomer: '#7C8099',
-    Trusted: '#788AFE',
-    'Verified Guardian': '#0D9F5E',
-    'Community Anchor': '#F5C542',
+    Newcomer: '#6B6890',
+    Trusted: '#7C3AED',
+    'Verified Guardian': '#10B981',
+    'Community Anchor': '#F59E0B',
   };
 
-  const currentColor = tierColors[tier] || '#788AFE';
+  const currentColor = tierColors[tier] || '#7C3AED';
 
   const componentMetrics = [
     { label: 'Safety Behaviour (35%)', value: breakdown.safety, max: 35 },
@@ -38,8 +38,8 @@ export const TrustRing: React.FC<TrustRingProps> = ({
   ];
 
   return (
-    <div className={`flex flex-col items-center gap-6 font-mono ${className}`}>
-      {/* 120px Circular Gauge */}
+    <div className={`flex flex-col items-center gap-6 ${className}`}>
+      {/* 130px Circular Gauge */}
       <div className="relative w-[130px] h-[130px] flex items-center justify-center">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 130 130">
           {/* Background Track */}
@@ -47,7 +47,7 @@ export const TrustRing: React.FC<TrustRingProps> = ({
             cx="65"
             cy="65"
             r={radius}
-            stroke="var(--cc-surface-2)"
+            stroke="#EDE9FE"
             strokeWidth={strokeWidth}
             fill="transparent"
           />
@@ -68,26 +68,26 @@ export const TrustRing: React.FC<TrustRingProps> = ({
 
         {/* Center Score & Tier */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <span className="font-display-l text-white text-3xl font-bold leading-none">
+          <span className="text-text text-3xl font-extrabold leading-none">
             {score}
           </span>
-          <span className="font-label text-[10px] text-text-2 tracking-wider mt-1">
+          <span className="text-[10px] font-bold text-text-muted tracking-wider mt-1">
             {tier.toUpperCase()}
           </span>
         </div>
       </div>
 
-      {/* Six Weighted Component Bars (PRD §6.3 & UI Spec §6.11) */}
-      <div className="w-full space-y-2.5">
+      {/* Six Weighted Component Bars */}
+      <div className="w-full space-y-3">
         {componentMetrics.map((item) => (
           <div key={item.label} className="space-y-1">
-            <div className="flex items-center justify-between text-xs font-mono">
-              <span className="text-text-2 text-[11px]">{item.label}</span>
-              <span className="text-white font-medium text-[11px]">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-text-muted font-medium text-[11px]">{item.label}</span>
+              <span className="text-text font-bold text-[11px]">
                 {item.value} / {item.max}
               </span>
             </div>
-            <div className="w-full h-1.5 bg-surface-2 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{

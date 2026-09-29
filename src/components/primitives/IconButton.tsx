@@ -16,20 +16,21 @@ export const IconButton: React.FC<IconButtonProps> = ({
   children,
   ...props
 }) => {
-  const sizeClasses = size === 'sm' ? 'w-10 h-10' : 'w-12 h-12'; // 48x48 default touch target
+  // Mobile-first touch targets: minimum 44x44px
+  const sizeClasses = size === 'sm' ? 'min-w-[44px] min-h-[44px] p-2.5' : 'min-w-[48px] min-h-[48px] p-3';
 
   const variantClasses = {
-    surface: 'bg-surface border border-border text-text hover:bg-surface-2',
-    primary: 'bg-primary text-white hover:bg-primary-hover shadow-md',
-    danger: 'bg-danger/20 border border-danger/40 text-danger hover:bg-danger/30',
-    ghost: 'bg-transparent text-text-2 hover:bg-surface hover:text-white',
+    surface: 'bg-surface border border-border text-text hover:bg-surface-2 hover:border-primary/30 shadow-sm',
+    primary: 'bg-primary-gradient text-white hover:opacity-95 shadow-colored',
+    danger: 'bg-danger/10 border border-danger/20 text-danger hover:bg-danger/20',
+    ghost: 'bg-transparent text-text-muted hover:bg-surface-2 hover:text-text',
   };
 
   return (
     <button
       aria-label={ariaLabel}
       disabled={disabled}
-      className={`rounded-inner flex items-center justify-center transition-all duration-120 active:scale-95 disabled:opacity-40 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-primary-soft ${sizeClasses} ${variantClasses[variant]} ${className}`}
+      className={`rounded-button inline-flex items-center justify-center transition-all duration-200 active:scale-95 disabled:opacity-40 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${sizeClasses} ${variantClasses[variant]} ${className}`}
       {...props}
     >
       {children}

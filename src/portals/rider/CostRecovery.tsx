@@ -31,7 +31,7 @@ export const RiderCostRecovery: React.FC = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Cost Recovery & Fuel Ledger"
         showBack={false}
@@ -41,42 +41,42 @@ export const RiderCostRecovery: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
         {/* Top Stats Overview Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card variant="glow" className="p-5 space-y-2">
+          <Card variant="glow" className="p-5 space-y-2 shadow-colored">
             <div className="flex items-center justify-between">
-              <span className="font-label text-success text-xs flex items-center gap-1.5">
-                <Fuel size={15} /> RECOVERED THIS MONTH
+              <span className="text-success font-bold text-xs flex items-center gap-1.5 uppercase tracking-wider">
+                <Fuel size={16} /> RECOVERED THIS MONTH
               </span>
               <Pill variant="available" label="88% RECOVERED" />
             </div>
-            <div className="font-display-l text-white text-3xl sm:text-4xl font-bold">
+            <div className="text-text text-3xl sm:text-4xl font-extrabold">
               Rs {costRecovered}
             </div>
-            <span className="text-[11px] text-text-3">Actual operating fuel spent: Rs {actualCost}</span>
+            <span className="text-xs text-text-muted font-medium">Actual operating fuel spent: Rs {actualCost}</span>
           </Card>
 
-          <Card variant="flat" className="p-5 space-y-2">
+          <Card variant="flat" className="p-5 space-y-2 shadow-colored">
             <div className="flex items-center justify-between">
-              <span className="font-label text-text-3 text-xs flex items-center gap-1.5">
-                <Car size={15} className="text-primary-soft" /> STATUTORY MONTHLY CAP
+              <span className="text-text-muted font-bold text-xs flex items-center gap-1.5 uppercase tracking-wider">
+                <Car size={16} className="text-primary" /> STATUTORY MONTHLY CAP
               </span>
-              <span className="font-pill text-[10px] text-warn">NON-COMMERCIAL</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-accent/15 border border-accent/30 text-accent font-bold text-[10px]">NON-COMMERCIAL</span>
             </div>
-            <div className="font-display-l text-white text-3xl sm:text-4xl font-bold">
+            <div className="text-text text-3xl sm:text-4xl font-extrabold">
               Rs {actualCost}
             </div>
-            <span className="text-[11px] text-text-3">Cap prevents commercial taxi classification</span>
+            <span className="text-xs text-text-muted font-medium">Cap prevents commercial taxi classification</span>
           </Card>
 
-          <Card variant="flat" className="p-5 space-y-2">
+          <Card variant="flat" className="p-5 space-y-2 shadow-colored">
             <div className="flex items-center justify-between">
-              <span className="font-label text-text-3 text-xs flex items-center gap-1.5">
-                <TrendingUp size={15} className="text-success" /> NET EXPENSE REDUCTION
+              <span className="text-success font-bold text-xs flex items-center gap-1.5 uppercase tracking-wider">
+                <TrendingUp size={16} className="text-success" /> NET EXPENSE REDUCTION
               </span>
             </div>
-            <div className="font-display-l text-success text-3xl sm:text-4xl font-bold">
+            <div className="text-success text-3xl sm:text-4xl font-extrabold">
               -88.8%
             </div>
-            <span className="text-[11px] text-text-3">CommuteCircle shared fuel split efficiency</span>
+            <span className="text-xs text-text-muted font-medium">CommuteCircle shared fuel split efficiency</span>
           </Card>
         </div>
 
@@ -84,18 +84,18 @@ export const RiderCostRecovery: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Column (7 cols): Fuel Cost Recovery Progress & Ledger */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-            {/* Cost Recovery Hero Card (UI Spec §9.11 & PRD §3.10 J3) */}
-            <Card variant="flat" className="space-y-4 p-5 sm:p-6">
+            {/* Cost Recovery Hero Card */}
+            <Card variant="flat" className="space-y-4 p-5 sm:p-6 shadow-colored">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-title-m text-white text-base font-semibold">
+                  <h3 className="text-text text-base sm:text-lg font-extrabold">
                     Cost Cap Utilization
                   </h3>
-                  <span className="text-xs text-text-3">
+                  <span className="text-xs sm:text-sm text-text-muted font-medium">
                     Rs {costRecovered} of Rs {actualCost} recovered (Remaining headroom: Rs {actualCost - costRecovered})
                   </span>
                 </div>
-                <span className="font-label text-text-3 text-xs">LEGAL CAP: 100%</span>
+                <span className="text-text-muted font-bold text-xs">LEGAL CAP: 100%</span>
               </div>
 
               {/* Cost Cap Tick Progress */}
@@ -109,12 +109,12 @@ export const RiderCostRecovery: React.FC = () => {
                 />
               </div>
 
-              {/* Legal Framing Notice (PRD §8.2 Non-negotiable) */}
-              <div className="p-3.5 bg-surface-2 rounded-inner border border-border text-xs text-text-2 space-y-1">
-                <p className="font-semibold text-white">
+              {/* Legal Framing Notice */}
+              <div className="p-4 bg-surface-2 rounded-card border border-border text-xs sm:text-sm text-text-muted space-y-1">
+                <p className="font-bold text-text">
                   Statutory Peer-to-Peer Cost Sharing Compliance:
                 </p>
-                <p className="text-[11px] text-text-3 italic leading-relaxed">
+                <p className="text-xs text-text-muted italic leading-relaxed">
                   "You share the fuel and toll cost of trips you were already making. You do not earn a fare or profit. Total collected can never exceed actual vehicle operating expenses."
                 </p>
               </div>
@@ -122,35 +122,35 @@ export const RiderCostRecovery: React.FC = () => {
 
             {/* Ledger Rows */}
             <div className="space-y-3">
-              <span className="font-label text-text-2 text-xs">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 DOUBLE-ENTRY FUEL RECOVERY LEDGER
               </span>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {ledger.map((tx) => {
                   const isCredit = tx.amount > 0;
                   return (
                     <div
                       key={tx.id}
-                      className="p-3.5 bg-surface hover:bg-surface-2 rounded-inner border border-border flex items-center justify-between text-xs transition-colors shadow-sm"
+                      className="p-4 bg-surface hover:bg-surface-2 rounded-card border border-border flex items-center justify-between text-xs sm:text-sm transition-all shadow-sm min-h-[52px]"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3.5">
                         <div
-                          className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                          className={`w-10 h-10 rounded-button flex items-center justify-center shrink-0 ${
                             isCredit
-                              ? 'bg-success/20 text-success'
-                              : 'bg-surface-2 text-text-3'
+                              ? 'bg-success/15 text-success'
+                              : 'bg-surface-2 text-text-muted'
                           }`}
                         >
-                          {isCredit ? <ArrowDownLeft size={18} /> : <ArrowUpRight size={18} />}
+                          {isCredit ? <ArrowDownLeft size={20} /> : <ArrowUpRight size={20} />}
                         </div>
                         <div>
-                          <div className="text-white font-semibold">{tx.description}</div>
-                          <div className="text-[11px] text-text-3 font-mono">{tx.timestamp}</div>
+                          <div className="text-text font-bold">{tx.description}</div>
+                          <div className="text-xs text-text-muted">{tx.timestamp}</div>
                         </div>
                       </div>
                       <span
-                        className={`font-semibold font-mono text-base ${
-                          isCredit ? 'text-success' : 'text-text-3'
+                        className={`font-extrabold text-base ${
+                          isCredit ? 'text-success' : 'text-text-muted'
                         }`}
                       >
                         {isCredit ? `+Rs ${tx.amount}` : `-Rs ${Math.abs(tx.amount)}`}
@@ -165,39 +165,39 @@ export const RiderCostRecovery: React.FC = () => {
           {/* Right Column (5 cols): Vehicle Fuel Parameters & Compliance */}
           <div className="lg:col-span-5 xl:col-span-4 space-y-6">
             {/* Breakdown of Fuel & Toll Inputs */}
-            <Card variant="flat" className="p-5 space-y-3">
-              <span className="font-label text-text-2 text-xs">VEHICLE FUEL SPECIFICATIONS</span>
-              <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-2 font-mono">
-                <div className="flex justify-between text-text-2">
+            <Card variant="flat" className="p-5 sm:p-6 space-y-4 shadow-colored">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">VEHICLE FUEL SPECIFICATIONS</span>
+              <div className="p-4 bg-surface-2 rounded-card border border-border text-xs sm:text-sm space-y-2.5">
+                <div className="flex justify-between text-text-muted">
                   <span>Vehicle:</span>
-                  <span className="text-white font-semibold">Honda City 1.5 i-VTEC</span>
+                  <span className="text-text font-bold">Honda City 1.5 i-VTEC</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>Mileage Baseline:</span>
-                  <span className="text-white font-semibold">15.0 km / litre</span>
+                  <span className="text-text font-bold">15.0 km / litre</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>Fuel Price (Chennai):</span>
-                  <span className="text-white font-semibold">Rs 102.63 / L</span>
+                  <span className="text-text font-bold">Rs 102.63 / L</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>Effective Operating Cost:</span>
-                  <span className="text-white font-semibold">Rs 6.84 / km</span>
+                  <span className="text-text font-bold">Rs 6.84 / km</span>
                 </div>
-                <div className="pt-2 border-t border-border flex justify-between text-text-2">
+                <div className="pt-2 border-t border-border flex justify-between text-text-muted">
                   <span>Platform Fee Deductible:</span>
-                  <span className="text-white font-semibold">5% upon ledger close</span>
+                  <span className="text-text font-bold">5% upon ledger close</span>
                 </div>
               </div>
             </Card>
 
             {/* Non-Commercial Safe Harbour Rules */}
-            <div className="p-5 bg-surface rounded-card border border-border space-y-2 text-xs text-text-3">
-              <div className="flex items-center gap-1.5 text-text-2 font-medium">
-                <Info size={14} className="text-primary-soft" />
+            <div className="p-5 bg-surface rounded-card border border-border space-y-2 text-xs sm:text-sm text-text-muted shadow-sm">
+              <div className="flex items-center gap-1.5 text-text font-bold">
+                <Info size={16} className="text-primary" />
                 <span>Zero Commercial Gain Guarantee</span>
               </div>
-              <p className="text-[11px] leading-relaxed">
+              <p className="text-xs leading-relaxed">
                 If your cost recovery reaches 100% of actual operating expenses in any billing cycle, the system stops passenger contributions and offers free peer matching until the next month.
               </p>
             </div>

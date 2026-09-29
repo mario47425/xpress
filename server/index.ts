@@ -3,6 +3,7 @@ import http from 'http';
 import cors from 'cors';
 import { WebSocketServer, WebSocket } from 'ws';
 import { store } from './store';
+import { checkRateLimit, getGroqChatCompletion, ChatMessageInput, ChatContextInput } from './chatService';
 
 const app = express();
 const server = http.createServer(app);
@@ -48,6 +49,59 @@ export function broadcast(type: string, payload: any, senderWs?: WebSocket) {
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
+// Groq AI Help & Navigation Chatbot Endpoint
+app.post('/api/chat', async (req, res) => {
+  const clientIp = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'client';
+
+  // 1. Rate limiting: 20 messages per minute
+  if (!checkRateLimit(clientIp)) {
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: 'Rate limit exceeded (max 20 messages/min). Please wait a moment before sending another message.',
+    });
+  }
+
+  const { messages, context } = req.body;
+
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'Invalid request: "messages" array is required.' });
+  }
+
+  // 2. Validate last user message length limit (500 chars)
+  const lastUserMessage = [...messages].reverse().find((m: any) => m.role === 'user');
+  if (lastUserMessage && typeof lastUserMessage.content === 'string') {
+    if (lastUserMessage.content.length > 500) {
+      return res.status(400).json({
+        error: 'Message Too Long',
+        message: 'Your message exceeds the 500-character limit. Please shorten your question.',
+      });
+    }
+  }
+
+  try {
+    const result = await getGroqChatCompletion(messages as ChatMessageInput[], context as ChatContextInput);
+    return res.json(result);
+  } catch (err: any) {
+    console.error('[Chat API Error]:', err.message);
+    if (err.message?.includes('GROQ_AUTH_ERROR')) {
+      return res.status(401).json({
+        error: 'Authentication Error',
+        message: 'Groq API key is invalid or unauthorized. Please verify GROQ_API_KEY in .env.',
+      });
+    }
+    if (err.message?.includes('GROQ_RATE_LIMIT')) {
+      return res.status(429).json({
+        error: 'Rate Limit',
+        message: 'Groq upstream rate limit reached. Please wait a few seconds and retry.',
+      });
+    }
+    return res.status(500).json({
+      error: 'Service Error',
+      message: "I'm having trouble connecting right now, please try again.",
+    });
+  }
 });
 
 // Users

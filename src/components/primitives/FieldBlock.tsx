@@ -14,14 +14,14 @@ export const FieldBlock: React.FC<FieldBlockProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`flex flex-col gap-1 font-mono ${className}`}>
-      <span className="font-label text-primary-soft text-[11px] tracking-wider uppercase">
+    <div className={`flex flex-col gap-1 ${className}`}>
+      <span className="text-text-muted text-[11px] font-semibold tracking-wider uppercase">
         {label}
       </span>
-      <div className="font-body-l text-white text-sm sm:text-base font-medium truncate">
+      <div className="text-text text-sm sm:text-base font-semibold truncate">
         {value}
       </div>
-      {caption && <span className="font-caption text-text-3 text-xs">{caption}</span>}
+      {caption && <span className="text-text-muted text-xs">{caption}</span>}
     </div>
   );
 };
@@ -32,7 +32,7 @@ export const FieldGrid: React.FC<{ children: React.ReactNode; columns?: 2 | 3; c
   className = '',
 }) => {
   return (
-    <div className={`grid ${columns === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 ${className}`}>
+    <div className={`grid ${columns === 2 ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'} gap-4 ${className}`}>
       {children}
     </div>
   );

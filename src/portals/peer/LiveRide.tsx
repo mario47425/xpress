@@ -60,7 +60,7 @@ export const LiveRide: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono relative bg-bg text-text">
+    <div className="flex-1 flex flex-col relative bg-bg text-text">
       <AppBar
         title={`Live Ride #${ride.id.replace('ride-', '')}`}
         pill={<Pill variant="progress" label={ride.status === 'IN_TRANSIT' ? 'IN PROGRESS' : ride.status} />}
@@ -71,7 +71,7 @@ export const LiveRide: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Column (5 cols on lg/xl): Trip Details, Assigned Driver, Actions */}
           <div className="lg:col-span-5 space-y-5">
-            {/* Live Nav Card (UI Spec §8.5) */}
+            {/* Live Nav Card */}
             <LiveNavCard
               instruction={`Approaching ${ride.destName}`}
               distance="0.4 km"
@@ -82,7 +82,7 @@ export const LiveRide: React.FC = () => {
 
             {/* Person Card for Assigned Rider */}
             <div className="space-y-1.5">
-              <span className="font-label text-text-3 text-[10px] uppercase">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 ASSIGNED CORRIDOR RIDER
               </span>
               <PersonCard
@@ -97,7 +97,7 @@ export const LiveRide: React.FC = () => {
             </div>
 
             {/* Revealed Pickup Point & Fare Share Field Blocks */}
-            <FieldGrid columns={2} className="bg-surface p-4 rounded-card border border-border">
+            <FieldGrid columns={2} className="bg-surface p-4 sm:p-5 rounded-card border border-border shadow-colored">
               <FieldBlock
                 label="PICKUP POINT (REVEALED)"
                 value="Velachery Bypass"
@@ -111,25 +111,25 @@ export const LiveRide: React.FC = () => {
             </FieldGrid>
 
             {/* Contact Support & Communications Row */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => alert('CommuteCircle Support Ops opened')}
-                className="flex-1 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn text-xs font-semibold text-white flex items-center justify-center gap-2 shadow-sm transition-all"
+                className="flex-1 min-h-[48px] bg-surface hover:bg-surface-2 border border-border rounded-button text-xs sm:text-sm font-bold text-text flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
               >
-                <Headphones size={16} className="text-primary-soft" />
+                <Headphones size={18} className="text-primary" />
                 <span>Contact Support</span>
               </button>
               <button
                 onClick={() => alert('Chat with Rider opened')}
                 aria-label="Chat with rider"
-                className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-primary-soft shadow-sm transition-all"
+                className="min-w-[48px] min-h-[48px] bg-surface hover:bg-surface-2 border border-border rounded-button flex items-center justify-center text-primary shadow-sm transition-all active:scale-95"
               >
                 <MessageSquare size={18} />
               </button>
               <button
                 onClick={() => alert('Calling Rider...')}
                 aria-label="Call rider"
-                className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-success shadow-sm transition-all"
+                className="min-w-[48px] min-h-[48px] bg-surface hover:bg-surface-2 border border-border rounded-button flex items-center justify-center text-success shadow-sm transition-all active:scale-95"
               >
                 <Phone size={18} />
               </button>
@@ -144,14 +144,14 @@ export const LiveRide: React.FC = () => {
             </div>
 
             {/* Emergency Info Box */}
-            <div className="p-3.5 bg-surface rounded-inner border border-border/60 text-xs text-text-3 flex items-center justify-between">
+            <div className="p-4 bg-surface rounded-card border border-border text-xs sm:text-sm text-text-muted flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-success" />
-                <span>SafeTrail 15s heartbeats active</span>
+                <ShieldCheck size={18} className="text-success" />
+                <span className="font-medium">SafeTrail 15s heartbeats active</span>
               </div>
               <button
                 onClick={() => navigate('/safety')}
-                className="text-primary-soft hover:underline font-semibold"
+                className="min-h-[44px] text-primary hover:underline font-bold"
               >
                 Safety Options ➔
               </button>
@@ -162,17 +162,17 @@ export const LiveRide: React.FC = () => {
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Navigation size={16} className="text-primary-soft animate-pulse" />
-                <span className="font-label text-white text-xs">
+                <Navigation size={18} className="text-primary animate-pulse" />
+                <span className="text-text font-bold text-xs sm:text-sm uppercase tracking-wider">
                   REAL-TIME SAFETRAIL TRACKING
                 </span>
               </div>
-              <span className="text-[11px] text-text-3 font-mono">
+              <span className="text-xs text-text-muted font-medium">
                 GPS: 12.9810, 80.2245 (Accuracy ±3m)
               </span>
             </div>
 
-            <div className="w-full h-[380px] lg:h-[560px] rounded-card overflow-hidden border border-border relative shadow-2xl">
+            <div className="w-full h-[380px] lg:h-[560px] rounded-card overflow-hidden border border-border relative shadow-colored">
               <CommuteMap
                 center={[12.9815, 80.2245]}
                 zoom={14}
@@ -198,11 +198,11 @@ export const LiveRide: React.FC = () => {
       >
         {!feedbackSubmitted ? (
           <div className="space-y-4">
-            <p className="text-xs text-text-2">
+            <p className="text-xs sm:text-sm text-text-muted font-medium">
               CommuteCircle peer ratings update trust scores and clean-ride streaks:
             </p>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {[
                 { key: 'onTime', label: 'Rider arrived on time' },
                 { key: 'smoothDriving', label: 'Comfortable, smooth driving' },
@@ -211,7 +211,7 @@ export const LiveRide: React.FC = () => {
               ].map((item) => (
                 <label
                   key={item.key}
-                  className="flex items-center justify-between p-3 rounded-inner bg-surface-2 border border-border text-xs text-white cursor-pointer"
+                  className="flex items-center justify-between p-3.5 rounded-card bg-surface-2 border border-border text-xs sm:text-sm text-text font-semibold cursor-pointer min-h-[48px]"
                 >
                   <span>{item.label}</span>
                   <input
@@ -220,7 +220,7 @@ export const LiveRide: React.FC = () => {
                     onChange={(e) =>
                       setRatings((prev) => ({ ...prev, [item.key]: e.target.checked }))
                     }
-                    className="w-4 h-4 accent-primary"
+                    className="w-5 h-5 accent-primary cursor-pointer"
                   />
                 </label>
               ))}
@@ -237,8 +237,8 @@ export const LiveRide: React.FC = () => {
         ) : (
           <div className="py-6 text-center space-y-3">
             <CheckCircle size={48} className="text-success mx-auto" />
-            <h4 className="font-title-m text-white text-base">Feedback Recorded</h4>
-            <p className="text-xs text-text-2">
+            <h4 className="text-text text-base sm:text-lg font-bold">Feedback Recorded</h4>
+            <p className="text-xs sm:text-sm text-text-muted">
               Fare settled: Rs 28 deducted from wallet. Trust streaks updated.
             </p>
           </div>

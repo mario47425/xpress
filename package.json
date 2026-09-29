@@ -8,7 +8,7 @@
     "dev:client": "vite",
     "dev:server": "tsx watch server/index.ts",
     "build": "tsc && vite build",
-    "test": "tsx test/index.ts",
+    "test": "tsx test/index.ts && tsx test/chatbot.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

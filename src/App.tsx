@@ -81,22 +81,22 @@ export default function App() {
           <Route
             path="/notifications"
             element={
-              <div className="flex-1 p-5 space-y-4 font-mono">
-                <h2 className="font-title-m text-white text-base">In-App SMS & Alerts Log</h2>
-                <div className="space-y-2">
-                  <div className="p-3 bg-surface rounded-inner border border-border text-xs space-y-1">
-                    <div className="flex justify-between text-text-3">
-                      <span>SMS GATEWAY (SANDBOX)</span>
+              <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto w-full space-y-4">
+                <h2 className="font-title-m text-text text-xl font-bold">In-App SMS & Alerts Log</h2>
+                <div className="space-y-3">
+                  <div className="p-4 bg-surface rounded-card border border-border text-xs space-y-1.5 shadow-card">
+                    <div className="flex justify-between text-text-muted text-[11px] font-semibold">
+                      <span className="text-primary font-bold">SMS GATEWAY (SANDBOX)</span>
                       <span>123456</span>
                     </div>
-                    <p className="text-white font-medium">OTP: 123456 is your verification code for CommuteCircle.</p>
+                    <p className="text-text font-medium text-sm">OTP: 123456 is your verification code for CommuteCircle.</p>
                   </div>
-                  <div className="p-3 bg-surface rounded-inner border border-border text-xs space-y-1">
-                    <div className="flex justify-between text-text-3">
-                      <span>SYSTEM</span>
+                  <div className="p-4 bg-surface rounded-card border border-border text-xs space-y-1.5 shadow-card">
+                    <div className="flex justify-between text-text-muted text-[11px] font-semibold">
+                      <span className="text-primary font-bold">SYSTEM</span>
                       <span>Now</span>
                     </div>
-                    <p className="text-white font-medium">Ghost Commute match found for tomorrow 08:10 Velachery corridor.</p>
+                    <p className="text-text font-medium text-sm">Ghost Commute match found for tomorrow 08:10 Velachery corridor.</p>
                   </div>
                 </div>
               </div>

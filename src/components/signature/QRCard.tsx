@@ -26,7 +26,7 @@ export const QRCard: React.FC<QRCardProps> = ({
       margin: 1,
       width: 240,
       color: {
-        dark: '#0A0B1E',
+        dark: '#1F1B3A',
         light: '#FFFFFF',
       },
     })
@@ -50,17 +50,17 @@ export const QRCard: React.FC<QRCardProps> = ({
   }, [onRefresh]);
 
   return (
-    <div className={`card-glow rounded-card border border-border p-6 flex flex-col items-center gap-5 font-mono shadow-2xl ${className}`}>
-      {/* Dedicated White QR Surface Tile (The ONLY white surface in the app) */}
-      <div className="bg-white p-4 rounded-[20px] shadow-lg flex items-center justify-center">
+    <div className={`bg-surface rounded-card border border-border p-6 flex flex-col items-center gap-5 shadow-colored ${className}`}>
+      {/* QR Code Container */}
+      <div className="bg-white p-4 rounded-card border border-border shadow-md flex items-center justify-center">
         {qrDataUrl ? (
           <img
             src={qrDataUrl}
             alt="Journey Pass QR Code"
-            className="w-52 h-52 object-contain"
+            className="w-48 sm:w-52 h-48 sm:h-52 object-contain"
           />
         ) : (
-          <div className="w-52 h-52 flex items-center justify-center text-bg text-xs">
+          <div className="w-48 sm:w-52 h-48 sm:h-52 flex items-center justify-center text-text-muted text-xs">
             Generating Pass...
           </div>
         )}
@@ -68,27 +68,27 @@ export const QRCard: React.FC<QRCardProps> = ({
 
       {/* Short Code Fallback */}
       <div className="flex flex-col items-center gap-1">
-        <span className="font-label text-text-3 text-[11px] tracking-wider uppercase">
+        <span className="text-text-muted text-[11px] font-semibold tracking-wider uppercase">
           Short Code Fallback
         </span>
-        <div className="font-display-l text-white text-3xl font-bold tracking-[0.25em] pl-[0.25em]">
+        <div className="text-text text-2xl sm:text-3xl font-extrabold tracking-[0.2em] pl-[0.2em]">
           {shortCode || 'CC-4821'}
         </div>
       </div>
 
       {/* 30-Second Refresh Tick Progress Bar */}
       <div className="w-full space-y-1.5 pt-1">
-        <div className="flex items-center justify-between text-[11px] font-mono text-text-2">
-          <span className="flex items-center gap-1.5 text-primary-soft">
+        <div className="flex items-center justify-between text-[11px] font-medium text-text-muted">
+          <span className="flex items-center gap-1.5 text-primary font-semibold">
             <RefreshCw size={12} className="animate-spin" />
             <span>AUTO-REFRESH</span>
           </span>
-          <span className="text-white">{secondsLeft}s</span>
+          <span className="text-text font-bold">{secondsLeft}s</span>
         </div>
         <TickProgress
           value={secondsLeft / 30}
           totalTicks={30}
-          color="white"
+          color="primary"
         />
       </div>
     </div>

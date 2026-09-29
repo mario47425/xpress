@@ -15,23 +15,23 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className="flex flex-col gap-1.5 w-full font-mono">
+    <div className="flex flex-col gap-1.5 w-full font-sans">
       {label && (
-        <label className="font-label text-primary-soft text-[11px] tracking-wider uppercase">
+        <label className="text-[11px] font-semibold text-primary uppercase tracking-wider">
           {label}
         </label>
       )}
       <input
         disabled={disabled}
-        className={`h-[52px] px-4 bg-surface-2 text-white placeholder-text-3 font-mono text-sm rounded-input border transition-all duration-120 outline-none focus:ring-2 focus:ring-primary-soft focus:ring-offset-1 focus:ring-offset-bg disabled:opacity-40 ${
-          error ? 'border-danger focus:ring-danger' : 'border-border focus:border-primary-soft'
+        className={`h-12 px-4 bg-surface-2 text-text placeholder-text-3 font-sans text-sm rounded-input border transition-all duration-150 outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary disabled:opacity-40 ${
+          error ? 'border-danger focus:ring-danger/40' : 'border-border'
         } ${className}`}
         {...props}
       />
       {error ? (
-        <span className="text-xs text-danger font-caption">{error}</span>
+        <span className="text-xs text-danger font-medium">{error}</span>
       ) : helperText ? (
-        <span className="text-xs text-text-3 font-caption">{helperText}</span>
+        <span className="text-xs text-text-3">{helperText}</span>
       ) : null}
     </div>
   );
@@ -68,19 +68,19 @@ export const OtpInput: React.FC<OtpInputProps> = ({ value, onChange, error = fal
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 w-full">
-      {Array.from({ length: 6 }).map((_, i) => (
+    <div className="flex items-center justify-center gap-2 sm:gap-3 font-sans">
+      {[0, 1, 2, 3, 4, 5].map((idx) => (
         <input
-          key={i}
-          ref={(el) => (inputsRef.current[i] = el)}
+          key={idx}
+          ref={(el) => (inputsRef.current[idx] = el)}
           type="text"
           inputMode="numeric"
           maxLength={1}
-          value={value[i] || ''}
-          onChange={(e) => handleChange(i, e)}
-          onKeyDown={(e) => handleKeyDown(i, e)}
-          className={`w-12 h-14 bg-surface-2 text-center text-white font-mono text-xl font-bold rounded-input border transition-all outline-none focus:ring-2 focus:ring-primary-soft ${
-            error ? 'border-danger' : 'border-border focus:border-primary-soft'
+          value={value[idx] || ''}
+          onChange={(e) => handleChange(idx, e)}
+          onKeyDown={(e) => handleKeyDown(idx, e)}
+          className={`w-11 sm:w-12 h-14 text-center text-xl font-bold bg-surface-2 text-text rounded-input border transition-all duration-150 outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary ${
+            error ? 'border-danger text-danger' : 'border-border'
           }`}
         />
       ))}

@@ -28,7 +28,7 @@ export const RiderTrustProfile: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Rider Trust & Driving Safety"
         showBack={false}
@@ -47,9 +47,9 @@ export const RiderTrustProfile: React.FC = () => {
                 breakdown={user.trustBreakdown}
               />
 
-              <div className="mt-5 pt-4 border-t border-border/50 space-y-2">
+              <div className="mt-5 pt-4 border-t border-border/60 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-text-2 font-label">GUARDIAN STANDING</span>
+                  <span className="text-text-muted font-label font-bold">GUARDIAN STANDING</span>
                   <span className="text-success font-semibold">62 Clean Rides Recorded</span>
                 </div>
                 <TickProgress
@@ -63,22 +63,22 @@ export const RiderTrustProfile: React.FC = () => {
             </Card>
 
             {/* Vehicle & Driving Credentials Card */}
-            <Card variant="flat" className="p-5 space-y-3">
-              <span className="font-label text-text-2 text-xs">VERIFIED VEHICLE CREDENTIALS</span>
-              <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-2 font-mono">
-                <div className="flex justify-between text-text-2">
+            <Card variant="flat" className="p-5 sm:p-6 space-y-3.5">
+              <span className="font-label text-text font-bold text-xs">VERIFIED VEHICLE CREDENTIALS</span>
+              <div className="p-3.5 bg-surface-2 rounded-inner border border-border text-xs space-y-2.5">
+                <div className="flex justify-between text-text-muted">
                   <span>Vehicle:</span>
-                  <span className="text-white font-semibold">Honda City 1.5 i-VTEC (White)</span>
+                  <span className="text-text font-semibold">Honda City 1.5 i-VTEC (White)</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>License Plate:</span>
-                  <span className="text-white font-semibold">TN 09 AB 4821</span>
+                  <span className="text-text font-semibold">TN 09 AB 4821</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>RC Verification:</span>
                   <span className="text-success font-semibold">Vaahan DB Verified ✓</span>
                 </div>
-                <div className="flex justify-between text-text-2">
+                <div className="flex justify-between text-text-muted">
                   <span>Comprehensive Insurance:</span>
                   <span className="text-success font-semibold">Valid until Oct 2027 ✓</span>
                 </div>
@@ -90,18 +90,18 @@ export const RiderTrustProfile: React.FC = () => {
           <div className="lg:col-span-6 space-y-6">
             {/* Driving Smoothness Component (UI Spec §9.10 & PRD §3.7 G10) */}
             <div className="space-y-3">
-              <span className="font-label text-success text-xs flex items-center gap-1.5">
-                <Activity size={14} /> MOTION SENSOR DRIVING SMOOTHNESS
+              <span className="font-label text-success text-xs font-bold flex items-center gap-1.5">
+                <Activity size={16} /> MOTION SENSOR DRIVING SMOOTHNESS
               </span>
-              <Card variant="flat" className="p-5 space-y-4">
+              <Card variant="flat" className="p-5 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-white text-xl sm:text-2xl font-bold">96 / 100 Smoothness</div>
-                    <div className="text-xs text-text-2 mt-0.5">
+                    <div className="text-text text-2xl sm:text-3xl font-bold">96 / 100 Smoothness</div>
+                    <div className="text-xs text-text-muted mt-1 font-medium">
                       Zero hard braking, rapid acceleration, or sharp cornering
                     </div>
                   </div>
-                  <Gauge size={36} className="text-success" />
+                  <Gauge size={40} className="text-success" />
                 </div>
 
                 <TickProgress
@@ -112,7 +112,7 @@ export const RiderTrustProfile: React.FC = () => {
                   rightLabel="EXCELLENT (96)"
                 />
 
-                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs text-text-3 font-mono leading-relaxed">
+                <div className="p-3.5 bg-surface-2 rounded-inner border border-border text-xs text-text-muted leading-relaxed">
                   Mobile accelerometer telematics automatically calculate smoothness during active drives, preserving Guardian tier status and passenger confidence.
                 </div>
               </Card>
@@ -120,24 +120,24 @@ export const RiderTrustProfile: React.FC = () => {
 
             {/* Safety Events Log (PRD §3.7 G10) */}
             <div className="space-y-3">
-              <span className="font-label text-text-2 text-xs">RECENT SAFETRAIL AUDIT LOG</span>
-              <div className="space-y-2">
-                <div className="p-3.5 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle size={16} className="text-success" />
+              <span className="font-label text-text-muted text-xs font-bold tracking-wider">RECENT SAFETRAIL AUDIT LOG</span>
+              <div className="space-y-2.5">
+                <div className="p-4 bg-surface rounded-card border border-border flex items-center justify-between text-xs shadow-card">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle size={18} className="text-success shrink-0" />
                     <div>
-                      <span className="text-white font-medium block">Velachery Bypass ➔ Guindy Ride</span>
-                      <span className="text-[10px] text-text-3 font-mono">Yesterday 08:35</span>
+                      <span className="text-text font-bold block text-sm">Velachery Bypass ➔ Guindy Ride</span>
+                      <span className="text-[11px] text-text-muted font-medium">Yesterday 08:35</span>
                     </div>
                   </div>
                   <span className="text-success font-semibold">100% Corridor Adherence</span>
                 </div>
-                <div className="p-3.5 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle size={16} className="text-success" />
+                <div className="p-4 bg-surface rounded-card border border-border flex items-center justify-between text-xs shadow-card">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle size={18} className="text-success shrink-0" />
                     <div>
-                      <span className="text-white font-medium block">Campus Night Return</span>
-                      <span className="text-[10px] text-text-3 font-mono">27 Sep 18:20</span>
+                      <span className="text-text font-bold block text-sm">Campus Night Return</span>
+                      <span className="text-[11px] text-text-muted font-medium">27 Sep 18:20</span>
                     </div>
                   </div>
                   <span className="text-success font-semibold">Well-Lit Safe Corridors Kept</span>

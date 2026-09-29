@@ -41,15 +41,15 @@ export const SOSActive: React.FC = () => {
 
   if (silentMode) {
     return (
-      <div className="flex-1 flex flex-col font-mono bg-bg text-text p-6 justify-between max-w-xl mx-auto w-full">
+      <div className="flex-1 flex flex-col bg-bg text-text p-6 justify-between max-w-xl mx-auto w-full">
         <AppBar title="Corridor Ride" pill={<Pill variant="danger" label="DISCREET ACTIVE" />} />
         <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4">
-          <div className="w-4 h-4 rounded-full bg-danger animate-ping mx-auto" />
-          <h3 className="font-title-m text-white text-base">Silent Emergency Beacon Active</h3>
-          <p className="text-xs text-text-3 max-w-md">
+          <div className="w-5 h-5 rounded-full bg-danger animate-ping mx-auto" />
+          <h3 className="font-title-m text-text text-lg font-bold">Silent Emergency Beacon Active</h3>
+          <p className="text-xs text-text-muted max-w-md leading-relaxed">
             Silent emergency tracking running discreetly. Live telemetry is streaming to 112 and trusted contacts.
           </p>
-          <Button variant="secondary" size="sm" onClick={() => setSilentMode(false)}>
+          <Button variant="secondary" size="default" onClick={() => setSilentMode(false)} className="min-h-[44px]">
             Show Emergency Dashboard
           </Button>
         </div>
@@ -58,7 +58,7 @@ export const SOSActive: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col font-mono relative bg-bg text-text card-sos-glow">
+    <div className="flex-1 flex flex-col relative bg-bg text-text card-sos-glow">
       <AppBar
         title="Emergency SOS Console"
         showBack={false}
@@ -71,51 +71,51 @@ export const SOSActive: React.FC = () => {
           {/* Left Column (5 cols): Distress Header, Checklist, Actions */}
           <div className="lg:col-span-5 space-y-5">
             {/* Distress Header */}
-            <div className="p-5 bg-danger/10 border border-danger/40 rounded-card space-y-2 text-center">
+            <div className="p-5 sm:p-6 bg-danger/10 border border-danger/30 rounded-card space-y-2 text-center">
               <div className="w-14 h-14 rounded-full bg-danger/20 border-2 border-danger flex items-center justify-center text-danger mx-auto animate-pulse">
                 <ShieldAlert size={32} />
               </div>
-              <h2 className="font-title-l text-white text-lg sm:text-xl font-bold">
+              <h2 className="font-title-l text-text text-xl sm:text-2xl font-bold">
                 Live Location is Being Shared
               </h2>
-              <p className="text-xs text-text-2">
+              <p className="text-xs text-text-muted font-medium">
                 Emergency broadcast dispatched. 112 services, trusted contacts, and community responders alerted.
               </p>
             </div>
 
             {/* Dispatch Checklist (PRD §3.9) */}
-            <div className="p-5 bg-surface/90 rounded-card border border-danger/30 space-y-3 shadow-lg">
-              <span className="font-label text-text-2 text-xs">DISPATCH ESCALATION STATUS</span>
+            <div className="p-5 sm:p-6 bg-surface rounded-card border border-border space-y-3.5 shadow-card">
+              <span className="font-label text-text font-bold text-xs tracking-wider">DISPATCH ESCALATION STATUS</span>
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-text-2 flex items-center gap-2">
+                <span className="text-text flex items-center gap-2">
                   <CheckCircle size={16} className="text-success" />
                   Trusted Contacts (SMS Link)
                 </span>
-                <span className="text-success font-label">NOTIFIED ✓</span>
+                <span className="text-success font-label font-bold">NOTIFIED ✓</span>
               </div>
 
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-text-2 flex items-center gap-2">
+                <span className="text-text flex items-center gap-2">
                   <CheckCircle size={16} className="text-success" />
                   Platform Emergency Ops
                 </span>
-                <span className="text-success font-label">NOTIFIED ✓</span>
+                <span className="text-success font-label font-bold">NOTIFIED ✓</span>
               </div>
 
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-text-2 flex items-center gap-2">
-                  <Radio size={16} className="text-warn animate-pulse" />
+                <span className="text-text flex items-center gap-2">
+                  <Radio size={16} className="text-amber-500 animate-pulse" />
                   Nearby Community Anchors
                 </span>
-                <span className="text-warn font-label">
+                <span className="text-amber-600 font-label font-bold">
                   3 ALERTED · {acknowledgedCount} ACK
                 </span>
               </div>
 
               {/* Tier 2 Escalation Countdown */}
-              <div className="pt-2 border-t border-border/50 space-y-1.5">
-                <div className="flex justify-between text-[10px] text-text-3 font-mono">
-                  <span>TIER 1 (MODS 2KM)</span>
+              <div className="pt-3 border-t border-border/60 space-y-2">
+                <div className="flex justify-between text-xs text-text-muted">
+                  <span className="font-semibold">TIER 1 (MODS 2KM)</span>
                   <span className="text-danger font-bold">
                     {secondsToTier2 > 0 ? `WIDENING IN 00:${secondsToTier2.toString().padStart(2, '0')}` : 'TIER 2 WIDENED'}
                   </span>
@@ -132,7 +132,7 @@ export const SOSActive: React.FC = () => {
             <div className="space-y-3">
               <button
                 onClick={handleCall112}
-                className="w-full h-14 bg-danger hover:bg-danger/90 text-white font-bold rounded-btn text-base flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(229,72,77,0.4)] active:scale-98 transition-all"
+                className="w-full h-14 bg-danger hover:bg-danger/90 text-white font-bold rounded-btn text-base flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(229,72,77,0.35)] active:scale-98 transition-all min-h-[48px]"
               >
                 <PhoneCall size={20} />
                 <span>Call 112 Police Emergency</span>
@@ -140,15 +140,16 @@ export const SOSActive: React.FC = () => {
 
               <Button
                 variant="secondary"
+                size="default"
                 onClick={handleEndSOS}
-                className="w-full text-text-2 hover:text-white"
+                className="w-full text-text-muted hover:text-text font-semibold min-h-[44px]"
               >
                 I'm Safe — End Emergency Alert
               </Button>
 
               <button
                 onClick={() => setSilentMode(true)}
-                className="w-full text-center text-xs text-text-3 hover:text-text-2 underline font-caption pt-1"
+                className="w-full text-center text-xs text-text-muted hover:text-text underline font-caption pt-1 min-h-[44px] flex items-center justify-center"
               >
                 Switch to Silent Discreet Mode
               </button>
@@ -158,13 +159,13 @@ export const SOSActive: React.FC = () => {
           {/* Right Column (7 cols): Full-Size Real-Time SOS Emergency Map */}
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-label text-danger text-xs flex items-center gap-1.5">
-                <Radio size={14} className="animate-pulse" /> LIVE TELEMETRY & RESPONDER RADAR
+              <span className="font-label text-danger text-xs font-bold flex items-center gap-1.5">
+                <Radio size={16} className="animate-pulse text-danger" /> LIVE TELEMETRY & RESPONDER RADAR
               </span>
-              <span className="text-[11px] text-text-3 font-mono">1 km Corridor Geofence</span>
+              <span className="text-xs text-text-muted font-medium">1 km Corridor Geofence</span>
             </div>
 
-            <div className="w-full h-[380px] lg:h-[540px] rounded-card overflow-hidden border border-danger/50 relative shadow-2xl">
+            <div className="w-full h-[380px] lg:h-[540px] rounded-card overflow-hidden border border-danger/40 relative shadow-2xl">
               <CommuteMap
                 center={[alertLoc.lat, alertLoc.lng]}
                 zoom={15}

@@ -63,7 +63,7 @@ export const HotspotWaiting: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title={`Waiting at ${hotspot.name.split(' ')[0]}`}
         pill={<Pill variant="waiting" label="WAITING QUEUE" />}
@@ -71,18 +71,18 @@ export const HotspotWaiting: React.FC = () => {
 
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
         {/* Top Status Bar */}
-        <div className="flex items-center justify-between p-3 rounded-inner bg-success/15 border border-success/30 text-success text-xs">
+        <div className="flex items-center justify-between p-3.5 rounded-card bg-success/10 border border-success/30 text-success text-xs sm:text-sm font-semibold shadow-sm">
           <div className="flex items-center gap-2">
             <Radio size={16} className="animate-pulse" />
-            <span className="font-label text-success">SAFETRAIL ACTIVE MONITORING</span>
+            <span className="font-bold tracking-wide">SAFETRAIL ACTIVE MONITORING</span>
           </div>
-          <span className="text-[11px] text-text-2">GPS Telemetry Online (±4m)</span>
+          <span className="text-xs text-text-muted font-medium">GPS Telemetry Online (±4m)</span>
         </div>
 
         {/* 100m Geofence Gate */}
         {distanceToHotspot > 100 && (
-          <div className="p-3 bg-warn/15 border border-warn/30 rounded-inner text-xs text-warn flex items-center gap-2">
-            <AlertCircle size={16} className="shrink-0" />
+          <div className="p-3.5 bg-accent/10 border border-accent/30 rounded-card text-xs sm:text-sm text-accent font-semibold flex items-center gap-2 shadow-sm">
+            <AlertCircle size={18} className="shrink-0" />
             <span>You are {distanceToHotspot}m from the hotspot. Move within 100m to activate pickup broadcast.</span>
           </div>
         )}
@@ -91,18 +91,18 @@ export const HotspotWaiting: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Column (6 cols): Waiting countdown & Hotspot info */}
           <div className="lg:col-span-6 space-y-5">
-            <Card variant="glow" className="space-y-4 p-5 sm:p-6">
+            <Card variant="default" className="space-y-4 p-5 sm:p-6 shadow-colored">
               <div className="space-y-1">
-                <span className="font-label text-primary-soft uppercase text-xs">
+                <span className="text-primary font-bold uppercase text-xs tracking-wider">
                   ESTIMATED ARRIVAL WINDOW
                 </span>
-                <div className="font-display-xl text-white text-5xl sm:text-6xl font-bold">
+                <div className="text-5xl sm:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-primary-gradient">
                   {Math.ceil(countdownSeconds / 60)} min
                 </div>
-                <p className="text-xs text-text-2 mt-1">
-                  Designated Spot: <span className="text-white font-semibold">{hotspot.name}</span>
+                <p className="text-xs sm:text-sm text-text-muted mt-1 font-medium">
+                  Designated Spot: <span className="text-text font-bold">{hotspot.name}</span>
                 </p>
-                <span className="text-[11px] text-text-3">
+                <span className="text-xs text-text-muted font-semibold">
                   {hotspot.category.toUpperCase().replace('_', ' ')} · {hotspot.lit ? 'Well-Lit & Monitored' : 'Designated Hub'}
                 </span>
               </div>
@@ -118,10 +118,10 @@ export const HotspotWaiting: React.FC = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-border/50 text-xs">
-                <span className="text-text-3 font-label">CORRIDOR RELIABILITY</span>
-                <span className="text-success font-semibold flex items-center gap-1">
-                  <ShieldCheck size={14} />
+              <div className="flex items-center justify-between pt-3 border-t border-border text-xs sm:text-sm">
+                <span className="text-text-muted font-bold text-xs uppercase tracking-wider">CORRIDOR RELIABILITY</span>
+                <span className="text-success font-bold flex items-center gap-1.5">
+                  <ShieldCheck size={16} />
                   <span>HIGH · {hotspot.historicalConfidence}% verified pickups</span>
                 </span>
               </div>
@@ -129,19 +129,19 @@ export const HotspotWaiting: React.FC = () => {
 
             {/* Fallback Option Prompt */}
             {showFallback && (
-              <div className="p-4 bg-surface rounded-card border border-primary-soft/50 space-y-3 animate-in fade-in duration-300">
-                <div className="flex items-center gap-2 text-primary-soft">
-                  <Bus size={18} />
-                  <span className="font-label text-primary-soft text-xs">FALLBACK TRANSIT ALTERNATIVE</span>
+              <div className="p-4 sm:p-5 bg-surface rounded-card border border-primary/40 space-y-3 animate-in fade-in duration-300 shadow-colored">
+                <div className="flex items-center gap-2 text-primary">
+                  <Bus size={20} />
+                  <span className="font-bold text-xs sm:text-sm tracking-wide">FALLBACK TRANSIT ALTERNATIVE</span>
                 </div>
-                <p className="text-xs text-text-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
                   No peer vehicle passed within 10 minutes. MTC Route 570 arrives at Guindy Metro in 3 minutes.
                 </p>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size="default"
                   onClick={() => navigate('/app/relay')}
-                  className="w-full text-xs"
+                  className="w-full text-xs font-bold"
                 >
                   Switch to Relay Multimodal Pass
                 </Button>
@@ -153,7 +153,7 @@ export const HotspotWaiting: React.FC = () => {
           <div className="lg:col-span-6 space-y-5">
             {/* Matched Approaching Rider Preview */}
             <div className="space-y-2">
-              <span className="font-label text-text-2 text-xs">MATCHED APPROACHING RIDER</span>
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">MATCHED APPROACHING RIDER</span>
               <PersonCard
                 name={matchedRider.name}
                 avatarUrl={matchedRider.avatar}
@@ -169,14 +169,14 @@ export const HotspotWaiting: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={handleShareLink}
-                className="flex-1 py-3 px-4 rounded-btn bg-surface hover:bg-surface-2 border border-border text-xs text-white flex items-center justify-center gap-2 transition-colors"
+                className="flex-1 min-h-[44px] py-3 px-4 rounded-button bg-surface hover:bg-surface-2 border border-border text-xs sm:text-sm font-bold text-text flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
               >
-                <Share2 size={16} className="text-primary-soft" />
+                <Share2 size={16} className="text-primary" />
                 <span>Share Live Tracking Link</span>
               </button>
               <button
                 onClick={() => navigate('/app')}
-                className="py-3 px-5 rounded-btn bg-surface hover:bg-surface-2 border border-border text-xs text-text-3 hover:text-white transition-colors"
+                className="min-h-[44px] py-3 px-5 rounded-button bg-surface hover:bg-surface-2 border border-border text-xs sm:text-sm text-text font-bold transition-all shadow-sm active:scale-95"
               >
                 Cancel
               </button>
@@ -190,7 +190,7 @@ export const HotspotWaiting: React.FC = () => {
                   size="lg"
                   onClick={handleImWaiting}
                   disabled={distanceToHotspot > 100}
-                  className="w-full text-sm font-semibold shadow-xl"
+                  className="w-full text-sm font-bold shadow-colored min-h-[48px]"
                 >
                   {distanceToHotspot > 100
                     ? `Move closer · ${distanceToHotspot}m from hotspot`
@@ -201,10 +201,10 @@ export const HotspotWaiting: React.FC = () => {
                   variant="primary"
                   size="lg"
                   onClick={() => navigate('/app/pickup-qr')}
-                  className="w-full text-sm font-semibold shadow-xl flex items-center justify-center gap-2"
+                  className="w-full text-sm font-bold shadow-colored flex items-center justify-center gap-2 min-h-[48px]"
                 >
                   <span>Show Boarding QR Pass</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={18} />
                 </Button>
               )}
             </div>

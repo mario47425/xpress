@@ -17,20 +17,25 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'relative inline-flex items-center justify-center font-mono font-medium rounded-btn transition-all duration-120 outline-none select-none active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary-soft focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-40 disabled:pointer-events-none disabled:active:scale-100';
+    'relative inline-flex items-center justify-center font-sans font-semibold rounded-btn transition-all duration-200 outline-none select-none active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-40 disabled:pointer-events-none disabled:active:scale-100';
 
   const sizeClasses = {
-    sm: 'h-10 px-4 text-xs',
-    default: 'h-14 px-6 text-base', // 56px height per spec
-    lg: 'h-16 px-8 text-lg',
+    sm: 'min-h-[44px] h-11 px-4 text-xs',
+    default: 'min-h-[48px] h-12 px-5 text-sm',
+    lg: 'min-h-[56px] h-14 px-7 text-base',
   };
 
   const variantClasses = {
-    primary: 'bg-primary hover:bg-primary-hover text-white shadow-[0_8px_24px_rgba(40,58,175,0.35)]',
-    secondary: 'bg-surface hover:bg-surface-2 text-white border border-border',
-    success: 'bg-success hover:bg-success/90 text-white shadow-[0_8px_20px_rgba(13,159,94,0.3)]',
-    danger: 'bg-danger hover:bg-danger/90 text-white shadow-[0_8px_20px_rgba(229,72,77,0.3)]',
-    ghost: 'bg-transparent hover:bg-surface-2 text-text-2 hover:text-white',
+    primary:
+      'bg-gradient-primary text-white shadow-md hover:shadow-gradient hover:brightness-105 active:brightness-95',
+    secondary:
+      'bg-surface hover:bg-surface-2 text-text border border-border hover:border-primary/40 shadow-xs',
+    success:
+      'bg-success hover:bg-success/90 text-white shadow-md active:brightness-95',
+    danger:
+      'bg-danger hover:bg-danger/90 text-white shadow-md active:brightness-95',
+    ghost:
+      'bg-transparent hover:bg-surface-2 text-text-2 hover:text-text',
   };
 
   return (
@@ -40,8 +45,10 @@ export const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {loading ? (
-        <span className="flex items-center gap-1 font-mono text-xl tracking-widest animate-pulse">
-          ···
+        <span className="flex items-center gap-1.5 font-bold tracking-widest animate-pulse">
+          <span className="w-1.5 h-1.5 rounded-full bg-current" />
+          <span className="w-1.5 h-1.5 rounded-full bg-current" />
+          <span className="w-1.5 h-1.5 rounded-full bg-current" />
         </span>
       ) : (
         children

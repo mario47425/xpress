@@ -31,7 +31,7 @@ export const SwipeConfirm: React.FC<SwipeConfirmProps> = ({
     if (!isDragging || disabled || completed) return;
     const delta = clientX - startXRef.current;
     if (!containerRef.current) return;
-    const maxDrag = containerRef.current.clientWidth - 56; // width minus handle width (48+8)
+    const maxDrag = containerRef.current.clientWidth - 56;
     const clamped = Math.max(0, Math.min(delta, maxDrag));
     setDragOffset(clamped);
   };
@@ -42,24 +42,21 @@ export const SwipeConfirm: React.FC<SwipeConfirmProps> = ({
     if (!containerRef.current) return;
     const maxDrag = containerRef.current.clientWidth - 56;
     if (dragOffset >= maxDrag * 0.85) {
-      // Trigger threshold passed!
       setCompleted(true);
       setDragOffset(maxDrag);
-      // Haptic pulse if supported
       if (navigator.vibrate) navigator.vibrate(80);
       onConfirm();
     } else {
-      // Spring back
       setDragOffset(0);
     }
   };
 
   return (
-    <div className={`relative w-full h-14 font-mono select-none ${className}`}>
+    <div className={`relative w-full h-14 select-none ${className}`}>
       {/* Visual Swipe Track */}
       <div
         ref={containerRef}
-        className={`w-full h-full rounded-btn bg-primary overflow-hidden flex items-center justify-center shadow-[0_8px_24px_rgba(40,58,175,0.35)] relative ${
+        className={`w-full h-full rounded-button bg-primary-gradient overflow-hidden flex items-center justify-center shadow-colored relative ${
           disabled ? 'opacity-40 pointer-events-none' : ''
         }`}
         onMouseMove={(e) => handleMove(e.clientX)}
@@ -69,7 +66,7 @@ export const SwipeConfirm: React.FC<SwipeConfirmProps> = ({
         onTouchEnd={handleEnd}
       >
         {/* Centred Label */}
-        <span className="font-body-l text-white font-medium text-sm sm:text-base pointer-events-none tracking-wide">
+        <span className="text-white font-bold text-sm sm:text-base pointer-events-none tracking-wide">
           {completed ? 'Confirmed ✓' : label}
         </span>
 
@@ -78,7 +75,7 @@ export const SwipeConfirm: React.FC<SwipeConfirmProps> = ({
           onMouseDown={(e) => handleStart(e.clientX)}
           onTouchStart={(e) => handleStart(e.touches[0].clientX)}
           style={{ transform: `translateX(${dragOffset}px)` }}
-          className={`absolute left-1.5 w-11 h-11 rounded-inner bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white cursor-grab active:cursor-grabbing transition-transform ${
+          className={`absolute left-1.5 w-11 h-11 rounded-button bg-white/25 backdrop-blur-md border border-white/50 flex items-center justify-center text-white cursor-grab active:cursor-grabbing transition-transform ${
             isDragging ? '' : 'transition-all duration-200'
           }`}
         >
@@ -86,14 +83,14 @@ export const SwipeConfirm: React.FC<SwipeConfirmProps> = ({
         </div>
       </div>
 
-      {/* Accessible Screen-reader / Keyboard Alternative (UI Spec §6.9 & §12) */}
+      {/* Accessible Screen-reader / Keyboard Alternative */}
       <button
         type="button"
         onClick={() => {
           setCompleted(true);
           onConfirm();
         }}
-        className="sr-only focus:not-sr-only focus:absolute focus:inset-0 focus:z-20 focus:bg-primary focus:text-white focus:rounded-btn focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:inset-0 focus:z-20 focus:bg-primary-gradient focus:text-white focus:rounded-button focus:font-semibold"
       >
         {label} (Press Enter to Confirm)
       </button>

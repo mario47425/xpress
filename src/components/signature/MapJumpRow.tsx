@@ -17,28 +17,28 @@ export const MapJumpRow: React.FC<MapJumpRowProps> = ({
   return (
     <div
       onClick={onJump}
-      className={`w-full h-[136px] flex items-stretch gap-2.5 font-mono cursor-pointer select-none group ${className}`}
+      className={`w-full h-[120px] sm:h-[136px] flex items-stretch gap-3 cursor-pointer select-none group ${className}`}
     >
       {/* Left 2/3: Mini Map Crop Visual Tile */}
-      <div className="flex-[2] bg-[#0F1120] rounded-inner border border-border relative overflow-hidden flex flex-col justify-end p-3">
-        {/* Abstract dark map grid lines and pin */}
-        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#283AAF_1px,transparent_1px)] [background-size:12px_12px]" />
+      <div className="flex-[2] bg-surface-2 rounded-card border border-border relative overflow-hidden flex flex-col justify-end p-3.5 shadow-sm">
+        {/* Abstract subtle grid lines and pin */}
+        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#7C3AED_1.5px,transparent_1.5px)] [background-size:14px_14px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center animate-ping" />
-          <div className="absolute w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-lg text-primary">
-            <MapPin size={12} className="fill-primary" />
+          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center animate-ping" />
+          <div className="absolute w-6 h-6 rounded-full bg-surface border border-primary/30 flex items-center justify-center shadow-md text-primary">
+            <MapPin size={14} className="fill-primary" />
           </div>
         </div>
 
-        <span className="relative z-10 font-caption text-[11px] text-text-2 bg-surface/80 px-2 py-0.5 rounded-pill backdrop-blur-sm self-start truncate">
+        <span className="relative z-10 text-[11px] font-bold text-text bg-surface/90 px-2.5 py-1 rounded-full border border-border backdrop-blur-sm self-start truncate shadow-sm">
           {previewName}
         </span>
       </div>
 
-      {/* Right 1/3: Indigo Jump Action Tile */}
-      <div className="flex-1 bg-primary group-hover:bg-primary-hover rounded-inner flex flex-col items-center justify-center p-3 text-white transition-all shadow-[0_4px_16px_rgba(40,58,175,0.3)] active:scale-98">
-        <ArrowUpRight size={32} className="mb-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        <span className="font-label text-[11px] font-semibold text-center leading-tight">
+      {/* Right 1/3: Primary Gradient Jump Action Tile */}
+      <div className="flex-1 bg-primary-gradient hover:opacity-95 rounded-card flex flex-col items-center justify-center p-3 text-white transition-all shadow-colored active:scale-95">
+        <ArrowUpRight size={28} className="mb-1.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <span className="text-xs font-bold text-center leading-tight">
           {label}
         </span>
       </div>

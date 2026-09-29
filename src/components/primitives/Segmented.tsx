@@ -21,7 +21,7 @@ export function Segmented<T extends string>({
 }: SegmentedProps<T>) {
   return (
     <div
-      className={`flex items-center p-1 bg-surface-2 rounded-btn border border-border font-mono text-xs ${className}`}
+      className={`flex items-center p-1.5 bg-surface-2 rounded-card border border-border text-xs ${className}`}
     >
       {options.map((opt) => {
         const isActive = opt.value === value;
@@ -30,14 +30,14 @@ export function Segmented<T extends string>({
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-inner font-medium transition-all duration-150 outline-none ${
+            className={`flex-1 min-h-[44px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-button font-medium transition-all duration-200 outline-none select-none ${
               isActive
-                ? 'bg-primary text-white shadow-md'
-                : 'text-text-3 hover:text-white hover:bg-surface/50'
+                ? 'bg-primary-gradient text-white shadow-colored'
+                : 'text-text-muted hover:text-text hover:bg-surface/60'
             }`}
           >
             {opt.icon && <span>{opt.icon}</span>}
-            <span>{opt.label}</span>
+            <span className="font-semibold">{opt.label}</span>
           </button>
         );
       })}
@@ -45,7 +45,7 @@ export function Segmented<T extends string>({
   );
 }
 
-// Filter Chip (height 36, pill, off = surface, on = primary)
+// Filter Chip (height min 44px touch target, pill, off = surface, on = primary gradient)
 export interface FilterChipProps {
   label: string;
   active: boolean;
@@ -58,10 +58,10 @@ export const FilterChip: React.FC<FilterChipProps> = ({ label, active, onClick, 
     <button
       type="button"
       onClick={onClick}
-      className={`h-9 px-3.5 rounded-pill font-mono text-xs font-medium flex items-center gap-1.5 transition-all outline-none border ${
+      className={`min-h-[44px] px-4 rounded-full text-xs font-semibold flex items-center gap-2 transition-all outline-none border active:scale-95 ${
         active
-          ? 'bg-primary text-white border-primary shadow-sm'
-          : 'bg-surface text-text-2 border-border hover:bg-surface-2'
+          ? 'bg-primary-gradient text-white border-transparent shadow-colored'
+          : 'bg-surface text-text border-border hover:bg-surface-2 hover:border-primary/30 shadow-sm'
       }`}
     >
       {icon && <span>{icon}</span>}

@@ -8,30 +8,23 @@ import {
   AlertTriangle,
   RotateCcw,
   Sparkles,
-  Smartphone,
-  Monitor,
   ChevronDown,
   Navigation,
   ShieldCheck,
   Wallet,
   Gavel,
   Radio,
+  Menu,
+  X,
+  Layers,
+  MapPin,
 } from 'lucide-react';
 
-interface DesktopNavBarProps {
-  viewMode: 'desktop' | 'mobile';
-  onToggleViewMode: (mode: 'desktop' | 'mobile') => void;
-}
-
-export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
-  viewMode,
-  onToggleViewMode,
-}) => {
+export const DesktopNavBar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const {
     currentUser,
-    users,
     activeRole,
     switchRole,
     switchUser,
@@ -42,6 +35,7 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
     simulateGpsStep,
   } = useAppStore();
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [devMenuOpen, setDevMenuOpen] = useState(false);
   const [gpsStep, setGpsStep] = useState(0);
@@ -70,49 +64,57 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
         { label: 'Recurring Pods', path: '/app/pods' },
         { label: 'Trust & Streaks', path: '/app/profile' },
         { label: 'Wallet', path: '/app/wallet' },
-        { label: 'Safety Centre', path: '/safety' },
+        { label: 'Safety', path: '/safety' },
       ]
     : [
         { label: 'Home', path: '/rider' },
         { label: 'Active Route', path: '/rider/route' },
         { label: 'QR Scanner', path: '/rider/scanner' },
         { label: 'Requests', path: '/rider/requests' },
-        { label: 'Relay Handoff', path: '/rider/handoff' },
         { label: 'Driving Pods', path: '/rider/pods' },
         { label: 'Cost Recovery', path: '/rider/cost-recovery' },
-        { label: 'Safety Centre', path: '/safety' },
+        { label: 'Safety', path: '/safety' },
       ];
 
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="w-full bg-surface border-b border-border z-40 sticky top-0 font-mono shadow-xl select-none">
-      {/* Top Banner Row */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Logo and Brand */}
-        <div className="flex items-center gap-3">
+    <header className="w-full bg-surface/95 backdrop-blur-md border-b border-border z-40 sticky top-0 font-sans shadow-sm select-none transition-colors">
+      {/* Compact Main Header Bar: 56px mobile, 64px desktop */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+        {/* Left: Brand Logo & Portal Switcher */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
           <div
             onClick={() => navigate(isPassenger ? '/app' : '/rider')}
-            className="flex items-center gap-2.5 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
-            <div className="w-9 h-9 rounded-inner bg-primary flex items-center justify-center text-white shadow-[0_0_16px_rgba(40,58,175,0.5)] group-hover:scale-105 transition-transform">
-              <Radio size={20} className="animate-pulse" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-inner overflow-hidden bg-white border border-border shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform shrink-0 p-0.5">
+              <img
+                src="/logo.png"
+                alt="CommuteCircle Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-title-m text-white text-base font-bold tracking-tight">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 truncate">
+                <span className="text-sm sm:text-base font-bold text-text tracking-tight truncate">
                   CommuteCircle
                 </span>
-                <span className="px-1.5 py-0.5 rounded-pill bg-success/20 border border-success/40 text-[9px] font-pill text-success">
-                  LIVE CHENNAI
+                <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-pill bg-success/15 text-success text-[10px] font-semibold border border-success/30">
+                  LIVE
                 </span>
               </div>
-              <span className="text-[10px] text-text-3 block -mt-0.5">
-                Peer-to-Peer Transit Community
+              <span className="text-[10px] text-text-muted block -mt-0.5 truncate hidden xs:block">
+                Chennai Peer Corridors
               </span>
             </div>
           </div>
 
-          {/* Portal Switcher Segmented Control */}
-          <div className="hidden md:flex items-center bg-surface-2 p-1 rounded-pill border border-border ml-3">
+          {/* Role Switcher Pill - visible from tablet up */}
+          <div className="hidden md:flex items-center bg-surface-2 p-1 rounded-pill border border-border ml-2">
             <button
               onClick={() => {
                 switchRole('passenger');
@@ -120,11 +122,11 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
               }}
               className={`px-3 py-1 rounded-pill text-xs font-semibold transition-all ${
                 isPassenger
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-text-3 hover:text-white'
+                  ? 'bg-gradient-primary text-white shadow-sm'
+                  : 'text-text-3 hover:text-text'
               }`}
             >
-              Passenger (/app)
+              Passenger
             </button>
             <button
               onClick={() => {
@@ -133,27 +135,27 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
               }}
               className={`px-3 py-1 rounded-pill text-xs font-semibold transition-all ${
                 !isPassenger
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-text-3 hover:text-white'
+                  ? 'bg-gradient-primary text-white shadow-sm'
+                  : 'text-text-3 hover:text-text'
               }`}
             >
-              Rider (/rider)
+              Rider
             </button>
           </div>
         </div>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1">
-          {navLinks.slice(0, 6).map((link) => {
+        {/* Center: Desktop Navigation Links (visible on lg+) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+          {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
             return (
               <button
                 key={link.path}
-                onClick={() => navigate(link.path)}
-                className={`px-3 py-1.5 rounded-inner text-xs font-medium transition-all ${
+                onClick={() => handleNavClick(link.path)}
+                className={`px-3 py-1.5 rounded-btn text-xs font-medium transition-all ${
                   isActive
-                    ? 'text-white bg-surface-2 border border-border font-semibold'
-                    : 'text-text-3 hover:text-white hover:bg-surface-2/60'
+                    ? 'bg-gradient-primary text-white font-semibold shadow-sm'
+                    : 'text-text-2 hover:text-text hover:bg-surface-2'
                 }`}
               >
                 {link.label}
@@ -162,68 +164,41 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
           })}
         </nav>
 
-        {/* Right Actions: Persona, Device View Toggle, Dev simulation & SOS */}
-        <div className="flex items-center gap-2.5">
-          {/* View Mode Toggle (Desktop Full Width vs Mobile 390px) */}
-          <div className="hidden sm:flex items-center bg-surface-2 p-1 rounded-inner border border-border text-xs">
-            <button
-              onClick={() => onToggleViewMode('desktop')}
-              className={`p-1.5 rounded-[10px] flex items-center gap-1 transition-all ${
-                viewMode === 'desktop'
-                  ? 'bg-primary text-white shadow-sm font-semibold'
-                  : 'text-text-3 hover:text-white'
-              }`}
-              title="Full Width Responsive Desktop Web App"
-            >
-              <Monitor size={15} />
-              <span className="text-[11px] hidden lg:inline">Web App</span>
-            </button>
-            <button
-              onClick={() => onToggleViewMode('mobile')}
-              className={`p-1.5 rounded-[10px] flex items-center gap-1 transition-all ${
-                viewMode === 'mobile'
-                  ? 'bg-primary text-white shadow-sm font-semibold'
-                  : 'text-text-3 hover:text-white'
-              }`}
-              title="Mobile Phone 390px Simulator"
-            >
-              <Smartphone size={15} />
-              <span className="text-[11px] hidden lg:inline">Mobile Frame</span>
-            </button>
-          </div>
-
+        {/* Right Slot: Persona, Wallet, GPS, SOS & Mobile Hamburger */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Quick Wallet Chip */}
           <button
             onClick={() => navigate(isPassenger ? '/app/wallet' : '/rider/cost-recovery')}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-inner bg-surface-2 hover:bg-surface-2/80 border border-border text-xs text-white"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-btn bg-surface-2 hover:bg-surface-glow border border-border text-xs text-text font-medium transition-colors"
           >
-            <Wallet size={14} className="text-primary-soft" />
-            <span className="font-semibold">Rs {wallet?.balance ?? 412}</span>
+            <Wallet size={14} className="text-primary" />
+            <span className="font-semibold text-text">Rs {wallet?.balance ?? 412}</span>
           </button>
 
           {/* Persona Switcher Dropdown */}
           <div className="relative">
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-inner bg-surface-2 hover:bg-surface-2/80 border border-border text-xs text-white transition-all"
+              className="flex items-center gap-1.5 px-2 py-1.5 rounded-btn bg-surface-2 hover:bg-surface-glow border border-border text-xs text-text transition-all min-h-[44px]"
+              aria-label="Switch User Persona"
             >
-              <div className="w-6 h-6 rounded-full overflow-hidden border border-border bg-surface shrink-0">
+              <div className="w-7 h-7 rounded-full overflow-hidden border border-border bg-white shrink-0">
                 <img
                   src={currentUser?.avatar || '/demo/avatars/anitha.svg'}
                   alt={currentUser?.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="font-semibold hidden sm:inline truncate max-w-[100px]">
+              <span className="font-medium hidden sm:inline truncate max-w-[80px]">
                 {currentUser?.name.split(' ')[0]}
               </span>
               <ChevronDown size={14} className="text-text-3" />
             </button>
 
             {userDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-surface rounded-card border border-border shadow-2xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95">
-                <span className="font-label text-text-3 text-[10px] px-2 py-1 block">
-                  SWITCH DEMO PERSONA
+              <div className="absolute right-0 mt-2 w-64 bg-surface rounded-card border border-border shadow-xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95">
+                <span className="text-[10px] font-semibold text-text-3 px-2 py-1 block uppercase tracking-wider">
+                  Switch Demo Persona
                 </span>
                 {[
                   { id: 'user-anitha', name: 'Anitha Ramesh', role: 'Passenger · Trusted (78)' },
@@ -241,11 +216,11 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
                     }}
                     className={`w-full text-left px-2.5 py-2 rounded-inner text-xs flex flex-col transition-all ${
                       currentUser?.id === u.id
-                        ? 'bg-primary/20 text-white font-semibold border border-primary/40'
+                        ? 'bg-primary/10 text-primary font-semibold border border-primary/30'
                         : 'text-text-2 hover:bg-surface-2'
                     }`}
                   >
-                    <span className="text-white font-medium">{u.name}</span>
+                    <span className="font-semibold">{u.name}</span>
                     <span className="text-[10px] text-text-3">{u.role}</span>
                   </button>
                 ))}
@@ -256,7 +231,7 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
                       navigate('/moderator');
                       setUserDropdownOpen(false);
                     }}
-                    className="w-full text-left px-2.5 py-1.5 rounded-inner text-xs text-warn hover:bg-warn/10 flex items-center gap-1.5"
+                    className="w-full text-left px-2.5 py-1.5 rounded-inner text-xs text-accent hover:bg-accent/10 flex items-center gap-1.5 font-medium"
                   >
                     <Gavel size={14} />
                     <span>Moderator Queue</span>
@@ -266,44 +241,45 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
             )}
           </div>
 
-          {/* Dev Tools Drawer Toggle */}
+          {/* Dev GPS Simulation Drawer */}
           <div className="relative">
             <button
               onClick={() => setDevMenuOpen(!devMenuOpen)}
-              className="p-2 rounded-inner bg-surface-2 hover:bg-surface-2/80 border border-border text-text-2 hover:text-white transition-all text-xs flex items-center gap-1"
-              title="Dev Tools & GPS Simulator"
+              className="min-h-[44px] min-w-[44px] p-2 rounded-btn bg-surface-2 hover:bg-surface-glow border border-border text-text-2 hover:text-text transition-all text-xs flex items-center justify-center gap-1"
+              title="GPS Simulator & Controls"
+              aria-label="GPS Simulator"
             >
-              <Compass size={16} className="text-primary-soft" />
-              <span className="hidden xl:inline text-[11px]">GPS Sim</span>
+              <Compass size={17} className="text-primary" />
+              <span className="hidden xl:inline text-[11px] font-medium">GPS</span>
             </button>
 
             {devMenuOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-surface rounded-card border border-border shadow-2xl p-3.5 z-50 space-y-3 animate-in fade-in zoom-in-95">
+              <div className="absolute right-0 mt-2 w-72 bg-surface rounded-card border border-border shadow-xl p-3.5 z-50 space-y-3 animate-in fade-in zoom-in-95">
                 <div className="flex items-center justify-between border-b border-border pb-2">
-                  <span className="font-label text-primary-soft text-[10px]">
-                    GPS SIMULATOR & CONTROLS
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
+                    GPS Simulator & Controls
                   </span>
-                  <span className="text-[10px] text-text-3 font-mono">Step {gpsStep + 1}/5</span>
+                  <span className="text-[10px] text-text-3">Step {gpsStep + 1}/5</span>
                 </div>
 
                 <div className="text-xs text-text-2">
-                  Waypoint: <span className="text-white font-semibold">{waypoints[gpsStep].label}</span>
+                  Waypoint: <span className="text-text font-semibold">{waypoints[gpsStep].label}</span>
                 </div>
 
                 <button
                   onClick={handleNextGps}
-                  className="w-full py-2 px-3 bg-surface-2 hover:bg-surface-2/80 border border-border rounded-btn text-xs text-white flex items-center justify-center gap-2"
+                  className="w-full py-2 px-3 bg-surface-2 hover:bg-surface-glow border border-border rounded-btn text-xs text-text flex items-center justify-center gap-2 font-medium"
                 >
-                  <Navigation size={14} className="text-primary-soft" />
+                  <Navigation size={14} className="text-primary" />
                   <span>Advance 1 GPS Waypoint</span>
                 </button>
 
                 <button
                   onClick={() => simulateGpsStep(12.9720, 80.2150, true)}
-                  className="w-full py-2 px-3 bg-warn/15 hover:bg-warn/25 border border-warn/40 rounded-btn text-xs text-warn flex items-center justify-center gap-2"
+                  className="w-full py-2 px-3 bg-warn/10 hover:bg-warn/20 border border-warn/30 rounded-btn text-xs text-warn flex items-center justify-center gap-2 font-medium"
                 >
                   <AlertTriangle size={14} />
-                  <span>Trigger 400m Route Deviation</span>
+                  <span>Trigger 400m Route Detour</span>
                 </button>
 
                 <div className="pt-2 border-t border-border flex gap-2">
@@ -312,14 +288,14 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
                       await fetch('/api/predictions/nightly-run', { method: 'POST' });
                       alert('Nightly predictions calculated');
                     }}
-                    className="flex-1 py-1.5 bg-surface-2 text-text-2 rounded-inner text-[10px] flex items-center justify-center gap-1"
+                    className="flex-1 py-1.5 bg-surface-2 text-text-2 rounded-inner text-[10px] flex items-center justify-center gap-1 hover:text-text"
                   >
-                    <Sparkles size={12} className="text-warn" />
+                    <Sparkles size={12} className="text-accent" />
                     <span>Run Nightly</span>
                   </button>
                   <button
                     onClick={resetData}
-                    className="flex-1 py-1.5 bg-surface-2 text-text-2 rounded-inner text-[10px] flex items-center justify-center gap-1"
+                    className="flex-1 py-1.5 bg-surface-2 text-text-2 rounded-inner text-[10px] flex items-center justify-center gap-1 hover:text-text"
                   >
                     <RotateCcw size={12} />
                     <span>Reset Data</span>
@@ -329,39 +305,101 @@ export const DesktopNavBar: React.FC<DesktopNavBarProps> = ({
             )}
           </div>
 
-          {/* Emergency SOS Button in Desktop Top Bar */}
+          {/* Emergency SOS Button */}
           <button
             onClick={() => {
               if (activeSOS) navigate('/sos/active');
               else triggerSOS();
             }}
-            className="h-9 px-3 rounded-inner bg-danger/20 hover:bg-danger/30 border border-danger/50 text-danger text-xs font-bold flex items-center gap-1.5 transition-all shadow-[0_0_12px_rgba(229,72,77,0.3)]"
+            className="min-h-[44px] h-10 px-3 rounded-btn bg-danger/10 hover:bg-danger/20 border border-danger/40 text-danger text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm shrink-0"
+            aria-label="Emergency SOS"
           >
-            <ShieldAlert size={16} className="animate-pulse" />
+            <ShieldAlert size={17} className="animate-pulse" />
             <span className="hidden sm:inline">SOS</span>
+          </button>
+
+          {/* Mobile Hamburger Toggle (visible on < lg) */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden min-h-[44px] min-w-[44px] p-2 rounded-btn bg-surface-2 hover:bg-surface-glow border border-border text-text flex items-center justify-center transition-colors"
+            aria-label="Toggle Mobile Navigation Menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Sub-navigation bar for tablet/desktop */}
-      <div className="border-t border-border/40 bg-surface/50 px-4 sm:px-6 py-1.5 flex xl:hidden items-center gap-2 overflow-x-auto no-scrollbar">
-        {navLinks.map((link) => {
-          const isActive = location.pathname === link.path;
-          return (
+      {/* Mobile Drawer / Collapsible Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-surface border-b border-border px-4 py-4 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-200">
+          {/* Role switcher inside mobile menu */}
+          <div className="flex items-center bg-surface-2 p-1 rounded-pill border border-border">
             <button
-              key={link.path}
-              onClick={() => navigate(link.path)}
-              className={`px-3 py-1 rounded-pill text-xs whitespace-nowrap transition-all ${
-                isActive
-                  ? 'bg-primary text-white font-semibold'
-                  : 'text-text-3 hover:text-white'
+              onClick={() => {
+                switchRole('passenger');
+                navigate('/app');
+                setMobileMenuOpen(false);
+              }}
+              className={`flex-1 py-2 rounded-pill text-xs font-semibold text-center transition-all ${
+                isPassenger
+                  ? 'bg-gradient-primary text-white shadow-sm'
+                  : 'text-text-3'
               }`}
             >
-              {link.label}
+              Passenger Mode (/app)
             </button>
-          );
-        })}
-      </div>
+            <button
+              onClick={() => {
+                switchRole('rider');
+                navigate('/rider');
+                setMobileMenuOpen(false);
+              }}
+              className={`flex-1 py-2 rounded-pill text-xs font-semibold text-center transition-all ${
+                !isPassenger
+                  ? 'bg-gradient-primary text-white shadow-sm'
+                  : 'text-text-3'
+              }`}
+            >
+              Rider Mode (/rider)
+            </button>
+          </div>
+
+          {/* Navigation Links List */}
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <button
+                  key={link.path}
+                  onClick={() => handleNavClick(link.path)}
+                  className={`px-3 py-2.5 rounded-btn text-xs font-medium text-left transition-all min-h-[44px] flex items-center ${
+                    isActive
+                      ? 'bg-gradient-primary text-white font-semibold shadow-sm'
+                      : 'bg-surface-2 text-text-2 hover:text-text'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick Wallet Link */}
+          <div className="pt-2 border-t border-border flex items-center justify-between">
+            <button
+              onClick={() => {
+                navigate(isPassenger ? '/app/wallet' : '/rider/cost-recovery');
+                setMobileMenuOpen(false);
+              }}
+              className="text-xs text-primary font-semibold flex items-center gap-1.5"
+            >
+              <Wallet size={15} />
+              <span>Wallet: Rs {wallet?.balance ?? 412}</span>
+            </button>
+            <span className="text-[11px] text-text-3">Chennai Corridors</span>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

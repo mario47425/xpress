@@ -44,23 +44,23 @@ export const RequestsInbox: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Incoming Requests"
         showBack={false}
         pill={<Pill variant="waiting" label={`${requests.filter(r => r.status === 'pending').length} PENDING`} />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-4 pb-8 no-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto w-full space-y-4 pb-8 no-scrollbar">
         {requests.length > 0 ? (
           requests.map((req) => (
-            <Card key={req.id} variant="flat" className="space-y-3">
+            <Card key={req.id} variant="flat" className="space-y-4 p-5 sm:p-6">
               <div className="flex items-center justify-between">
-                <span className="font-label text-primary-soft text-[10px]">
+                <span className="font-label text-primary text-xs font-bold uppercase tracking-wider">
                   CORRIDOR MATCH (94% OVERLAP)
                 </span>
-                <span className="text-success text-xs font-bold font-mono">
-                  +Rs {req.fareShare} Fuel Recovery
+                <span className="text-success text-xs font-bold">
+                  +₹{req.fareShare} Fuel Recovery
                 </span>
               </div>
 
@@ -74,25 +74,25 @@ export const RequestsInbox: React.FC = () => {
               />
 
               {req.status === 'accepted' ? (
-                <div className="p-3 bg-success/15 border border-success/30 rounded-inner text-success text-xs font-semibold text-center flex items-center justify-center gap-2">
-                  <CheckCircle size={16} />
+                <div className="p-3.5 bg-success/15 border border-success/30 rounded-inner text-success text-xs font-semibold text-center flex items-center justify-center gap-2">
+                  <CheckCircle size={18} />
                   <span>Request Accepted · Passenger added to trip manifest</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 pt-1">
+                <div className="flex items-center gap-3 pt-1">
                   <Button
                     variant="secondary"
-                    size="sm"
+                    size="default"
                     onClick={() => handleDecline(req.id)}
-                    className="flex-1 text-xs"
+                    className="flex-1 text-xs min-h-[44px]"
                   >
                     Decline
                   </Button>
                   <Button
                     variant="success"
-                    size="sm"
+                    size="default"
                     onClick={() => handleAccept(req.id)}
-                    className="flex-1 text-xs"
+                    className="flex-1 text-xs font-semibold min-h-[44px] shadow-sm"
                   >
                     Accept Match
                   </Button>
@@ -101,10 +101,12 @@ export const RequestsInbox: React.FC = () => {
             </Card>
           ))
         ) : (
-          <div className="text-center py-12 space-y-2">
-            <Inbox size={40} className="text-text-3 mx-auto" />
-            <h4 className="font-title-m text-white text-base">No pending requests</h4>
-            <p className="text-xs text-text-3 max-w-xs mx-auto">
+          <div className="text-center py-16 space-y-3">
+            <div className="w-16 h-16 rounded-full bg-surface-2 border border-border flex items-center justify-center text-text-muted mx-auto">
+              <Inbox size={32} />
+            </div>
+            <h4 className="font-title-m text-text text-lg font-bold">No pending requests</h4>
+            <p className="text-xs text-text-muted max-w-sm mx-auto">
               Your published trip is active and visible to verified commuters along your corridor.
             </p>
           </div>

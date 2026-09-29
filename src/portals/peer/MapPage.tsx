@@ -8,6 +8,7 @@ import { Pill } from '../../components/primitives/Pill';
 import { useAppStore } from '../../store/useAppStore';
 import { Hotspot } from '../../types';
 import { Users, MapPin, ShieldCheck, ChevronRight, Navigation, Clock } from 'lucide-react';
+import { FeatureHelpButton } from '../../components/chat/FeatureHelpButton';
 
 export const PeerMapPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const PeerMapPage: React.FC = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col font-mono relative bg-bg text-text">
+    <div className="flex-1 flex flex-col relative bg-bg text-text">
       <AppBar title="Corridor & Hotspot Map" showBack={false} />
 
       {/* Main Desktop / Mobile Responsive Container */}
@@ -44,48 +45,51 @@ export const PeerMapPage: React.FC = () => {
                 label="Hotspots"
                 active={activeFilter === 'hotspots'}
                 onClick={() => setActiveFilter('hotspots')}
-                icon={<MapPin size={12} />}
+                icon={<MapPin size={14} />}
               />
               <FilterChip
                 label="Pods"
                 active={activeFilter === 'pods'}
                 onClick={() => setActiveFilter('pods')}
-                icon={<Users size={12} />}
+                icon={<Users size={14} />}
               />
               <FilterChip
                 label="Safe Route"
                 active={activeFilter === 'saferoute'}
                 onClick={() => setActiveFilter('saferoute')}
-                icon={<ShieldCheck size={12} className="text-success" />}
+                icon={<ShieldCheck size={14} className="text-success" />}
               />
             </div>
 
             {/* Selected Hotspot Action Card */}
-            <div className="bg-surface rounded-card border border-primary-soft/50 p-4 space-y-3 shadow-lg">
-              <div className="flex items-center justify-between">
+            <div className="bg-surface rounded-card border border-primary/30 p-4 sm:p-5 space-y-3.5 shadow-colored">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
                 <div>
-                  <span className="font-label text-primary-soft text-[10px] uppercase">
+                  <span className="text-primary font-bold text-[10px] uppercase tracking-wider">
                     SELECTED PICKUP POINT
                   </span>
-                  <h3 className="font-title-m text-white text-base font-semibold truncate">
+                  <h3 className="text-text text-base sm:text-lg font-extrabold truncate">
                     {selectedHotspot.name}
                   </h3>
-                  <span className="text-[11px] text-text-3">
+                  <span className="text-xs text-text-muted">
                     {selectedHotspot.category.toUpperCase().replace('_', ' ')} · {selectedHotspot.lit ? 'Lit & Safe' : 'Designated Stop'}
                   </span>
                 </div>
-                <Pill
-                  variant={selectedHotspot.waitingCount > 0 ? 'waiting' : 'available'}
-                  label={`${selectedHotspot.waitingCount} WAITING`}
-                />
+                <div className="flex items-center gap-2">
+                  <FeatureHelpButton question="How do Pickup Hotspots work?" label="Hotspot Guide" />
+                  <Pill
+                    variant={selectedHotspot.waitingCount > 0 ? 'waiting' : 'available'}
+                    label={`${selectedHotspot.waitingCount} WAITING`}
+                  />
+                </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-text-2 font-mono py-1 border-y border-border/50">
-                <span className="flex items-center gap-1">
-                  <Clock size={12} className="text-primary-soft" />
+              <div className="flex items-center justify-between text-xs sm:text-sm text-text-muted py-2 border-y border-border">
+                <span className="flex items-center gap-1 font-medium">
+                  <Clock size={14} className="text-primary" />
                   <span>Avg Wait: {selectedHotspot.avgWaitMins} min</span>
                 </span>
-                <span className="text-success font-semibold">
+                <span className="text-success font-bold">
                   Confidence: {selectedHotspot.historicalConfidence}%
                 </span>
               </div>
@@ -93,16 +97,16 @@ export const PeerMapPage: React.FC = () => {
               <Button
                 variant="primary"
                 onClick={() => navigate(`/app/waiting/${selectedHotspot.id}`)}
-                className="w-full text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md"
+                className="w-full text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 shadow-colored min-h-[44px]"
               >
                 <span>I'm Waiting at this Hotspot</span>
-                <ChevronRight size={15} />
+                <ChevronRight size={16} />
               </Button>
             </div>
 
             {/* Hotspots Directory on Corridor */}
             <div className="flex-1 flex flex-col space-y-2 min-h-0">
-              <span className="font-label text-text-3 text-[10px] uppercase">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 ALL CHENNAI CORRIDOR HOTSPOTS ({hotspots.length})
               </span>
               <div className="flex-1 overflow-y-auto space-y-2 pr-1 max-h-[300px] lg:max-h-[calc(100vh-380px)] no-scrollbar">
@@ -112,17 +116,17 @@ export const PeerMapPage: React.FC = () => {
                     <div
                       key={hs.id}
                       onClick={() => setSelectedHotspot(hs)}
-                      className={`p-3 rounded-inner border transition-all cursor-pointer flex items-center justify-between ${
+                      className={`p-3.5 rounded-card border transition-all cursor-pointer flex items-center justify-between min-h-[48px] ${
                         isSelected
-                          ? 'bg-primary/20 border-primary-soft text-white'
-                          : 'bg-surface hover:bg-surface-2 border-border text-text-2'
+                          ? 'bg-primary/10 border-primary text-text shadow-sm'
+                          : 'bg-surface hover:bg-surface-2 border-border text-text'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 truncate">
-                        <MapPin size={14} className={isSelected ? 'text-primary-soft' : 'text-text-3'} />
+                        <MapPin size={16} className={isSelected ? 'text-primary' : 'text-text-muted'} />
                         <div className="truncate">
-                          <h4 className="text-xs font-medium text-white truncate">{hs.name}</h4>
-                          <span className="text-[10px] text-text-3">
+                          <h4 className="text-xs sm:text-sm font-bold text-text truncate">{hs.name}</h4>
+                          <span className="text-[11px] text-text-muted">
                             {hs.category.toUpperCase().replace('_', ' ')} · {hs.lit ? 'Lit' : 'Safe'}
                           </span>
                         </div>
@@ -139,7 +143,7 @@ export const PeerMapPage: React.FC = () => {
           </div>
 
           {/* Right Column (8 cols on lg/xl): Full-Size Interactive Leaflet Map */}
-          <div className="order-1 lg:order-2 lg:col-span-8 h-[360px] sm:h-[420px] lg:h-[calc(100vh-140px)] rounded-card overflow-hidden border border-border shadow-2xl relative">
+          <div className="order-1 lg:order-2 lg:col-span-8 h-[360px] sm:h-[420px] lg:h-[calc(100vh-140px)] rounded-card overflow-hidden border border-border shadow-colored relative">
             <CommuteMap
               center={[selectedHotspot.lat, selectedHotspot.lng]}
               zoom={14}

@@ -41,7 +41,7 @@ export const ActiveDrive: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono relative bg-bg text-text">
+    <div className="flex-1 flex flex-col relative bg-bg text-text">
       <AppBar
         title="Active Drive Navigation"
         pill={<Pill variant="progress" label={isPaused ? 'PAUSED' : 'IN PROGRESS'} />}
@@ -49,9 +49,9 @@ export const ActiveDrive: React.FC = () => {
           <button
             onClick={() => navigate('/rider/scanner')}
             aria-label="Open Scanner"
-            className="w-10 h-10 rounded-inner bg-surface border border-border flex items-center justify-center text-primary-soft hover:bg-surface-2 transition-all"
+            className="min-w-[44px] min-h-[44px] rounded-button bg-surface border border-border flex items-center justify-center text-primary hover:bg-surface-2 transition-all active:scale-95 shadow-sm"
           >
-            <QrCode size={18} />
+            <QrCode size={20} />
           </button>
         }
       />
@@ -61,24 +61,24 @@ export const ActiveDrive: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Left Column (5 cols on lg/xl): Tasks, Passengers, Route Instructions */}
           <div className="lg:col-span-5 space-y-5">
-            {/* Current Active Task Card (UI Spec §9.8) */}
+            {/* Current Active Task Card */}
             <div className="space-y-1.5">
-              <span className="font-label text-text-3 text-[10px] uppercase">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 CURRENT NAVIGATION TASK
               </span>
-              <Card variant="glow" className="space-y-3.5">
+              <Card variant="default" className="space-y-4 p-5 sm:p-6 shadow-colored">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-title-m text-white text-base font-semibold">
+                  <h3 className="text-text text-base sm:text-lg font-extrabold">
                     Drop off #{ride.id.replace('ride-', '')}
                   </h3>
                   <Pill variant="progress" label={isPaused ? 'PAUSED' : 'IN PROGRESS'} />
                 </div>
 
-                <div className="text-xs text-text-2">
+                <div className="text-xs sm:text-sm text-text-muted font-medium">
                   08:15 – 08:30 · Corridor: Velachery → Guindy → IIT Madras
                 </div>
 
-                <FieldGrid columns={2} className="pt-2 border-t border-border/50">
+                <FieldGrid columns={2} className="pt-3 border-t border-border">
                   <FieldBlock
                     label="TIME TO DESTINATION"
                     value="11 min"
@@ -96,7 +96,7 @@ export const ActiveDrive: React.FC = () => {
             {/* Quick Scanner Launch Button */}
             <button
               onClick={() => navigate('/rider/scanner')}
-              className="w-full py-3.5 px-4 bg-primary hover:bg-primary/90 text-white rounded-btn text-xs font-semibold flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-98"
+              className="w-full min-h-[48px] py-3.5 px-4 bg-primary-gradient hover:opacity-95 text-white rounded-button text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-colored transition-transform active:scale-98"
             >
               <QrCode size={18} />
               <span>Verify Passenger Boarding Pass</span>
@@ -104,31 +104,31 @@ export const ActiveDrive: React.FC = () => {
 
             {/* Next Pickups Along Route */}
             <div className="space-y-2">
-              <span className="font-label text-text-2 text-[10px] uppercase">
+              <span className="text-text-muted font-bold text-xs uppercase tracking-wider">
                 UPCOMING CORRIDOR STOPS
               </span>
-              <div className="space-y-2">
-                <div className="p-3 bg-surface rounded-card border border-border flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-inner bg-primary/20 text-primary-soft flex items-center justify-center">
-                      <MapPin size={16} />
+              <div className="space-y-2.5">
+                <div className="p-3.5 bg-surface rounded-card border border-border flex items-center justify-between shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-button bg-primary/10 text-primary flex items-center justify-center">
+                      <MapPin size={18} />
                     </div>
                     <div>
-                      <h4 className="text-white text-xs font-semibold">Guindy Metro Bay 2</h4>
-                      <span className="text-[10px] text-text-3">2 commuters · +0.4 km detour</span>
+                      <h4 className="text-text text-xs sm:text-sm font-bold">Guindy Metro Bay 2</h4>
+                      <span className="text-xs text-text-muted">2 commuters · +0.4 km detour</span>
                     </div>
                   </div>
                   <Pill variant="waiting" label="2 WAITING" />
                 </div>
 
-                <div className="p-3 bg-surface rounded-card border border-border flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-inner bg-success/20 text-success flex items-center justify-center">
-                      <MapPin size={16} />
+                <div className="p-3.5 bg-surface rounded-card border border-border flex items-center justify-between shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-button bg-success/15 text-success flex items-center justify-center">
+                      <MapPin size={18} />
                     </div>
                     <div>
-                      <h4 className="text-white text-xs font-semibold">IIT Madras Main Gate</h4>
-                      <span className="text-[10px] text-text-3">Final destination</span>
+                      <h4 className="text-text text-xs sm:text-sm font-bold">IIT Madras Main Gate</h4>
+                      <span className="text-xs text-text-muted">Final destination</span>
                     </div>
                   </div>
                   <Pill variant="available" label="DESTINATION" />
@@ -139,9 +139,9 @@ export const ActiveDrive: React.FC = () => {
             {/* Pause Shift / Resume Shift Button */}
             <button
               onClick={() => setIsPaused(!isPaused)}
-              className="w-full py-3 px-4 rounded-btn bg-surface hover:bg-surface-2 border border-border text-xs text-text-2 hover:text-white flex items-center justify-center gap-2 transition-all"
+              className="w-full min-h-[44px] py-3 px-4 rounded-button bg-surface hover:bg-surface-2 border border-border text-xs sm:text-sm text-text font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
             >
-              {isPaused ? <Play size={16} className="text-success" /> : <Pause size={16} className="text-warn" />}
+              {isPaused ? <Play size={16} className="text-success" /> : <Pause size={16} className="text-accent" />}
               <span>{isPaused ? 'Resume Navigation Shift' : 'Pause Drive Shift'}</span>
             </button>
 
@@ -153,8 +153,8 @@ export const ActiveDrive: React.FC = () => {
                   onConfirm={handleCompleteDrive}
                 />
               ) : (
-                <div className="p-4 bg-success/20 border border-success text-success rounded-btn flex items-center justify-center gap-2 font-bold text-sm">
-                  <CheckCircle size={18} />
+                <div className="p-4 bg-success/15 border border-success/30 text-success rounded-card flex items-center justify-center gap-2 font-bold text-sm shadow-sm">
+                  <CheckCircle size={20} />
                   <span>Drive Completed · Fuel Cost Settled</span>
                 </div>
               )}
@@ -165,17 +165,17 @@ export const ActiveDrive: React.FC = () => {
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Navigation size={16} className="text-success animate-pulse" />
-                <span className="font-label text-white text-xs">
+                <Navigation size={18} className="text-primary animate-pulse" />
+                <span className="text-text font-bold text-xs sm:text-sm uppercase tracking-wider">
                   CORRIDOR NAVIGATION MAP
                 </span>
               </div>
-              <span className="text-[11px] text-text-3 font-mono">
+              <span className="text-xs text-text-muted font-medium">
                 Vehicle: Honda City (White)
               </span>
             </div>
 
-            <div className="w-full h-[380px] lg:h-[560px] rounded-card overflow-hidden border border-border relative shadow-2xl">
+            <div className="w-full h-[380px] lg:h-[560px] rounded-card overflow-hidden border border-border relative shadow-colored">
               <CommuteMap
                 center={[12.9815, 80.2245]}
                 zoom={14}

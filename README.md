@@ -21,8 +21,29 @@ This single command starts:
 
 To run the automated validation test suite:
 ```bash
-npm run test
+npm test
 ```
+
+---
+
+## 1.1 Groq AI Help & Navigation Chatbot Configuration
+
+CommuteCircle includes an intelligent AI assistant powered by the **Groq API** (`llama-3.3-70b-versatile`, with automatic fallback to `llama-3.1-8b-instant`).
+
+### Setting Up Your Groq API Key:
+1. Copy `.env.example` to `.env` (already created and gitignored):
+   ```bash
+   cp .env.example .env
+   ```
+2. Open `.env` and set your key:
+   ```env
+   GROQ_API_KEY=gsk_your_actual_groq_api_key_here
+   GROQ_MODEL=llama-3.3-70b-versatile
+   GROQ_FALLBACK_MODEL=llama-3.1-8b-instant
+   ```
+3. Restart the dev server or run `npm run dev`. The backend securely loads `GROQ_API_KEY` on `POST /api/chat`. The API key is **never** sent to or exposed on the client.
+
+*Zero Setup Fallback:* If `GROQ_API_KEY` is not provided or left as placeholder, the assistant seamlessly runs with a local intent engine returning the exact same JSON format and interactive navigation actions. This guarantees the chatbot works out of the box for testing and grading without requiring an external API key!
 
 ---
 

@@ -16,11 +16,11 @@ export const Toggle: React.FC<ToggleProps> = ({
   disabled = false,
 }) => {
   return (
-    <label className="flex items-center justify-between cursor-pointer group select-none gap-4">
+    <label className="flex items-center justify-between cursor-pointer group select-none gap-4 min-h-[44px] py-1">
       {(label || helper) && (
         <div className="flex flex-col">
-          {label && <span className="font-body-l text-white text-sm font-medium">{label}</span>}
-          {helper && <span className="font-caption text-text-3 text-xs">{helper}</span>}
+          {label && <span className="text-text text-sm font-semibold">{label}</span>}
+          {helper && <span className="text-text-muted text-xs">{helper}</span>}
         </div>
       )}
       <button
@@ -29,8 +29,8 @@ export const Toggle: React.FC<ToggleProps> = ({
         aria-checked={checked}
         disabled={disabled}
         onClick={() => onChange(!checked)}
-        className={`w-[52px] h-[30px] rounded-full p-1 transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary-soft shrink-0 ${
-          checked ? 'bg-success' : 'bg-surface-2'
+        className={`w-[52px] h-[30px] rounded-full p-1 transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0 ${
+          checked ? 'bg-primary' : 'bg-surface-3 border border-border'
         } ${disabled ? 'opacity-40 pointer-events-none' : ''}`}
       >
         <div

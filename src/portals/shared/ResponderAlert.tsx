@@ -30,7 +30,7 @@ export const ResponderAlert: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono relative bg-bg text-text card-sos-glow">
+    <div className="flex-1 flex flex-col relative bg-bg text-text card-sos-glow">
       <AppBar
         title="Community SOS Responder Alert"
         pill={<Pill variant="danger" label="EMERGENCY BROADCAST" />}
@@ -43,27 +43,27 @@ export const ResponderAlert: React.FC = () => {
           <div className="lg:col-span-5 space-y-5">
             {/* Title Banner */}
             <div className="space-y-1">
-              <span className="font-label text-danger uppercase tracking-wider text-xs">
+              <span className="font-label text-danger uppercase tracking-wider text-xs font-bold">
                 Nearby CommuteCircle Member Needs Help
               </span>
-              <h2 className="font-title-m text-white text-xl font-bold">
+              <h2 className="font-title-m text-text text-xl sm:text-2xl font-bold">
                 Emergency Dispatch Near Velachery Corridor
               </h2>
             </div>
 
             {/* Safety Warning Notice (PRD §3.9 I6: Call 112 first, do not confront anyone) */}
-            <div className="p-4 bg-danger/15 border border-danger/40 rounded-card space-y-2">
+            <div className="p-4 sm:p-5 bg-danger/10 border border-danger/30 rounded-card space-y-2">
               <div className="flex items-center gap-2 text-danger">
                 <AlertTriangle size={18} className="shrink-0" />
                 <span className="font-label text-danger font-bold text-xs">SAFETY DIRECTIVE</span>
               </div>
-              <p className="text-xs text-white leading-relaxed font-semibold">
+              <p className="text-xs text-danger font-semibold leading-relaxed">
                 Call 112 first. Do not confront anyone. Responding is strictly optional and should never endanger your personal safety.
               </p>
             </div>
 
             {/* Three Anonymous Field Blocks (UI Spec §10.4: DISTANCE, ETA, MESSAGE) */}
-            <div className="p-5 bg-surface rounded-card border border-border space-y-4 shadow-sm">
+            <div className="p-5 bg-surface rounded-card border border-border space-y-4 shadow-card">
               <FieldGrid columns={2}>
                 <FieldBlock
                   label="DISTANCE"
@@ -88,17 +88,17 @@ export const ResponderAlert: React.FC = () => {
             {acknowledged ? (
               <div className="space-y-3">
                 <div className="p-3.5 bg-success/15 border border-success/30 rounded-inner text-success text-xs font-semibold flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <Check size={16} /> YOU ACKNOWLEDGED THIS ALERT
+                  <span className="flex items-center gap-1.5 font-bold">
+                    <Check size={18} /> YOU ACKNOWLEDGED THIS ALERT
                   </span>
-                  <span>+2 Trust Earned</span>
+                  <span className="font-bold">+2 Trust Earned</span>
                 </div>
 
                 <button
                   onClick={() => window.open('tel:112')}
-                  className="w-full py-3.5 bg-danger text-white rounded-btn text-xs font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-danger/90 transition-all"
+                  className="w-full min-h-[48px] py-3.5 bg-danger text-white rounded-btn text-xs font-bold flex items-center justify-center gap-2 shadow-md hover:bg-danger/90 active:scale-98 transition-all"
                 >
-                  <PhoneCall size={16} />
+                  <PhoneCall size={18} />
                   <span>Call 112 with Incident Coordinates</span>
                 </button>
               </div>
@@ -107,7 +107,7 @@ export const ResponderAlert: React.FC = () => {
                 <Button
                   variant="primary"
                   onClick={handleAcknowledge}
-                  className="w-full h-14 bg-danger hover:bg-danger/90 text-white font-bold shadow-lg"
+                  className="w-full min-h-[48px] h-14 bg-danger hover:bg-danger/90 text-white font-bold shadow-lg"
                 >
                   Acknowledge & View Safe Directions
                 </Button>
@@ -115,7 +115,7 @@ export const ResponderAlert: React.FC = () => {
                 <Button
                   variant="secondary"
                   onClick={handleCantHelp}
-                  className="w-full text-text-3 hover:text-white"
+                  className="w-full min-h-[44px] text-text-muted hover:text-text font-semibold"
                 >
                   Can't Help Right Now
                 </Button>
@@ -126,10 +126,10 @@ export const ResponderAlert: React.FC = () => {
           {/* Right Column (7 cols): Real-Time Incident Map */}
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-label text-danger text-xs flex items-center gap-1.5">
+              <span className="font-label text-danger text-xs font-bold flex items-center gap-1.5">
                 <Navigation size={14} className="animate-spin text-danger" /> INCIDENT LOCATION RADAR
               </span>
-              <span className="text-[11px] text-text-3 font-mono">Anonymous Zone</span>
+              <span className="text-xs text-text-muted font-medium">Anonymous Zone</span>
             </div>
 
             <div className="w-full h-[380px] lg:h-[520px] rounded-card overflow-hidden border border-danger/40 relative shadow-2xl">

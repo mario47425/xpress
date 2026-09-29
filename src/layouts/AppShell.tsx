@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BottomNav } from './BottomNav';
 import { useAppStore } from '../store/useAppStore';
 import { WifiOff, ShieldAlert, AlertTriangle } from 'lucide-react';
+import { ChatWidget } from '../components/chat/ChatWidget';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -37,7 +38,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, hideNav = false })
   const showBottomNav = !hideNav && isTopLevel;
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 bg-bg text-text relative font-mono">
+    <div className="flex-1 flex flex-col min-h-0 bg-bg text-text relative font-sans">
       {/* Offline Status Persistent Banner (UI Spec §6.14) */}
       {isOffline && (
         <div className="w-full bg-warn/15 border-b border-warn/30 h-10 px-4 flex items-center justify-center gap-2 text-warn text-xs z-50 shrink-0">
@@ -50,12 +51,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children, hideNav = false })
       {activeSOS && (
         <div
           onClick={() => navigate('/sos/active')}
-          className="w-full bg-danger/20 border-b border-danger/40 h-10 px-4 sm:px-6 flex items-center justify-between text-danger text-xs z-50 shrink-0 cursor-pointer animate-pulse"
+          className="w-full bg-danger/15 border-b border-danger/30 h-10 px-4 sm:px-6 flex items-center justify-between text-danger text-xs z-50 shrink-0 cursor-pointer animate-pulse"
         >
           <div className="flex items-center gap-2 max-w-7xl mx-auto w-full justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 font-medium">
               <ShieldAlert size={16} />
-              <span className="font-pill text-danger">SOS ACTIVE · LIVE COMMUNITY EMERGENCY</span>
+              <span className="font-pill text-danger">SOS ACTIVE · LIVE EMERGENCY DISPATCH</span>
             </div>
             <span className="text-[11px] font-bold underline">OPEN EMERGENCY MONITOR ➔</span>
           </div>
@@ -71,25 +72,25 @@ export const AppShell: React.FC<AppShellProps> = ({ children, hideNav = false })
 
       {/* Deviation "Are You Okay?" Soft Check-In Modal / Sheet (UI Spec §10.2 & PRD §3.7) */}
       {checkInActive && (
-        <div className="fixed inset-0 bg-bg/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-text/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-surface max-w-lg w-full rounded-card border border-warn/40 p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-inner bg-warn/20 border border-warn/40 flex items-center justify-center text-warn shrink-0">
+              <div className="w-12 h-12 rounded-inner bg-warn/15 border border-warn/30 flex items-center justify-center text-warn shrink-0">
                 <AlertTriangle size={26} />
               </div>
               <div>
                 <span className="font-label text-warn text-[10px]">ROUTE DEVIATION DETECTED</span>
-                <h3 className="font-title-m text-white text-lg">Are you okay?</h3>
+                <h3 className="font-title-m text-text text-lg font-bold">Are you okay?</h3>
               </div>
             </div>
 
             <p className="text-xs text-text-2 leading-relaxed">
-              {checkInReason}. Please check in within <span className="text-white font-bold">{checkInCountdown}s</span>. If unanswered, your emergency contacts and community responders will be alerted automatically.
+              {checkInReason}. Please check in within <span className="text-text font-bold">{checkInCountdown}s</span>. If unanswered, your emergency contacts and community responders will be alerted automatically.
             </p>
 
             {/* Countdown Tick Progress */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[10px] text-text-3 font-mono">
+              <div className="flex justify-between text-[10px] text-text-3">
                 <span>COMMUNITY ESCALATION IN</span>
                 <span className="text-warn font-bold">{checkInCountdown} SECONDS</span>
               </div>
@@ -110,7 +111,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children, hideNav = false })
               </button>
               <button
                 onClick={() => respondCheckIn(false)}
-                className="h-12 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger font-semibold rounded-btn text-sm flex items-center justify-center transition-all"
+                className="h-12 bg-danger/10 hover:bg-danger/20 border border-danger/30 text-danger font-semibold rounded-btn text-sm flex items-center justify-center transition-all"
               >
                 Need Help · Trigger SOS
               </button>
@@ -119,12 +120,15 @@ export const AppShell: React.FC<AppShellProps> = ({ children, hideNav = false })
         </div>
       )}
 
-      {/* Bottom Navigation: Shown ONLY on mobile viewports (< lg), hidden on desktop where DesktopNavBar operates */}
+      {/* Bottom Navigation: Shown ONLY on mobile viewports (< lg) */}
       {showBottomNav && (
-        <div className="lg:hidden shrink-0 z-30">
+        <div className="lg:hidden shrink-0 z-30 pb-[env(safe-area-inset-bottom)]">
           <BottomNav />
         </div>
       )}
+
+      {/* CommuteCircle AI Assistant Chat Widget */}
+      <ChatWidget />
     </div>
   );
 };

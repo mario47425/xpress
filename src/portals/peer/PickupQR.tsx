@@ -77,7 +77,7 @@ export const PickupQR: React.FC = () => {
   const assignedCar = liveRide?.vehicle?.makeModel || 'Honda City';
 
   return (
-    <div className="flex-1 flex flex-col font-mono text-text">
+    <div className="flex-1 flex flex-col text-text">
       <AppBar
         title="Pickup Handshake"
         pill={<Pill variant="available" label="READY TO SCAN" />}
@@ -86,20 +86,20 @@ export const PickupQR: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center no-scrollbar">
         <div className="w-full max-w-xl space-y-6">
           <div className="text-center space-y-1">
-            <span className="font-label text-primary-soft text-xs uppercase tracking-wider">
+            <span className="text-primary font-bold text-xs uppercase tracking-wider">
               SHOW THIS TO YOUR RIDER AT HOTSPOT
             </span>
-            <h2 className="font-title-m text-white text-xl sm:text-2xl font-bold">
+            <h2 className="text-text text-xl sm:text-2xl font-extrabold tracking-tight">
               Cryptographic Journey Pass
             </h2>
-            <p className="text-xs text-text-3">
+            <p className="text-xs sm:text-sm text-text-muted">
               Server-signed ES256 single-use token · Automatically locks upon scan
             </p>
           </div>
 
           {/* QR Card with dedicated white scan tile and short code */}
           {activePass ? (
-            <div className="relative shadow-2xl">
+            <div className="relative shadow-colored">
               <QRCard
                 jwtToken={activePass.jwtToken}
                 shortCode={activePass.shortCode}
@@ -108,57 +108,57 @@ export const PickupQR: React.FC = () => {
 
               {/* Scanned Verification Overlay Checkmark */}
               {scannedCheckmark && (
-                <div className="absolute inset-0 bg-bg/95 backdrop-blur-md rounded-card flex flex-col items-center justify-center space-y-3 z-30 animate-in zoom-in-95 duration-200">
-                  <div className="w-16 h-16 rounded-full bg-success/20 border-2 border-success flex items-center justify-center text-success">
+                <div className="absolute inset-0 bg-surface/95 backdrop-blur-md rounded-card flex flex-col items-center justify-center space-y-3 z-30 animate-in zoom-in-95 duration-200">
+                  <div className="w-16 h-16 rounded-full bg-success/15 border-2 border-success flex items-center justify-center text-success">
                     <CheckCircle2 size={36} />
                   </div>
-                  <div className="font-title-m text-white text-lg font-bold">
+                  <div className="text-text text-lg sm:text-xl font-bold">
                     Pass Verified! Boarding Commenced
                   </div>
-                  <p className="text-xs text-text-2">
+                  <p className="text-xs sm:text-sm text-text-muted">
                     Exact drop-off point unlocked · Starting live SafeTrail navigation...
                   </p>
                 </div>
               )}
             </div>
           ) : (
-            <div className="p-8 bg-surface rounded-card border border-border text-center text-text-3">
+            <div className="p-8 bg-surface rounded-card border border-border text-center text-text-muted shadow-sm">
               Generating your cryptographic Journey Pass...
             </div>
           )}
 
           {/* Assigned Vehicle Identification Card */}
-          <Card variant="flat" className="p-4 flex items-center justify-between">
+          <Card variant="flat" className="p-4 sm:p-5 flex items-center justify-between shadow-colored">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-inner bg-primary/20 text-primary-soft flex items-center justify-center shrink-0">
-                <Car size={20} />
+              <div className="w-11 h-11 rounded-button bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Car size={22} />
               </div>
               <div>
-                <span className="font-label text-text-3 text-[10px] uppercase">
+                <span className="text-text-muted text-[10px] font-bold uppercase tracking-wider">
                   CONFIRM VEHICLE LICENSE PLATE
                 </span>
-                <div className="font-title-m text-white text-base font-bold">
+                <div className="text-text text-base sm:text-lg font-extrabold">
                   {assignedPlate}
                 </div>
-                <span className="text-xs text-text-2">{assignedCar} · White</span>
+                <span className="text-xs text-text-muted font-medium">{assignedCar} · White</span>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="font-label text-success text-[10px]">CORRIDOR PASS</span>
-              <div className="text-xs text-text-3 mt-1">Leg 1 of 1</div>
+              <span className="text-success font-bold text-xs">CORRIDOR PASS</span>
+              <div className="text-xs text-text-muted mt-1 font-medium">Leg 1 of 1</div>
             </div>
           </Card>
 
           {/* Wake Lock & Safety Info Banner */}
-          <div className="flex items-center justify-between text-xs text-text-3 px-1">
+          <div className="flex items-center justify-between text-xs text-text-muted px-1">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-success" />
+              <ShieldCheck size={16} className="text-success" />
               <span>Screen wake-lock held active</span>
             </span>
             <button
               onClick={() => navigate('/app')}
-              className="hover:text-white underline text-xs transition-colors"
+              className="min-h-[44px] text-primary hover:underline font-bold flex items-center"
             >
               Back to Home
             </button>

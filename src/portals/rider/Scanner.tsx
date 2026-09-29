@@ -144,7 +144,7 @@ export const RiderScanner: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-mono bg-bg text-text">
+    <div className="flex-1 flex flex-col bg-bg text-text">
       <AppBar
         title="Scan Journey Pass"
         pill={<Pill variant="available" label="CAMERA ACTIVE" />}
@@ -153,41 +153,41 @@ export const RiderScanner: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center no-scrollbar">
         <div className="w-full max-w-xl space-y-6">
           <div className="text-center space-y-1">
-            <span className="font-label text-primary-soft text-xs uppercase tracking-wider">
+            <span className="text-primary font-bold text-xs uppercase tracking-wider">
               HOTSPOT HANDSHAKE VERIFICATION
             </span>
-            <h2 className="font-title-m text-white text-xl sm:text-2xl font-bold">
+            <h2 className="text-text text-xl sm:text-2xl font-extrabold tracking-tight">
               Scan Passenger Pass
             </h2>
-            <p className="text-xs text-text-3">
+            <p className="text-xs sm:text-sm text-text-muted">
               Verifies co-presence and burns single-use cryptographic token
             </p>
           </div>
 
           {mode === 'camera' ? (
-            <div className="flex flex-col items-center justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-xl">
+            <div className="flex flex-col items-center justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-colored">
               {/* 260px Camera Scan Window */}
-              <div className="relative w-[260px] h-[260px] rounded-card border-2 border-primary-soft/40 overflow-hidden bg-black flex items-center justify-center shadow-2xl">
+              <div className="relative w-[260px] h-[260px] rounded-card border-2 border-primary/40 overflow-hidden bg-black flex items-center justify-center shadow-lg">
                 <div id="qr-reader-viewport" className="w-full h-full object-cover" />
-                <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary-soft" />
-                <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary-soft" />
-                <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary-soft" />
-                <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary-soft" />
-                <div className="absolute left-0 right-0 h-[2px] bg-success shadow-[0_0_8px_#0D9F5E] animate-scan-sweep pointer-events-none" />
+                <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
+                <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary" />
+                <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
+                <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
+                <div className="absolute left-0 right-0 h-[2px] bg-primary shadow-[0_0_8px_#7C3AED] animate-scan-sweep pointer-events-none" />
               </div>
 
               <div className="text-center space-y-1">
-                <p className="font-body-m text-white text-sm font-semibold">
+                <p className="text-text text-sm sm:text-base font-bold">
                   Point at passenger's Journey Pass QR
                 </p>
-                <p className="text-xs text-text-3">
+                <p className="text-xs text-text-muted">
                   Scans instantly within 30 cm distance
                 </p>
               </div>
 
               <Button
                 variant="secondary"
-                size="sm"
+                size="default"
                 onClick={() => setMode('manual')}
                 className="flex items-center gap-2"
               >
@@ -196,10 +196,10 @@ export const RiderScanner: React.FC = () => {
               </Button>
             </div>
           ) : (
-            <div className="flex flex-col justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-xl">
+            <div className="flex flex-col justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-colored">
               <div className="text-center space-y-1">
-                <h3 className="font-title-m text-white text-base font-semibold">Enter 6-Char Short Code</h3>
-                <p className="text-xs text-text-3">
+                <h3 className="text-text text-base sm:text-lg font-bold">Enter 6-Char Short Code</h3>
+                <p className="text-xs text-text-muted">
                   Type the alphanumeric code shown under passenger's QR card
                 </p>
               </div>
@@ -213,16 +213,16 @@ export const RiderScanner: React.FC = () => {
                 variant="primary"
                 onClick={handleManualSubmit}
                 disabled={manualCode.length < 4}
-                className="w-full text-xs font-semibold"
+                className="w-full text-xs sm:text-sm font-bold min-h-[44px]"
               >
                 Verify Code
               </Button>
 
               <Button
                 variant="ghost"
-                size="sm"
+                size="default"
                 onClick={() => setMode('camera')}
-                className="flex items-center justify-center gap-2 text-xs"
+                className="flex items-center justify-center gap-2 text-xs font-bold"
               >
                 <Camera size={16} />
                 <span>Switch back to camera scanner</span>
@@ -231,32 +231,32 @@ export const RiderScanner: React.FC = () => {
           )}
 
           {/* Sandbox Quick Testing Bar */}
-          <div className="p-4 bg-surface rounded-card border border-border space-y-2">
-            <span className="font-label text-text-3 text-[10px] flex items-center gap-1">
-              <Zap size={12} className="text-warn" /> QUICK SCAN TEST (SANDBOX 7-STATE VERIFIER)
+          <div className="p-4 bg-surface rounded-card border border-border space-y-2.5 shadow-sm">
+            <span className="text-text-muted font-bold text-[10px] uppercase tracking-wider flex items-center gap-1">
+              <Zap size={14} className="text-accent" /> QUICK SCAN TEST (SANDBOX 7-STATE VERIFIER)
             </span>
             <div className="grid grid-cols-4 gap-2 text-xs">
               <button
                 onClick={() => handleTestToken('valid')}
-                className="py-2 px-2 bg-success/20 hover:bg-success/30 border border-success/40 text-success rounded-inner font-semibold text-center transition-colors"
+                className="min-h-[44px] py-2 px-2 bg-success/15 hover:bg-success/25 border border-success/30 text-success rounded-button font-bold text-center transition-all active:scale-95"
               >
                 Valid
               </button>
               <button
                 onClick={() => handleTestToken('expired')}
-                className="py-2 px-2 bg-warn/20 hover:bg-warn/30 border border-warn/40 text-warn rounded-inner font-semibold text-center transition-colors"
+                className="min-h-[44px] py-2 px-2 bg-accent/15 hover:bg-accent/25 border border-accent/30 text-accent rounded-button font-bold text-center transition-all active:scale-95"
               >
                 Expired
               </button>
               <button
                 onClick={() => handleTestToken('used')}
-                className="py-2 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner font-semibold text-center transition-colors"
+                className="min-h-[44px] py-2 px-2 bg-danger/15 hover:bg-danger/25 border border-danger/30 text-danger rounded-button font-bold text-center transition-all active:scale-95"
               >
                 Replay
               </button>
               <button
                 onClick={() => handleTestToken('wrong')}
-                className="py-2 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner font-semibold text-center transition-colors"
+                className="min-h-[44px] py-2 px-2 bg-danger/15 hover:bg-danger/25 border border-danger/30 text-danger rounded-button font-bold text-center transition-all active:scale-95"
               >
                 Wrong
               </button>
@@ -275,7 +275,7 @@ export const RiderScanner: React.FC = () => {
           <div className="space-y-4">
             {scanResult.state === 'VALID' ? (
               <div className="space-y-4">
-                <div className="p-3.5 bg-success/15 border border-success/30 rounded-inner text-success text-xs font-semibold flex items-center gap-2">
+                <div className="p-3.5 bg-success/15 border border-success/30 rounded-card text-success text-xs sm:text-sm font-bold flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-success animate-ping" />
                   <span>PASSENGER VERIFIED · CO-PRESENCE OK</span>
                 </div>
@@ -290,14 +290,14 @@ export const RiderScanner: React.FC = () => {
                   isVerified={true}
                 />
 
-                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-1">
-                  <div className="flex justify-between text-text-2">
-                    <span>Fare Share:</span>
-                    <span className="text-white font-semibold">Rs 28</span>
+                <div className="p-3.5 bg-surface-2 rounded-card border border-border text-xs sm:text-sm space-y-1.5">
+                  <div className="flex justify-between text-text-muted">
+                    <span className="font-medium">Fare Share:</span>
+                    <span className="text-text font-bold">Rs 28</span>
                   </div>
-                  <div className="flex justify-between text-text-2">
-                    <span>Pickup Point:</span>
-                    <span className="text-white">Velachery Bypass Junction</span>
+                  <div className="flex justify-between text-text-muted">
+                    <span className="font-medium">Pickup Point:</span>
+                    <span className="text-text font-bold">Velachery Bypass Junction</span>
                   </div>
                 </div>
 
@@ -308,15 +308,15 @@ export const RiderScanner: React.FC = () => {
                 />
               </div>
             ) : scanResult.state === 'EXPIRED' ? (
-              <div className="p-5 bg-warn/15 border border-warn/40 rounded-card space-y-3 text-center">
-                <Clock size={36} className="text-warn mx-auto" />
-                <h4 className="font-title-m text-white text-base">Code Expired</h4>
-                <p className="text-xs text-text-2">
+              <div className="p-5 bg-accent/10 border border-accent/30 rounded-card space-y-3 text-center">
+                <Clock size={36} className="text-accent mx-auto" />
+                <h4 className="text-text text-base sm:text-lg font-bold">Code Expired</h4>
+                <p className="text-xs sm:text-sm text-text-muted">
                   Ask passenger to refresh their QR code. Journey Passes auto-refresh every 30 seconds for security.
                 </p>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size="default"
                   onClick={() => setSheetOpen(false)}
                   className="w-full"
                 >
@@ -324,15 +324,15 @@ export const RiderScanner: React.FC = () => {
                 </Button>
               </div>
             ) : scanResult.state === 'ALREADY_USED' ? (
-              <div className="p-5 bg-danger/15 border border-danger/40 rounded-card space-y-3 text-center">
+              <div className="p-5 bg-danger/10 border border-danger/30 rounded-card space-y-3 text-center">
                 <AlertTriangle size={36} className="text-danger mx-auto" />
-                <h4 className="font-title-m text-danger text-base">Already Used</h4>
-                <p className="text-xs text-text-2">
+                <h4 className="text-danger text-base sm:text-lg font-bold">Already Used</h4>
+                <p className="text-xs sm:text-sm text-text-muted">
                   This code has already been scanned and verified. Screenshot replay attacks are blocked.
                 </p>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size="default"
                   onClick={() => setSheetOpen(false)}
                   className="w-full"
                 >
@@ -340,15 +340,15 @@ export const RiderScanner: React.FC = () => {
                 </Button>
               </div>
             ) : scanResult.state === 'WRONG_RIDER' ? (
-              <div className="p-5 bg-danger/15 border border-danger/40 rounded-card space-y-3 text-center">
+              <div className="p-5 bg-danger/10 border border-danger/30 rounded-card space-y-3 text-center">
                 <XCircle size={36} className="text-danger mx-auto" />
-                <h4 className="font-title-m text-danger text-base">Not Assigned to this Ride</h4>
-                <p className="text-xs text-text-2">
+                <h4 className="text-danger text-base sm:text-lg font-bold">Not Assigned to this Ride</h4>
+                <p className="text-xs sm:text-sm text-text-muted">
                   You are not the designated rider for this journey leg. Passenger details are hidden for privacy.
                 </p>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size="default"
                   onClick={() => setSheetOpen(false)}
                   className="w-full"
                 >
@@ -356,13 +356,13 @@ export const RiderScanner: React.FC = () => {
                 </Button>
               </div>
             ) : (
-              <div className="p-5 bg-danger/15 border border-danger/40 rounded-card space-y-3 text-center">
+              <div className="p-5 bg-danger/10 border border-danger/30 rounded-card space-y-3 text-center">
                 <ShieldAlert size={36} className="text-danger mx-auto" />
-                <h4 className="font-title-m text-danger text-base">{scanResult.state}</h4>
-                <p className="text-xs text-text-2">{scanResult.message}</p>
+                <h4 className="text-danger text-base sm:text-lg font-bold">{scanResult.state}</h4>
+                <p className="text-xs sm:text-sm text-text-muted">{scanResult.message}</p>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size="default"
                   onClick={() => setSheetOpen(false)}
                   className="w-full"
                 >
