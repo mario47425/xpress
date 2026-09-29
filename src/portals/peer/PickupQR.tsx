@@ -5,7 +5,7 @@ import { Pill } from '../../components/primitives/Pill';
 import { QRCard } from '../../components/signature/QRCard';
 import { Card } from '../../components/primitives/Card';
 import { useAppStore } from '../../store/useAppStore';
-import { ShieldCheck, Car, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Car, CheckCircle2, Navigation, AlertCircle } from 'lucide-react';
 
 export const PickupQR: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const PickupQR: React.FC = () => {
   const [wakeLockActive, setWakeLockActive] = useState(false);
   const [scannedCheckmark, setScannedCheckmark] = useState(false);
 
-  // Screen Wake Lock API (PRD §9 & UI Spec §15)
+  // Screen Wake Lock API
   useEffect(() => {
     let wakeLock: any = null;
     const requestWakeLock = async () => {
@@ -77,73 +77,92 @@ export const PickupQR: React.FC = () => {
   const assignedCar = liveRide?.vehicle?.makeModel || 'Honda City';
 
   return (
-    <div className="flex-1 flex flex-col font-mono">
+    <div className="flex-1 flex flex-col font-mono text-text">
       <AppBar
         title="Pickup Handshake"
         pill={<Pill variant="available" label="READY TO SCAN" />}
       />
 
-      <div className="p-5 space-y-5 pb-8 flex-1 flex flex-col justify-between">
-        <div className="space-y-4">
-          <div className="text-center">
-            <span className="font-label text-primary-soft text-xs uppercase">
-              Show this to your rider
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center no-scrollbar">
+        <div className="w-full max-w-xl space-y-6">
+          <div className="text-center space-y-1">
+            <span className="font-label text-primary-soft text-xs uppercase tracking-wider">
+              SHOW THIS TO YOUR RIDER AT HOTSPOT
             </span>
-            <h2 className="font-title-m text-white text-lg font-bold">
-              Journey Pass Handshake
+            <h2 className="font-title-m text-white text-xl sm:text-2xl font-bold">
+              Cryptographic Journey Pass
             </h2>
+            <p className="text-xs text-text-3">
+              Server-signed ES256 single-use token · Automatically locks upon scan
+            </p>
           </div>
 
           {/* QR Card with dedicated white scan tile and short code */}
           {activePass ? (
-            <div className="relative">
+            <div className="relative shadow-2xl">
               <QRCard
                 jwtToken={activePass.jwtToken}
                 shortCode={activePass.shortCode}
                 onRefresh={refreshPass}
               />
 
-              {/* Scanned Success Green Check Overlay */}
+              {/* Scanned Verification Overlay Checkmark */}
               {scannedCheckmark && (
-                <div className="absolute inset-0 bg-success/90 backdrop-blur-sm rounded-card flex flex-col items-center justify-center text-white space-y-2 animate-in zoom-in-95 duration-200">
-                  <CheckCircle2 size={56} className="animate-bounce" />
-                  <span className="font-title-m font-bold text-lg">PASS SCANNED</span>
-                  <span className="text-xs text-white/90 font-mono">Boarding verified by rider</span>
+                <div className="absolute inset-0 bg-bg/95 backdrop-blur-md rounded-card flex flex-col items-center justify-center space-y-3 z-30 animate-in zoom-in-95 duration-200">
+                  <div className="w-16 h-16 rounded-full bg-success/20 border-2 border-success flex items-center justify-center text-success">
+                    <CheckCircle2 size={36} />
+                  </div>
+                  <div className="font-title-m text-white text-lg font-bold">
+                    Pass Verified! Boarding Commenced
+                  </div>
+                  <p className="text-xs text-text-2">
+                    Exact drop-off point unlocked · Starting live SafeTrail navigation...
+                  </p>
                 </div>
               )}
             </div>
           ) : (
-            <Card variant="flat" className="h-64 flex items-center justify-center text-xs text-text-3">
-              Generating Signed Journey Pass...
-            </Card>
+            <div className="p-8 bg-surface rounded-card border border-border text-center text-text-3">
+              Generating your cryptographic Journey Pass...
+            </div>
           )}
 
-          {/* Mutual Verification Vehicle Plate Card (PRD §3.7 G8) */}
-          <div className="p-4 bg-surface rounded-card border border-primary-soft/40 space-y-2">
-            <div className="flex items-center gap-2">
-              <Car size={18} className="text-primary-soft" />
-              <span className="font-label text-primary-soft">MUTUAL VEHICLE CHECK</span>
-            </div>
-            <div className="flex items-center justify-between">
+          {/* Assigned Vehicle Identification Card */}
+          <Card variant="flat" className="p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-inner bg-primary/20 text-primary-soft flex items-center justify-center shrink-0">
+                <Car size={20} />
+              </div>
               <div>
-                <div className="text-white text-base font-bold tracking-wider font-mono">
-                  Match: {assignedPlate}
+                <span className="font-label text-text-3 text-[10px] uppercase">
+                  CONFIRM VEHICLE LICENSE PLATE
+                </span>
+                <div className="font-title-m text-white text-base font-bold">
+                  {assignedPlate}
                 </div>
-                <div className="text-xs text-text-2">{assignedCar} (Sedan)</div>
-              </div>
-              <div className="text-right">
-                <span className="font-label text-text-3 text-[10px]">RIDE CODE</span>
-                <div className="text-white font-bold text-base font-mono">
-                  {liveRide?.rideCode || '4821'}
-                </div>
+                <span className="text-xs text-text-2">{assignedCar} · White</span>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Wake Lock Status Indicator */}
-        <div className="text-center text-[10px] text-text-3 font-mono">
-          Screen wake lock: <span className={wakeLockActive ? 'text-success' : 'text-text-2'}>{wakeLockActive ? 'Active (Screen stays awake)' : 'Inactive'}</span>
+            <div className="text-right">
+              <span className="font-label text-success text-[10px]">CORRIDOR PASS</span>
+              <div className="text-xs text-text-3 mt-1">Leg 1 of 1</div>
+            </div>
+          </Card>
+
+          {/* Wake Lock & Safety Info Banner */}
+          <div className="flex items-center justify-between text-xs text-text-3 px-1">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck size={14} className="text-success" />
+              <span>Screen wake-lock held active</span>
+            </span>
+            <button
+              onClick={() => navigate('/app')}
+              className="hover:text-white underline text-xs transition-colors"
+            >
+              Back to Home
+            </button>
+          </div>
         </div>
       </div>
     </div>

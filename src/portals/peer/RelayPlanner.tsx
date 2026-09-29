@@ -6,7 +6,7 @@ import { Button } from '../../components/primitives/Button';
 import { Pill } from '../../components/primitives/Pill';
 import { Timeline } from '../../components/signature/Timeline';
 import { useAppStore } from '../../store/useAppStore';
-import { Route, ShieldCheck, Zap, DollarSign, Clock, ArrowRight } from 'lucide-react';
+import { Route, ShieldCheck, Zap, DollarSign, Clock, ArrowRight, Layers, Sparkles } from 'lucide-react';
 import { PassLeg } from '../../types';
 
 export const RelayPlanner: React.FC = () => {
@@ -173,97 +173,116 @@ export const RelayPlanner: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col font-mono bg-bg text-text">
       <AppBar
-        title="Relay Planner"
-        pill={<Pill variant="available" label="3 ROUTES FOUND" />}
+        title="Multimodal Relay Planner"
+        pill={<Pill variant="available" label="3 ROUTES DISCOVERED" />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-5 pb-8 no-scrollbar">
-        {/* Origin & Destination Card */}
-        <Card variant="flat" className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Route size={16} className="text-primary-soft" />
-            <span className="font-label text-primary-soft">CORRIDOR SELECTION</span>
-          </div>
-          <div className="space-y-2">
-            <div className="p-2.5 bg-surface-2 rounded-inner border border-border text-xs">
-              <span className="text-text-3 font-label text-[10px]">ORIGIN</span>
-              <div className="text-white font-semibold">{origin}</div>
-            </div>
-            <div className="p-2.5 bg-surface-2 rounded-inner border border-border text-xs">
-              <span className="text-text-3 font-label text-[10px]">DESTINATION</span>
-              <div className="text-white font-semibold">{destination}</div>
-            </div>
-          </div>
-        </Card>
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
+        {/* Desktop 12-Column Responsive Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column (5 cols): Origin, Destination, Route Options */}
+          <div className="lg:col-span-5 space-y-5">
+            {/* Origin & Destination Card */}
+            <Card variant="flat" className="space-y-3 p-5">
+              <div className="flex items-center gap-2">
+                <Route size={16} className="text-primary-soft" />
+                <span className="font-label text-primary-soft text-xs">CHENNAI CORRIDOR SELECTION</span>
+              </div>
+              <div className="space-y-2">
+                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs">
+                  <span className="text-text-3 font-label text-[10px]">ORIGIN</span>
+                  <div className="text-white font-semibold">{origin}</div>
+                </div>
+                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs">
+                  <span className="text-text-3 font-label text-[10px]">DESTINATION</span>
+                  <div className="text-white font-semibold">{destination}</div>
+                </div>
+              </div>
+            </Card>
 
-        {/* Three Plan Options (UI Spec §8.7: Cheapest, Fastest, Safest) */}
-        <div className="space-y-2.5">
-          <span className="font-label text-text-2">CHOOSE COMMUTE STRATEGY</span>
-          <div className="grid grid-cols-3 gap-2">
-            {(['fastest', 'cheapest', 'safest'] as const).map((key) => {
-              const p = plans[key];
-              const isSel = selectedPlan === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setSelectedPlan(key)}
-                  className={`p-3 rounded-card border text-left flex flex-col justify-between transition-all ${
-                    isSel
-                      ? 'bg-primary/20 border-primary-soft text-white shadow-lg'
-                      : 'bg-surface border-border text-text-2 hover:bg-surface-2'
-                  }`}
-                >
-                  <span
-                    className={`font-label text-[9px] font-bold ${
-                      key === 'fastest'
-                        ? 'text-primary-soft'
-                        : key === 'cheapest'
-                        ? 'text-success'
-                        : 'text-warn'
-                    }`}
-                  >
-                    {p.badge}
-                  </span>
-                  <div className="my-1.5 font-title-m text-white text-base font-bold">
-                    {p.totalTime}
-                  </div>
-                  <div className="text-xs text-text-3">Rs {p.totalCost}</div>
-                </button>
-              );
-            })}
+            {/* Three Plan Options */}
+            <div className="space-y-3">
+              <span className="font-label text-text-2 text-xs">SELECT ITINERARY PROFILE</span>
+              <div className="space-y-2.5">
+                {(['fastest', 'cheapest', 'safest'] as const).map((planKey) => {
+                  const p = plans[planKey];
+                  const isSelected = selectedPlan === planKey;
+                  return (
+                    <div
+                      key={planKey}
+                      onClick={() => setSelectedPlan(planKey)}
+                      className={`p-4 rounded-card border transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-primary/15 border-primary shadow-md'
+                          : 'bg-surface hover:bg-surface-2 border-border'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-title-m text-white text-sm font-semibold">
+                          {p.title}
+                        </span>
+                        <Pill
+                          variant={isSelected ? 'progress' : 'neutral'}
+                          label={p.badge}
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-4 text-xs text-text-2 mt-2 font-mono">
+                        <span className="flex items-center gap-1 text-white">
+                          <Clock size={13} className="text-primary-soft" />
+                          <span>{p.totalTime}</span>
+                        </span>
+                        <span className="flex items-center gap-1 text-white">
+                          <DollarSign size={13} className="text-success" />
+                          <span>Rs {p.totalCost} total</span>
+                        </span>
+                        <span className="flex items-center gap-1 text-success">
+                          <ShieldCheck size={13} />
+                          <span>{p.safetyScore}% Safe</span>
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Create Pass Action Button */}
+            <Button
+              variant="primary"
+              size="lg"
+              loading={isCreating}
+              onClick={handleCreatePass}
+              className="w-full text-sm font-semibold flex items-center justify-center gap-2 shadow-xl"
+            >
+              <Sparkles size={16} />
+              <span>Generate Single Unified QR Pass</span>
+            </Button>
+          </div>
+
+          {/* Right Column (7 cols): Multimodal Leg-by-Leg Itinerary Timeline */}
+          <div className="lg:col-span-7 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="font-label text-text-2 text-xs uppercase">
+                MULTIMODAL LEG-BY-LEG ITINERARY ({currentPlan.legs.length} LEGS)
+              </span>
+              <span className="text-[11px] text-text-3 font-mono">
+                Auto-Transitions upon Boarding
+              </span>
+            </div>
+
+            <Card variant="flat" className="p-5 sm:p-6 space-y-4">
+              <Timeline legs={currentPlan.legs} currentLegIndex={0} />
+
+              <div className="p-3.5 bg-surface-2 rounded-inner border border-border/60 text-xs text-text-2 space-y-1">
+                <span className="text-white font-semibold">Unified Single QR Pass:</span>
+                <p className="text-[11px] text-text-3 leading-relaxed">
+                  Your server-signed ES256 Journey Pass contains cryptographically sequenced sub-tokens for each leg. Scanning at Leg 1 automatically unlocks the Leg 2 transfer hub.
+                </p>
+              </div>
+            </Card>
           </div>
         </div>
-
-        {/* Selected Plan Details & Relay Timeline (UI Spec §8.8) */}
-        <Card variant="glow" className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="font-label text-primary-soft uppercase">
-              {currentPlan.title}
-            </span>
-            <div className="flex items-center gap-1 text-success text-xs font-semibold">
-              <ShieldCheck size={14} />
-              <span>Safety {currentPlan.safetyScore}%</span>
-            </div>
-          </div>
-
-          <Timeline legs={currentPlan.legs} currentLegIndex={0} />
-
-          <div className="pt-2 border-t border-border/50 flex items-center justify-between text-xs font-mono">
-            <span className="text-text-2">Total Combined Fare:</span>
-            <span className="text-white font-bold text-base">Rs {currentPlan.totalCost}</span>
-          </div>
-        </Card>
-
-        {/* Primary Action Button: Create Journey Pass */}
-        <Button
-          variant="primary"
-          onClick={handleCreatePass}
-          loading={isCreating}
-          className="w-full text-base font-semibold flex items-center justify-center gap-2"
-        >
-          <span>Issue Signed Journey Pass</span>
-          <ArrowRight size={18} />
-        </Button>
       </div>
     </div>
   );

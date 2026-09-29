@@ -5,7 +5,17 @@ import { Button } from '../../components/primitives/Button';
 import { Pill } from '../../components/primitives/Pill';
 import { BottomSheet } from '../../components/primitives/BottomSheet';
 import { useAppStore } from '../../store/useAppStore';
-import { Wallet as WalletIcon, ArrowUpRight, ArrowDownLeft, Plus, History, HelpCircle } from 'lucide-react';
+import {
+  Wallet as WalletIcon,
+  ArrowUpRight,
+  ArrowDownLeft,
+  Plus,
+  History,
+  HelpCircle,
+  ShieldCheck,
+  TrendingDown,
+  CreditCard,
+} from 'lucide-react';
 
 export const PeerWalletPage: React.FC = () => {
   const { wallet, topUpWallet } = useAppStore();
@@ -16,10 +26,11 @@ export const PeerWalletPage: React.FC = () => {
 
   const balance = wallet?.balance ?? 412;
   const ledger = wallet?.ledger ?? [
-    { id: 'tx-1', timestamp: 'Yesterday 17:30', description: 'UPI Top-up', amount: 500, type: 'topup' },
+    { id: 'tx-1', timestamp: 'Yesterday 17:30', description: 'UPI Top-up (Sandbox)', amount: 500, type: 'topup' },
     { id: 'tx-2', timestamp: 'Yesterday 09:12', description: 'Ride to IIT Madras share', amount: -28, type: 'fare_debit' },
     { id: 'tx-3', timestamp: '27 Sep 18:05', description: 'Ride from Campus share', amount: -30, type: 'fare_debit' },
     { id: 'tx-4', timestamp: '26 Sep 08:45', description: 'Relay pass metro leg', amount: -15, type: 'fare_debit' },
+    { id: 'tx-5', timestamp: '25 Sep 18:15', description: 'Ride to Velachery share', amount: -28, type: 'fare_debit' },
   ];
 
   const handleTopUp = async () => {
@@ -34,100 +45,145 @@ export const PeerWalletPage: React.FC = () => {
       <AppBar
         title="Wallet & Fare Split"
         showBack={false}
-        pill={<Pill variant="available" label="UPI LINKED" />}
+        pill={<Pill variant="available" label="UPI AUTO-SPLIT" />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-5 pb-8 no-scrollbar">
-        {/* Balance Hero Card */}
-        <Card variant="glow" className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="font-label text-primary-soft flex items-center gap-1.5">
-              <WalletIcon size={16} /> COMMUTECIRCLE BALANCE
-            </span>
-            <Pill variant="progress" label="HEALTHY" />
-          </div>
-
-          <div className="flex items-baseline gap-2">
-            <span className="font-display-l text-white text-4xl font-bold">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
+        {/* Top Stats Overview Row on Desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Card variant="glow" className="p-5 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-label text-primary-soft text-xs flex items-center gap-1.5">
+                <WalletIcon size={15} /> AVAILABLE BALANCE
+              </span>
+              <Pill variant="progress" label="HEALTHY" />
+            </div>
+            <div className="font-display-l text-white text-3xl sm:text-4xl font-bold">
               Rs {balance}
-            </span>
-            <span className="text-xs text-text-3">Available</span>
-          </div>
-
-          <Button
-            variant="primary"
-            onClick={() => setTopUpOpen(true)}
-            className="w-full text-sm font-semibold flex items-center justify-center gap-2"
-          >
-            <Plus size={16} />
-            <span>Top Up via Mock UPI</span>
-          </Button>
-        </Card>
-
-        {/* Transparent Fair-Fare Reason Card (PRD §3.10 J1 & UI Spec §8.11) */}
-        <div className="space-y-2">
-          <span className="font-label text-text-2 flex items-center gap-1">
-            <HelpCircle size={14} className="text-primary-soft" /> HOW YOUR FARE IS CALCULATED
-          </span>
-          <Card variant="flat" className="space-y-3">
-            <div className="text-xs text-white font-semibold leading-relaxed">
-              "Your fare is Rs 28 because you shared 6.2 km and added 0.4 km detour offset."
             </div>
-            <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-1.5 font-mono">
-              <div className="flex justify-between text-text-2">
-                <span>Base Fuel & Toll Share:</span>
-                <span className="text-white">Rs 24</span>
-              </div>
-              <div className="flex justify-between text-text-2">
-                <span>Detour Kilometer Offset (0.4 km):</span>
-                <span className="text-white">Rs 3</span>
-              </div>
-              <div className="flex justify-between text-text-2">
-                <span>Platform Maintenance Fee (5%):</span>
-                <span className="text-white">Rs 1</span>
-              </div>
+            <span className="text-[11px] text-text-3">Auto-deducted per completed ride pass</span>
+          </Card>
+
+          <Card variant="flat" className="p-5 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-label text-text-3 text-xs flex items-center gap-1.5">
+                <TrendingDown size={15} className="text-success" /> MONTHLY TRANSIT SAVED
+              </span>
             </div>
+            <div className="font-display-l text-success text-3xl sm:text-4xl font-bold">
+              Rs 412
+            </div>
+            <span className="text-[11px] text-text-3">Saved vs commercial app surge pricing</span>
+          </Card>
+
+          <Card variant="flat" className="p-5 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-label text-text-3 text-xs flex items-center gap-1.5">
+                <CreditCard size={15} className="text-warn" /> PAYMENT RAILS
+              </span>
+              <span className="font-pill text-[10px] text-success">NPCI UPI</span>
+            </div>
+            <div className="font-title-m text-white text-xl sm:text-2xl font-bold">
+              anitha@okhdfc
+            </div>
+            <span className="text-[11px] text-text-3">Instant escrow release upon QR scan</span>
           </Card>
         </div>
 
-        {/* Double-Entry Transaction Ledger Rows (PRD §3.10 J2) */}
-        <div className="space-y-2">
-          <span className="font-label text-text-2 flex items-center gap-1.5">
-            <History size={14} /> TRANSACTION LEDGER
-          </span>
-          <div className="space-y-2">
-            {ledger.map((tx: any) => {
-              const isPositive = tx.amount > 0;
-              return (
-                <div
-                  key={tx.id}
-                  className="p-3 bg-surface rounded-inner border border-border flex items-center justify-between text-xs"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                        isPositive
-                          ? 'bg-success/20 text-success'
-                          : 'bg-surface-2 text-text-3'
+        {/* Responsive 12-Column Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column (7 cols): Double-Entry Transaction Ledger */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-label text-text-2 text-xs flex items-center gap-1.5">
+                <History size={14} /> DOUBLE-ENTRY TRANSACTION LEDGER
+              </span>
+              <span className="text-[11px] text-text-3 font-mono">
+                {ledger.length} ENTRIES RECORDED
+              </span>
+            </div>
+
+            <div className="space-y-2.5">
+              {ledger.map((tx: any) => {
+                const isPositive = tx.amount > 0;
+                return (
+                  <div
+                    key={tx.id}
+                    className="p-3.5 bg-surface hover:bg-surface-2 rounded-inner border border-border flex items-center justify-between text-xs transition-colors shadow-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                          isPositive
+                            ? 'bg-success/20 text-success'
+                            : 'bg-surface-2 text-text-3'
+                        }`}
+                      >
+                        {isPositive ? <ArrowDownLeft size={18} /> : <ArrowUpRight size={18} />}
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">{tx.description}</div>
+                        <div className="text-[11px] text-text-3 font-mono">{tx.timestamp}</div>
+                      </div>
+                    </div>
+                    <span
+                      className={`font-semibold font-mono text-base ${
+                        isPositive ? 'text-success' : 'text-white'
                       }`}
                     >
-                      {isPositive ? <ArrowDownLeft size={16} /> : <ArrowUpRight size={16} />}
-                    </div>
-                    <div>
-                      <div className="text-white font-semibold">{tx.description}</div>
-                      <div className="text-[10px] text-text-3 font-mono">{tx.timestamp}</div>
-                    </div>
+                      {isPositive ? `+Rs ${tx.amount}` : `-Rs ${Math.abs(tx.amount)}`}
+                    </span>
                   </div>
-                  <span
-                    className={`font-semibold font-mono text-sm ${
-                      isPositive ? 'text-success' : 'text-white'
-                    }`}
-                  >
-                    {isPositive ? `+Rs ${tx.amount}` : `-Rs ${Math.abs(tx.amount)}`}
-                  </span>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Column (5 cols): Fair-Fare Breakdown & Quick Top-Up */}
+          <div className="lg:col-span-5 xl:col-span-4 space-y-6">
+            {/* Quick Top-Up Card */}
+            <Card variant="flat" className="p-5 space-y-3">
+              <span className="font-label text-text-2 text-xs">ADD FUNDS TO RIDE POOL</span>
+              <p className="text-xs text-text-3">
+                Load mock UPI funds to auto-settle upcoming ghost commutes:
+              </p>
+              <Button
+                variant="primary"
+                onClick={() => setTopUpOpen(true)}
+                className="w-full text-xs font-semibold flex items-center justify-center gap-2 shadow-md"
+              >
+                <Plus size={15} />
+                <span>Top Up Balance via Mock UPI</span>
+              </Button>
+            </Card>
+
+            {/* Transparent Fair-Fare Reason Card */}
+            <Card variant="flat" className="p-5 space-y-3">
+              <span className="font-label text-primary-soft text-xs flex items-center gap-1">
+                <HelpCircle size={14} /> HOW YOUR COMMUTE FARE IS CALCULATED
+              </span>
+              <div className="text-xs text-white font-medium leading-relaxed">
+                "Your ride fare is strictly calculated to reimburse vehicle fuel and detour without commercial profit."
+              </div>
+              <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-2 font-mono">
+                <div className="flex justify-between text-text-2">
+                  <span>Base Fuel & Toll Share (6.2 km):</span>
+                  <span className="text-white font-semibold">Rs 24</span>
                 </div>
-              );
-            })}
+                <div className="flex justify-between text-text-2">
+                  <span>Detour Km Offset (0.4 km):</span>
+                  <span className="text-white font-semibold">Rs 3</span>
+                </div>
+                <div className="flex justify-between text-text-2">
+                  <span>Platform Operations (5%):</span>
+                  <span className="text-white font-semibold">Rs 1</span>
+                </div>
+                <div className="pt-1.5 border-t border-border flex justify-between text-white font-bold">
+                  <span>Total Settled Share:</span>
+                  <span className="text-success">Rs 28</span>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>

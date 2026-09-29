@@ -5,7 +5,7 @@ import { Pill } from '../../components/primitives/Pill';
 import { TrustRing } from '../../components/signature/TrustRing';
 import { TickProgress } from '../../components/signature/TickProgress';
 import { useAppStore } from '../../store/useAppStore';
-import { Activity, ShieldCheck, Gauge, CheckCircle } from 'lucide-react';
+import { Activity, ShieldCheck, Gauge, CheckCircle, Car, Award } from 'lucide-react';
 
 export const RiderTrustProfile: React.FC = () => {
   const { currentUser } = useAppStore();
@@ -35,61 +35,114 @@ export const RiderTrustProfile: React.FC = () => {
         pill={<Pill variant="progress" label="GUARDIAN TIER" />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-5 pb-8 no-scrollbar">
-        {/* Trust Score Ring */}
-        <Card variant="glow" className="p-5">
-          <TrustRing
-            score={user.trustScore}
-            tier={user.tier}
-            breakdown={user.trustBreakdown}
-          />
-        </Card>
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
+        {/* Desktop 12-Column Responsive Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column (6 cols): Trust Score Ring & Breakdown */}
+          <div className="lg:col-span-6 space-y-6">
+            <Card variant="glow" className="p-5 sm:p-6">
+              <TrustRing
+                score={user.trustScore}
+                tier={user.tier}
+                breakdown={user.trustBreakdown}
+              />
 
-        {/* Driving Smoothness Component (UI Spec §9.10 & PRD §3.7 G10) */}
-        <div className="space-y-2">
-          <span className="font-label text-success flex items-center gap-1.5">
-            <Activity size={14} /> MOTION SENSOR DRIVING SMOOTHNESS
-          </span>
-          <Card variant="flat" className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-white text-base font-bold">96 / 100 Smoothness</div>
-                <div className="text-xs text-text-2">Zero hard braking or aggressive acceleration</div>
+              <div className="mt-5 pt-4 border-t border-border/50 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-text-2 font-label">GUARDIAN STANDING</span>
+                  <span className="text-success font-semibold">62 Clean Rides Recorded</span>
+                </div>
+                <TickProgress
+                  value={1}
+                  totalTicks={28}
+                  color="success"
+                  leftLabel="TRUSTED"
+                  rightLabel="GUARDIAN (ACHIEVED)"
+                />
               </div>
-              <Gauge size={28} className="text-success" />
+            </Card>
+
+            {/* Vehicle & Driving Credentials Card */}
+            <Card variant="flat" className="p-5 space-y-3">
+              <span className="font-label text-text-2 text-xs">VERIFIED VEHICLE CREDENTIALS</span>
+              <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs space-y-2 font-mono">
+                <div className="flex justify-between text-text-2">
+                  <span>Vehicle:</span>
+                  <span className="text-white font-semibold">Honda City 1.5 i-VTEC (White)</span>
+                </div>
+                <div className="flex justify-between text-text-2">
+                  <span>License Plate:</span>
+                  <span className="text-white font-semibold">TN 09 AB 4821</span>
+                </div>
+                <div className="flex justify-between text-text-2">
+                  <span>RC Verification:</span>
+                  <span className="text-success font-semibold">Vaahan DB Verified ✓</span>
+                </div>
+                <div className="flex justify-between text-text-2">
+                  <span>Comprehensive Insurance:</span>
+                  <span className="text-success font-semibold">Valid until Oct 2027 ✓</span>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Right Column (6 cols): Driving Smoothness & Safety Audit Log */}
+          <div className="lg:col-span-6 space-y-6">
+            {/* Driving Smoothness Component (UI Spec §9.10 & PRD §3.7 G10) */}
+            <div className="space-y-3">
+              <span className="font-label text-success text-xs flex items-center gap-1.5">
+                <Activity size={14} /> MOTION SENSOR DRIVING SMOOTHNESS
+              </span>
+              <Card variant="flat" className="p-5 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white text-xl sm:text-2xl font-bold">96 / 100 Smoothness</div>
+                    <div className="text-xs text-text-2 mt-0.5">
+                      Zero hard braking, rapid acceleration, or sharp cornering
+                    </div>
+                  </div>
+                  <Gauge size={36} className="text-success" />
+                </div>
+
+                <TickProgress
+                  value={0.96}
+                  totalTicks={28}
+                  color="success"
+                  leftLabel="SMOOTH"
+                  rightLabel="EXCELLENT (96)"
+                />
+
+                <div className="p-3 bg-surface-2 rounded-inner border border-border text-xs text-text-3 font-mono leading-relaxed">
+                  Mobile accelerometer telematics automatically calculate smoothness during active drives, preserving Guardian tier status and passenger confidence.
+                </div>
+              </Card>
             </div>
 
-            <TickProgress
-              value={0.96}
-              totalTicks={28}
-              color="success"
-              leftLabel="SMOOTH"
-              rightLabel="EXCELLENT"
-            />
-
-            <div className="p-2.5 bg-surface-2 rounded-inner border border-border text-xs text-text-3 font-mono">
-              Phone accelerometer captures jerk metrics during active trips, contributing to your Guardian Tier discounts.
-            </div>
-          </Card>
-        </div>
-
-        {/* Safety Events Log (PRD §3.7 G10) */}
-        <div className="space-y-2">
-          <span className="font-label text-text-2">RECENT SAFETY AUDIT LOG</span>
-          <div className="space-y-2">
-            <div className="p-3 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-success" />
-                <span className="text-white">Velachery ➔ Guindy Ride</span>
+            {/* Safety Events Log (PRD §3.7 G10) */}
+            <div className="space-y-3">
+              <span className="font-label text-text-2 text-xs">RECENT SAFETRAIL AUDIT LOG</span>
+              <div className="space-y-2">
+                <div className="p-3.5 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle size={16} className="text-success" />
+                    <div>
+                      <span className="text-white font-medium block">Velachery Bypass ➔ Guindy Ride</span>
+                      <span className="text-[10px] text-text-3 font-mono">Yesterday 08:35</span>
+                    </div>
+                  </div>
+                  <span className="text-success font-semibold">100% Corridor Adherence</span>
+                </div>
+                <div className="p-3.5 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle size={16} className="text-success" />
+                    <div>
+                      <span className="text-white font-medium block">Campus Night Return</span>
+                      <span className="text-[10px] text-text-3 font-mono">27 Sep 18:20</span>
+                    </div>
+                  </div>
+                  <span className="text-success font-semibold">Well-Lit Safe Corridors Kept</span>
+                </div>
               </div>
-              <span className="text-success font-semibold">100% Smooth</span>
-            </div>
-            <div className="p-3 bg-surface rounded-inner border border-border flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-success" />
-                <span className="text-white">Campus Night Return</span>
-              </div>
-              <span className="text-success font-semibold">Lit Corridor Kept</span>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { SOSShield } from '../../components/signature/SOSShield';
 import { BottomSheet } from '../../components/primitives/BottomSheet';
 import { Button } from '../../components/primitives/Button';
 import { useAppStore } from '../../store/useAppStore';
-import { MessageSquare, Phone, Headphones, Star, CheckCircle } from 'lucide-react';
+import { MessageSquare, Phone, Headphones, Star, CheckCircle, ShieldCheck, Navigation } from 'lucide-react';
 
 export const LiveRide: React.FC = () => {
   const { rideId } = useParams();
@@ -62,99 +62,135 @@ export const LiveRide: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col font-mono relative bg-bg text-text">
       <AppBar
-        title={`Ride #${ride.id.replace('ride-', '')}`}
+        title={`Live Ride #${ride.id.replace('ride-', '')}`}
         pill={<Pill variant="progress" label={ride.status === 'IN_TRANSIT' ? 'IN PROGRESS' : ride.status} />}
       />
 
-      <div className="flex-1 overflow-y-auto p-5 space-y-4 pb-24 no-scrollbar">
-        {/* Live Nav Card (UI Spec §8.5 & Reference Image 1) */}
-        <LiveNavCard
-          instruction={`Approaching ${ride.destName}`}
-          distance="0.4 km"
-          etaMins="6 MIN"
-          arrivalTime="08:26 AM"
-          progress={0.72}
-        />
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 no-scrollbar">
+        {/* Desktop Split View: 12-Column Responsive Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column (5 cols on lg/xl): Trip Details, Assigned Driver, Actions */}
+          <div className="lg:col-span-5 space-y-5">
+            {/* Live Nav Card (UI Spec §8.5) */}
+            <LiveNavCard
+              instruction={`Approaching ${ride.destName}`}
+              distance="0.4 km"
+              etaMins="6 MIN"
+              arrivalTime="08:26 AM"
+              progress={0.72}
+            />
 
-        {/* Embedded Dark Leaflet Map with Live Vehicle Marker (UI Spec §7) */}
-        <div className="w-full h-48 rounded-card overflow-hidden border border-border relative shadow-lg">
-          <CommuteMap
-            center={[12.9815, 80.2245]}
-            zoom={14}
-            routeCoordinates={ride.routePolyline}
-            vehiclePosition={ride.currentRiderPosition}
-            passengerPosition={{ lat: 12.9774, lng: 80.2212 }}
-          />
-        </div>
+            {/* Person Card for Assigned Rider */}
+            <div className="space-y-1.5">
+              <span className="font-label text-text-3 text-[10px] uppercase">
+                ASSIGNED CORRIDOR RIDER
+              </span>
+              <PersonCard
+                name={ride.riderName}
+                avatarUrl={ride.riderAvatar}
+                tier={ride.riderTier}
+                trustScore={88}
+                subtitle={`${ride.vehicle.makeModel} · ${ride.vehicle.plate}`}
+                meta={`Boarding PIN ${ride.rideCode}`}
+                showContactActions={true}
+              />
+            </div>
 
-        {/* Person Card for Rider */}
-        <div className="space-y-1">
-          <span className="font-label text-text-3 text-[10px]">ASSIGNED RIDER</span>
-          <PersonCard
-            name={ride.riderName}
-            avatarUrl={ride.riderAvatar}
-            tier={ride.riderTier}
-            trustScore={88}
-            subtitle={`${ride.vehicle.makeModel} · ${ride.vehicle.plate}`}
-            meta={`Ride PIN ${ride.rideCode}`}
-            showContactActions={true}
-          />
-        </div>
+            {/* Revealed Pickup Point & Fare Share Field Blocks */}
+            <FieldGrid columns={2} className="bg-surface p-4 rounded-card border border-border">
+              <FieldBlock
+                label="PICKUP POINT (REVEALED)"
+                value="Velachery Bypass"
+                caption="Near Bus Shelter, 100ft Road"
+              />
+              <FieldBlock
+                label="YOUR FARE SHARE"
+                value="Rs 28"
+                caption="Fuel split + 0.4 km detour"
+              />
+            </FieldGrid>
 
-        {/* Revealed Pickup Point & Fare Share Field Blocks (UI Spec §8.5) */}
-        <FieldGrid columns={2} className="bg-surface p-4 rounded-card border border-border">
-          <FieldBlock
-            label="PICKUP POINT (REVEALED)"
-            value="Velachery Bypass"
-            caption="Near Bus Shelter, 100ft Road"
-          />
-          <FieldBlock
-            label="YOUR FARE SHARE"
-            value="Rs 28"
-            caption="Fuel split + 0.4 km detour"
-          />
-        </FieldGrid>
+            {/* Contact Support & Communications Row */}
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={() => alert('CommuteCircle Support Ops opened')}
+                className="flex-1 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn text-xs font-semibold text-white flex items-center justify-center gap-2 shadow-sm transition-all"
+              >
+                <Headphones size={16} className="text-primary-soft" />
+                <span>Contact Support</span>
+              </button>
+              <button
+                onClick={() => alert('Chat with Rider opened')}
+                aria-label="Chat with rider"
+                className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-primary-soft shadow-sm transition-all"
+              >
+                <MessageSquare size={18} />
+              </button>
+              <button
+                onClick={() => alert('Calling Rider...')}
+                aria-label="Call rider"
+                className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-success shadow-sm transition-all"
+              >
+                <Phone size={18} />
+              </button>
+            </div>
 
-        {/* Contact Support Row (UI Spec §6.1 & Reference Pattern: Primary flex-1 + icon + icon) */}
-        <div className="flex items-center gap-2.5 pt-1">
-          <button
-            onClick={() => alert('CommuteCircle Support Ops opened')}
-            className="flex-1 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn text-xs font-semibold text-white flex items-center justify-center gap-2"
-          >
-            <Headphones size={16} className="text-primary-soft" />
-            <span>Contact Support</span>
-          </button>
-          <button
-            onClick={() => alert('Chat with Rider opened')}
-            aria-label="Chat with rider"
-            className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-primary-soft"
-          >
-            <MessageSquare size={18} />
-          </button>
-          <button
-            onClick={() => alert('Calling Rider...')}
-            aria-label="Call rider"
-            className="w-12 h-12 bg-surface hover:bg-surface-2 border border-border rounded-btn flex items-center justify-center text-success"
-          >
-            <Phone size={18} />
-          </button>
-        </div>
+            {/* Swipe to Complete Ride on Mobile / Desktop Button */}
+            <div className="pt-2">
+              <SwipeConfirm
+                label="Swipe to Complete Ride"
+                onConfirm={handleCompleteRide}
+              />
+            </div>
 
-        {/* Swipe to Complete Ride (UI Spec §6.9) */}
-        <div className="pt-2">
-          <SwipeConfirm
-            label="Swipe to Complete Ride"
-            onConfirm={handleCompleteRide}
-          />
+            {/* Emergency Info Box */}
+            <div className="p-3.5 bg-surface rounded-inner border border-border/60 text-xs text-text-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-success" />
+                <span>SafeTrail 15s heartbeats active</span>
+              </div>
+              <button
+                onClick={() => navigate('/safety')}
+                className="text-primary-soft hover:underline font-semibold"
+              >
+                Safety Options ➔
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column (7 cols on lg/xl): Large Interactive Real-Time Map */}
+          <div className="lg:col-span-7 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Navigation size={16} className="text-primary-soft animate-pulse" />
+                <span className="font-label text-white text-xs">
+                  REAL-TIME SAFETRAIL TRACKING
+                </span>
+              </div>
+              <span className="text-[11px] text-text-3 font-mono">
+                GPS: 12.9810, 80.2245 (Accuracy ±3m)
+              </span>
+            </div>
+
+            <div className="w-full h-[380px] lg:h-[560px] rounded-card overflow-hidden border border-border relative shadow-2xl">
+              <CommuteMap
+                center={[12.9815, 80.2245]}
+                zoom={14}
+                routeCoordinates={ride.routePolyline}
+                vehiclePosition={ride.currentRiderPosition}
+                passengerPosition={{ lat: 12.9774, lng: 80.2212 }}
+              />
+
+              {/* Floating Emergency Shield inside map corner on desktop */}
+              <div className="absolute bottom-4 right-4 z-[500]">
+                <SOSShield size="normal" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Floating Thumb-Reachable SOS Shield above bottom area */}
-      <div className="absolute bottom-6 right-6 z-40">
-        <SOSShield size="normal" />
-      </div>
-
-      {/* Post-Ride Structured Feedback Bottom Sheet (PRD §3.7 G9) */}
+      {/* Post-Ride Structured Feedback Bottom Sheet */}
       <BottomSheet
         isOpen={feedbackOpen}
         onClose={() => setFeedbackOpen(false)}

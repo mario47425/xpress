@@ -50,13 +50,10 @@ export const RiderScanner: React.FC = () => {
         { facingMode: 'environment' },
         config,
         async (decodedText) => {
-          // Pause camera and verify scanned string on server side
           await html5QrCode.stop().catch(() => {});
           handleVerify(decodedText);
         },
-        () => {
-          // QR scan frame error - expected while scanning
-        }
+        () => {}
       )
       .catch((err) => {
         console.warn('Camera start error, falling back to manual entry:', err);
@@ -75,7 +72,6 @@ export const RiderScanner: React.FC = () => {
     try {
       const res = await scanPass(codeOrToken);
       setScanResult(res);
-      // Grab matched pass from store if valid
       const storePass = useAppStore.getState().lastScanResult?.pass;
       if (storePass) {
         setScannedPass(storePass);
@@ -115,7 +111,7 @@ export const RiderScanner: React.FC = () => {
     }
   };
 
-  // Test sandbox helper: inject valid token, expired token, or already used nonce
+  // Test sandbox helper
   const handleTestToken = (type: 'valid' | 'expired' | 'used' | 'wrong') => {
     if (type === 'valid') {
       if (activePass) {
@@ -154,113 +150,122 @@ export const RiderScanner: React.FC = () => {
         pill={<Pill variant="available" label="CAMERA ACTIVE" />}
       />
 
-      <div className="flex-1 flex flex-col p-5 justify-between">
-        {mode === 'camera' ? (
-          <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-            {/* 260px Camera Scan Window (UI Spec §9.6) */}
-            <div className="relative w-[260px] h-[260px] rounded-card border-2 border-primary-soft/40 overflow-hidden bg-black flex items-center justify-center shadow-2xl">
-              {/* HTML5 Camera Video Element */}
-              <div id="qr-reader-viewport" className="w-full h-full object-cover" />
-
-              {/* Corner brackets */}
-              <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary-soft" />
-              <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary-soft" />
-              <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary-soft" />
-              <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary-soft" />
-
-              {/* 2px Sweeping Scan Line */}
-              <div className="absolute left-0 right-0 h-[2px] bg-success shadow-[0_0_8px_#0D9F5E] animate-scan-sweep pointer-events-none" />
-            </div>
-
-            <div className="text-center space-y-1">
-              <p className="font-body-m text-white text-sm">
-                Point at passenger's Journey Pass QR
-              </p>
-              <p className="text-xs text-text-3">
-                Scans instantly within 30 cm
-              </p>
-            </div>
-
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => setMode('manual')}
-              className="flex items-center gap-2"
-            >
-              <Keyboard size={16} />
-              <span>Enter 6-char code instead</span>
-            </Button>
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center no-scrollbar">
+        <div className="w-full max-w-xl space-y-6">
+          <div className="text-center space-y-1">
+            <span className="font-label text-primary-soft text-xs uppercase tracking-wider">
+              HOTSPOT HANDSHAKE VERIFICATION
+            </span>
+            <h2 className="font-title-m text-white text-xl sm:text-2xl font-bold">
+              Scan Passenger Pass
+            </h2>
+            <p className="text-xs text-text-3">
+              Verifies co-presence and burns single-use cryptographic token
+            </p>
           </div>
-        ) : (
-          <div className="flex-1 flex flex-col justify-center space-y-6">
-            <div className="text-center space-y-1">
-              <h3 className="font-title-m text-white text-base">Enter Short Code</h3>
-              <p className="text-xs text-text-3">
-                Type the 6-character code shown on passenger's screen
-              </p>
+
+          {mode === 'camera' ? (
+            <div className="flex flex-col items-center justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-xl">
+              {/* 260px Camera Scan Window */}
+              <div className="relative w-[260px] h-[260px] rounded-card border-2 border-primary-soft/40 overflow-hidden bg-black flex items-center justify-center shadow-2xl">
+                <div id="qr-reader-viewport" className="w-full h-full object-cover" />
+                <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-primary-soft" />
+                <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-primary-soft" />
+                <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-primary-soft" />
+                <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-primary-soft" />
+                <div className="absolute left-0 right-0 h-[2px] bg-success shadow-[0_0_8px_#0D9F5E] animate-scan-sweep pointer-events-none" />
+              </div>
+
+              <div className="text-center space-y-1">
+                <p className="font-body-m text-white text-sm font-semibold">
+                  Point at passenger's Journey Pass QR
+                </p>
+                <p className="text-xs text-text-3">
+                  Scans instantly within 30 cm distance
+                </p>
+              </div>
+
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setMode('manual')}
+                className="flex items-center gap-2"
+              >
+                <Keyboard size={16} />
+                <span>Enter 6-char code instead</span>
+              </Button>
             </div>
+          ) : (
+            <div className="flex flex-col justify-center space-y-5 bg-surface p-6 rounded-card border border-border shadow-xl">
+              <div className="text-center space-y-1">
+                <h3 className="font-title-m text-white text-base font-semibold">Enter 6-Char Short Code</h3>
+                <p className="text-xs text-text-3">
+                  Type the alphanumeric code shown under passenger's QR card
+                </p>
+              </div>
 
-            <OtpInput
-              value={manualCode}
-              onChange={setManualCode}
-            />
+              <OtpInput
+                value={manualCode}
+                onChange={setManualCode}
+              />
 
-            <Button
-              variant="primary"
-              onClick={handleManualSubmit}
-              disabled={manualCode.length < 4}
-              className="w-full"
-            >
-              Verify Code
-            </Button>
+              <Button
+                variant="primary"
+                onClick={handleManualSubmit}
+                disabled={manualCode.length < 4}
+                className="w-full text-xs font-semibold"
+              >
+                Verify Code
+              </Button>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setMode('camera')}
-              className="flex items-center justify-center gap-2"
-            >
-              <Camera size={16} />
-              <span>Switch back to camera scanner</span>
-            </Button>
-          </div>
-        )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMode('camera')}
+                className="flex items-center justify-center gap-2 text-xs"
+              >
+                <Camera size={16} />
+                <span>Switch back to camera scanner</span>
+              </Button>
+            </div>
+          )}
 
-        {/* Sandbox Quick Testing Bar (Tests all 7 states per PRD §4.4) */}
-        <div className="p-3 bg-surface rounded-inner border border-border space-y-2">
-          <span className="font-label text-text-3 text-[10px] flex items-center gap-1">
-            <Zap size={12} className="text-warn" /> QUICK SCAN TEST (SANDBOX)
-          </span>
-          <div className="grid grid-cols-4 gap-1.5 text-[10px]">
-            <button
-              onClick={() => handleTestToken('valid')}
-              className="py-1.5 px-2 bg-success/20 hover:bg-success/30 border border-success/40 text-success rounded-inner"
-            >
-              Valid
-            </button>
-            <button
-              onClick={() => handleTestToken('expired')}
-              className="py-1.5 px-2 bg-warn/20 hover:bg-warn/30 border border-warn/40 text-warn rounded-inner"
-            >
-              Expired
-            </button>
-            <button
-              onClick={() => handleTestToken('used')}
-              className="py-1.5 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner"
-            >
-              Replay
-            </button>
-            <button
-              onClick={() => handleTestToken('wrong')}
-              className="py-1.5 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner"
-            >
-              Wrong
-            </button>
+          {/* Sandbox Quick Testing Bar */}
+          <div className="p-4 bg-surface rounded-card border border-border space-y-2">
+            <span className="font-label text-text-3 text-[10px] flex items-center gap-1">
+              <Zap size={12} className="text-warn" /> QUICK SCAN TEST (SANDBOX 7-STATE VERIFIER)
+            </span>
+            <div className="grid grid-cols-4 gap-2 text-xs">
+              <button
+                onClick={() => handleTestToken('valid')}
+                className="py-2 px-2 bg-success/20 hover:bg-success/30 border border-success/40 text-success rounded-inner font-semibold text-center transition-colors"
+              >
+                Valid
+              </button>
+              <button
+                onClick={() => handleTestToken('expired')}
+                className="py-2 px-2 bg-warn/20 hover:bg-warn/30 border border-warn/40 text-warn rounded-inner font-semibold text-center transition-colors"
+              >
+                Expired
+              </button>
+              <button
+                onClick={() => handleTestToken('used')}
+                className="py-2 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner font-semibold text-center transition-colors"
+              >
+                Replay
+              </button>
+              <button
+                onClick={() => handleTestToken('wrong')}
+                className="py-2 px-2 bg-danger/20 hover:bg-danger/30 border border-danger/40 text-danger rounded-inner font-semibold text-center transition-colors"
+              >
+                Wrong
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Result Bottom Sheet (PRD §4.4 7 Result States) */}
+      {/* Result Bottom Sheet */}
       <BottomSheet
         isOpen={sheetOpen}
         onClose={() => setSheetOpen(false)}
@@ -275,7 +280,6 @@ export const RiderScanner: React.FC = () => {
                   <span>PASSENGER VERIFIED · CO-PRESENCE OK</span>
                 </div>
 
-                {/* Passenger Person Card */}
                 <PersonCard
                   name={scannedPass?.passengerName || 'Anitha Ramesh'}
                   avatarUrl={scannedPass?.passengerAvatar || '/demo/avatars/anitha.svg'}
@@ -297,7 +301,6 @@ export const RiderScanner: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Swipe Confirm to Accept Boarding */}
                 <SwipeConfirm
                   label="Accept Passenger Boarding"
                   onConfirm={handleAcceptPassenger}
