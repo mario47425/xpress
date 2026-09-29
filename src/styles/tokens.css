@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Tokens */
+  --cc-primary: #283AAF;
+  --cc-primary-hover: #3145C8;
+  --cc-primary-soft: #788AFE;
+  --cc-success: #0D9F5E;
+  --cc-surface: #20222E;
+  --cc-surface-2: #2A2D3E;
+  --cc-surface-glow: #343A5C;
+  --cc-bg: #0A0B1E;
+  --cc-bg-alt: #14161F;
+  --cc-text: #FFFFFF;
+  --cc-text-2: #B4B8CC;
+  --cc-text-3: #7C8099;
+  --cc-warn: #F5A524;
+  --cc-danger: #E5484D;
+  --cc-info: #2F6FED;
+  --cc-route-a: #18B6C8;
+  --cc-route-b: #2F6FED;
+  --cc-border: rgba(255, 255, 255, 0.08);
+
+  /* Tier Colours */
+  --cc-tier-1: #7C8099; /* Newcomer */
+  --cc-tier-2: #788AFE; /* Trusted */
+  --cc-tier-3: #0D9F5E; /* Verified Guardian */
+  --cc-tier-4: #F5C542; /* Community Anchor */
+
+  /* Radii */
+  --r-card: 24px;
+  --r-inner: 16px;
+  --r-btn: 16px;
+  --r-icon-btn: 16px;
+  --r-input: 14px;
+  --r-pill: 999px;
+  --r-phone-frame: 44px;
+
+  /* Gradients */
+  --cc-card-glow: radial-gradient(120% 90% at 50% 0%, #343A5C 0%, #20222E 70%);
+  --cc-route: linear-gradient(90deg, #18B6C8 0%, #2F6FED 100%);
+  --cc-sos-glow: radial-gradient(100% 80% at 50% 0%, rgba(229, 72, 77, 0.35) 0%, #20222E 70%);
+
+  /* Typography Stack */
+  --font: "Sometype Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 120ms;
+  --t-base: 220ms;
+  --t-slow: 420ms;
+}
+
+html, body {
+  background-color: var(--cc-bg);
+  color: var(--cc-text);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography styles matching UI Spec §3.3 */
+.font-display-xl {
+  font-size: 56px;
+  line-height: 60px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-display-l {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-title-l {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
+.font-title-m {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+.font-body-l {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.font-body-m {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.font-label {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cc-primary-soft);
+}
+
+.font-pill {
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.font-caption {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: var(--cc-text-3);
+}
+
+/* Card Glow Utility */
+.card-glow {
+  background: var(--cc-card-glow);
+}
+
+.card-sos-glow {
+  background: var(--cc-sos-glow);
+}
+
+/* Custom Scrollbar for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Leaflet Dark Filter & Styling (UI Spec §7) */
+.leaflet-container {
+  background: #0F1120 !important;
+  font-family: var(--font) !important;
+}
+
+.leaflet-tile-pane {
+  filter: invert(1) hue-rotate(200deg) brightness(0.75) contrast(0.9) saturate(0.5);
+}
+
+.leaflet-control-attribution {
+  background: rgba(10, 11, 30, 0.7) !important;
+  color: var(--cc-text-3) !important;
+  font-size: 9px !important;
+}
+.leaflet-control-attribution a {
+  color: var(--cc-primary-soft) !important;
+}
+
+/* Animated Pulse for SOS & Live Leg */
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+/* Scan line animation for camera window */
+@keyframes scan-sweep {
+  0% { top: 0%; opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0.8; }
+}
+
+.animate-scan-sweep {
+  animation: scan-sweep 1.6s ease-in-out infinite alternate;
+}

@@ -1,0 +1,13 @@
+# CommuteCircle — Architectural & Design Decisions
+
+| ID | Topic | Decision | Rationale |
+|---|---|---|---|
+| DEC-001 | Geographic Demo Focus | Chennai (Map centre: 13.0827, 80.2707) replacing all Coimbatore references. | Explicit user requirement and PRD override; realistic corridors (Velachery-Guindy-IITM and Adyar-OMR-Siruseri) match Chennai commute patterns. |
+| DEC-002 | Token Signature & Verification | Server-side signing and verification using JSON Web Tokens (ECDSA / ES256 with elliptic curve keypair generated in backend memory/storage). | PRD §4.2 non-negotiable: clients & riders never hold private signing key. Prevents forgery; server burns nonce upon first valid scan. |
+| DEC-003 | Realtime Communication | WebSockets using `ws` on Node.js Express server (`/ws`), synchronized with an event-driven in-memory SQLite/datastore. | Zero configuration setup via `npm run dev`. Works flawlessly across multiple browser windows for location pings, ride lifecycle, and SOS. |
+| DEC-004 | Dual Portals in Single App | Single React + Vite + TypeScript application serving `/app` (Peer Booking) and `/rider` (Rider Portal), sharing styling, components, state store, and API layer. | Required by PRD §2 and UI Spec §0. Fast role switching, shared authentication, zero code duplication. |
+| DEC-005 | Sometype Mono & Dark Mode Tokens | Sometype Mono imported via Google Fonts; tabular numbers enabled everywhere; 100% token-based styling matching UI Spec §3. | Strictly mandated by UI Spec; guarantees high readability, tactical aesthetic, and strict visual consistency. |
+| DEC-006 | Privacy & Reveal Ladder | Precision-6 Geohashing for home/work storage. Exact pickup point only revealed when both confirmed AND within 10 minutes of pickup time. | PRD §3.2 & Non-negotiables. Preserves commuter privacy against stalking or data harvesting. |
+| DEC-007 | Cost Recovery Cap | Rider portal calculates fuel + toll share without profit margin. Displays "Cost recovered", never "Earnings". | PRD §3.10 and Legal Framing §8.2. Adheres strictly to peer-to-peer carpooling regulatory standards. |
+| DEC-008 | Scanner 7-State Engine | Server-side verification returns explicit status codes: `VALID`, `EXPIRED`, `ALREADY_USED`, `WRONG_RIDER`, `TOO_FAR`, `INACTIVE`, `INVALID`. | PRD §4.4 acceptance criteria. Prevents screenshot replay attacks and unauthorized passenger pickups. |
+| DEC-009 | Mock Adapters | Sandbox adapters for SMS (OTP fixed to 123456, in-app notification/SMS drawer), Payments (mock UPI wallet with double-entry ledger), and KYC ID/Selfie upload. | Zero paid external dependencies while maintaining 100% workable feature flows. |
