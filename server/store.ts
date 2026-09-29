@@ -265,8 +265,8 @@ export class AppStore {
 
     const ride = this.rides.get(rideId);
     if (ride) {
-      ride.status = 'VERIFIED';
-      const participant = ride.participants.find((p) => p.userId === pass?.passengerId);
+      const participant =
+        ride.participants.find((p) => p.userId === pass?.passengerId) || ride.participants[0];
       if (participant) {
         participant.status = 'onboard';
         // Unlock exact pickup point
