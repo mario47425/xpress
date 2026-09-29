@@ -237,7 +237,7 @@ export const PeerTrustProfile: React.FC = () => {
                       alert('Dispute submitted to moderator queue');
                       setShowDisputeModal(false);
                     }}
-                    className="flex-1 min-h-[44px] py-2 bg-gradient-to-r from-primary to-pink-500 text-white rounded-btn text-xs font-semibold shadow-md active:scale-98 transition-all"
+                    className="flex-1 min-h-[44px] py-2 bg-primary hover:bg-primary-hover text-white rounded-btn text-xs font-semibold shadow-md active:scale-98 transition-all"
                   >
                     Submit Dispute
                   </button>

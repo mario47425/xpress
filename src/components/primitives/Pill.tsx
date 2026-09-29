@@ -16,11 +16,11 @@ export const Pill: React.FC<PillProps> = ({
   icon,
 }) => {
   const variantStyles: Record<PillVariant, string> = {
-    progress: 'bg-emerald-50 text-emerald-700 border border-emerald-300 font-semibold',
-    available: 'bg-violet-50 text-violet-700 border border-violet-200 font-semibold',
-    waiting: 'bg-amber-50 text-amber-800 border border-amber-300 font-semibold',
-    danger: 'bg-red-50 text-red-700 border border-red-300 font-semibold',
-    neutral: 'bg-surface-2 text-text-2 border border-border font-medium',
+    progress: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold',
+    available: 'bg-primary/20 text-primary-soft border border-primary/40 font-bold',
+    waiting: 'bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold',
+    danger: 'bg-red-500/20 text-red-400 border border-red-500/40 font-bold',
+    neutral: 'bg-surface-2 text-text-2 border border-border font-semibold',
   };
 
   return (

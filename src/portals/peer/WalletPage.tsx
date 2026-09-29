@@ -205,7 +205,7 @@ export const PeerWalletPage: React.FC = () => {
                 onClick={() => setTopUpAmount(amt)}
                 className={`min-h-[44px] py-2.5 px-3 rounded-btn border font-bold text-sm transition-all ${
                   topUpAmount === amt
-                    ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-md'
+                    ? 'bg-primary text-white border-transparent shadow-md'
                     : 'bg-surface-2 text-text border-border hover:bg-surface-2/80'
                 }`}
               >

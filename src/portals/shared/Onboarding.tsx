@@ -130,7 +130,7 @@ export const Onboarding: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setSelfieVerified(true)}
-                  className="min-h-[44px] px-3.5 py-1.5 bg-gradient-to-r from-primary to-pink-500 text-white text-xs font-bold rounded-pill shadow-sm"
+                  className="min-h-[44px] px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-pill shadow-sm"
                 >
                   Verify Now
                 </button>
@@ -160,7 +160,7 @@ export const Onboarding: React.FC = () => {
                       onClick={() => setCarType(type)}
                       className={`min-h-[44px] py-2 px-3 rounded-btn border text-xs font-semibold capitalize transition-all ${
                         carType === type
-                          ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-md'
+                          ? 'bg-primary text-white border-transparent shadow-md'
                           : 'bg-surface-2 text-text-muted border-border hover:bg-surface-2/80 hover:text-text'
                       }`}
                     >

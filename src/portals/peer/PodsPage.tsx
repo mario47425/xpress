@@ -52,7 +52,7 @@ export const PeerPodsPage: React.FC = () => {
                 onClick={() => setActivePodIdx(idx)}
                 className={`min-h-[44px] px-4 py-2.5 rounded-btn border text-xs font-semibold whitespace-nowrap transition-all ${
                   activePodIdx === idx
-                    ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-sm'
+                    ? 'bg-primary text-white border-transparent shadow-sm'
                     : 'bg-surface text-text-muted border-border hover:bg-surface-2 hover:text-text'
                 }`}
               >

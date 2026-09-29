@@ -192,7 +192,7 @@ export const ModeratorQueue: React.FC = () => {
                     onClick={() => setReviewAction(act)}
                     className={`min-h-[44px] py-2.5 px-3 rounded-btn border text-xs font-semibold capitalize transition-all ${
                       reviewAction === act
-                        ? 'bg-gradient-to-r from-primary to-pink-500 text-white border-transparent shadow-md'
+                        ? 'bg-primary text-white border-transparent shadow-md'
                         : 'bg-surface text-text-muted border-border hover:bg-surface-2 hover:text-text'
                     }`}
                   >

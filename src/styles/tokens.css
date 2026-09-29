@@ -3,55 +3,55 @@
 @tailwind utilities;
 
 :root {
-  /* Vibrant Theme Tokens */
-  --cc-primary: #7C3AED;
-  --cc-primary-hover: #6D28D9;
-  --cc-primary-soft: #A78BFA;
-  --cc-primary-gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
-  --cc-secondary: #06B6D4;
+  /* Bold Dark Professional Theme Tokens */
+  --cc-primary: #2563EB;
+  --cc-primary-hover: #1D4ED8;
+  --cc-primary-soft: #60A5FA;
+  --cc-primary-gradient: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+  --cc-secondary: #0EA5E9;
   --cc-accent: #F59E0B;
   --cc-success: #10B981;
   --cc-danger: #EF4444;
   --cc-warn: #F59E0B;
-  --cc-info: #06B6D4;
-  --cc-route-a: #7C3AED;
-  --cc-route-b: #06B6D4;
+  --cc-info: #38BDF8;
+  --cc-route-a: #2563EB;
+  --cc-route-b: #0EA5E9;
 
-  /* Surfaces & Backgrounds (Bright, clean, modern) */
-  --cc-bg: #F8F7FF;
-  --cc-bg-alt: #F1F0FA;
-  --cc-surface: #FFFFFF;
-  --cc-surface-2: #F5F3FF;
-  --cc-surface-glow: #EDE9FE;
+  /* Dark Metallic Surfaces & Backgrounds */
+  --cc-bg: #0B0F17;
+  --cc-bg-alt: #111622;
+  --cc-surface: #161B26;
+  --cc-surface-2: #1E2536;
+  --cc-surface-glow: #252E42;
 
-  /* Typography Colors */
-  --cc-text: #1F1B3A;
-  --cc-text-2: #4B466E;
-  --cc-text-3: #6B6890;
+  /* High-Contrast Crisp Typography */
+  --cc-text: #F8FAFC;
+  --cc-text-2: #CBD5E1;
+  --cc-text-3: #94A3B8;
 
   /* Borders & Shadows */
-  --cc-border: #E5E7EB;
-  --cc-border-subtle: #EDE9FE;
-  --cc-card-shadow: 0 8px 24px rgba(124, 58, 237, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
-  --cc-card-shadow-hover: 0 12px 32px rgba(124, 58, 237, 0.16), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --cc-border: #262F40;
+  --cc-border-subtle: #1E2533;
+  --cc-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --cc-card-shadow-hover: 0 12px 32px rgba(37, 99, 235, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
 
   /* Tier Colours */
-  --cc-tier-1: #6B6890; /* Newcomer */
-  --cc-tier-2: #7C3AED; /* Trusted */
+  --cc-tier-1: #94A3B8; /* Newcomer */
+  --cc-tier-2: #3B82F6; /* Trusted */
   --cc-tier-3: #10B981; /* Verified Guardian */
   --cc-tier-4: #F59E0B; /* Community Anchor */
 
-  /* Radii */
-  --r-card: 16px;
-  --r-inner: 12px;
-  --r-btn: 12px;
-  --r-icon-btn: 12px;
-  --r-input: 12px;
+  /* Structural Radii (Sharper, bolder, masculine) */
+  --r-card: 12px;
+  --r-inner: 8px;
+  --r-btn: 8px;
+  --r-icon-btn: 8px;
+  --r-input: 8px;
   --r-pill: 999px;
 
-  /* Gradients */
-  --cc-card-glow: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 243, 255, 1) 100%);
-  --cc-sos-glow: linear-gradient(135deg, rgba(254, 242, 242, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  /* Dark Gradients & Glows */
+  --cc-card-glow: linear-gradient(135deg, #161B26 0%, #1E2536 100%);
+  --cc-sos-glow: linear-gradient(135deg, #2D1517 0%, #161B26 100%);
 
   /* Typography Stack: Poppins with sans-serif fallback */
   --font: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -198,26 +198,26 @@ h3, .font-h3 {
   scrollbar-width: none;
 }
 
-/* Leaflet Crisp Light Map Styling */
+/* Leaflet Dark Tactical Map Styling */
 .leaflet-container {
-  background: #E5E7EB !important;
+  background: #111622 !important;
   font-family: var(--font) !important;
   border-radius: var(--r-card);
 }
 
 .leaflet-tile-pane {
-  filter: saturate(1.1) brightness(1.02);
+  filter: brightness(0.65) invert(1) contrast(1.2) hue-rotate(200deg) saturate(0.3);
 }
 
 .leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(22, 27, 38, 0.85) !important;
   color: var(--cc-text-3) !important;
   font-size: 9px !important;
   backdrop-filter: blur(4px);
   border-radius: 4px;
 }
 .leaflet-control-attribution a {
-  color: var(--cc-primary) !important;
+  color: var(--cc-primary-soft) !important;
 }
 
 /* Animated Pulse for SOS & Live Leg */
